@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.integrador.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author Ricardo
- */
 public class ConectionPostgres {
-    private static final String URL = "quadraManager:postgresql://localhost:5432/";
+    private static final String URL = "jdbc:postgresql://localhost:5432/quadraManager"; // URL corregida
     private static final String USUARIO = "postgres";
     private static final String SENHA = "28579994";
 
@@ -36,13 +28,10 @@ public class ConectionPostgres {
     }
 
     public static void main(String[] args) {
-        // Exemplo de como usar a classe de conexão
-        Connection conexao = null;
-        try {
-            conexao = ConectionPostgres.getConnection();
+        try (Connection conexao = ConectionPostgres.getConnection()) { // Usando try-with-resources
             System.out.println("Conexão estabelecida com sucesso!");
-        } finally {
-            ConectionPostgres.fecharConexao(conexao);
+        } catch (SQLException e) {
+            System.err.println("Erro ao estabelecer a conexão: " + e.getMessage());
         }
     }
 }
