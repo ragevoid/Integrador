@@ -53,25 +53,66 @@ public class Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         cadatroMenu = new javax.swing.JMenu();
+        usersMenu = new javax.swing.JMenuItem();
+        clientesMenu = new javax.swing.JMenuItem();
+        modalidadesMenu = new javax.swing.JMenuItem();
+        quadrasMenu = new javax.swing.JMenuItem();
         agendaMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1204, 600));
-        setMinimumSize(new java.awt.Dimension(1204, 600));
+        setMaximumSize(new java.awt.Dimension(600, 600));
+        setMinimumSize(new java.awt.Dimension(600, 600));
+        setPreferredSize(new java.awt.Dimension(600, 600));
 
         PrincipalBackGround.setBackground(new java.awt.Color(51, 51, 51));
-        PrincipalBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PrincipalBackGround.setMaximumSize(new java.awt.Dimension(600, 600));
+        PrincipalBackGround.setMinimumSize(new java.awt.Dimension(600, 600));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo2.png"))); // NOI18N
         jLabel2.setToolTipText("");
-        PrincipalBackGround.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 1340, 510));
+
+        javax.swing.GroupLayout PrincipalBackGroundLayout = new javax.swing.GroupLayout(PrincipalBackGround);
+        PrincipalBackGround.setLayout(PrincipalBackGroundLayout);
+        PrincipalBackGroundLayout.setHorizontalGroup(
+            PrincipalBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        PrincipalBackGroundLayout.setVerticalGroup(
+            PrincipalBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PrincipalBackGroundLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
 
         jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setBorder(null);
 
         cadatroMenu.setText("Cadastro");
         cadatroMenu.setMargin(new java.awt.Insets(6, 6, 6, 6));
+
+        usersMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        usersMenu.setText("Usuarios");
+        cadatroMenu.add(usersMenu);
+
+        clientesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        clientesMenu.setText("Clientes");
+        clientesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesMenuActionPerformed(evt);
+            }
+        });
+        cadatroMenu.add(clientesMenu);
+
+        modalidadesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        modalidadesMenu.setText("Modalidades");
+        cadatroMenu.add(modalidadesMenu);
+
+        quadrasMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        quadrasMenu.setText("Quadras");
+        cadatroMenu.add(quadrasMenu);
+
         jMenuBar1.add(cadatroMenu);
 
         agendaMenu.setText("Agenda");
@@ -87,13 +128,15 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PrincipalBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(PrincipalBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clientesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clientesMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,7 +177,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel PrincipalBackGround;
     private javax.swing.JMenu agendaMenu;
     private javax.swing.JMenu cadatroMenu;
+    private javax.swing.JMenuItem clientesMenu;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem modalidadesMenu;
+    private javax.swing.JMenuItem quadrasMenu;
+    private javax.swing.JMenuItem usersMenu;
     // End of variables declaration//GEN-END:variables
 }

@@ -100,18 +100,25 @@ public class Login extends javax.swing.JFrame {
                 userFieldActionPerformed(evt);
             }
         });
+        userField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userFieldKeyPressed(evt);
+            }
+        });
         backGround.add(userField, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 210, 40));
 
         passwordField.setBackground(new java.awt.Color(51, 51, 51));
         passwordField.setForeground(new java.awt.Color(153, 153, 153));
         passwordField.setText("jPasswordField1");
         passwordField.setBorder(null);
-        passwordField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                passwordFieldMouseEntered(evt);
+        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordFieldFocusGained(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                passwordFieldMousePressed(evt);
+        });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
             }
         });
         backGround.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, 180, 40));
@@ -144,9 +151,9 @@ public class Login extends javax.swing.JFrame {
         loginButton.setForeground(new java.awt.Color(51, 51, 51));
         loginButton.setText("Login");
         loginButton.setBorder(null);
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginButtonMouseClicked(evt);
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
             }
         });
         backGround.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 80, 30));
@@ -175,19 +182,29 @@ public class Login extends javax.swing.JFrame {
         userField.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_userFieldMousePressed
 
-    private void passwordFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordFieldMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldMouseEntered
+    private void userFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userFieldKeyPressed
 
-    private void passwordFieldMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordFieldMousePressed
+        if(evt.getKeyCode() == 10){
+        passwordField.requestFocusInWindow();
+        } 
+    }//GEN-LAST:event_userFieldKeyPressed
+
+    private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
         // TODO add your handling code here:
         passwordField.setText("");
         passwordField.setForeground(new Color(204,204,204));
-    }//GEN-LAST:event_passwordFieldMousePressed
+    }//GEN-LAST:event_passwordFieldFocusGained
 
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         // TODO add your handling code here:
-    String idText = userField.getText(); // Suponiendo que tienes un JTextField para el ID
+                if(evt.getKeyCode() == 10){
+                    loginButton.doClick();
+        } 
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+           String idText = userField.getText(); // Suponiendo que tienes un JTextField para el ID
     String senha = new String(passwordField.getPassword()); // Suponiendo que tienes un JPasswordField para la contraseña
     
     try {
@@ -196,6 +213,9 @@ public class Login extends javax.swing.JFrame {
         
         if (funcionarioService.verificarCredenciais(id, senha)) {
             System.out.println("Login bem-sucedido!");
+            this.dispose();
+            Principal principal = new Principal();
+            principal.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null,"ID ou Senha Incorreto","Error",
 JOptionPane.ERROR_MESSAGE);;
@@ -205,7 +225,7 @@ JOptionPane.ERROR_MESSAGE);;
 JOptionPane.ERROR_MESSAGE);;
     }
         
-    }//GEN-LAST:event_loginButtonMouseClicked
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments
