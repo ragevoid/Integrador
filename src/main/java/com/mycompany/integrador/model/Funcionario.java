@@ -10,32 +10,53 @@ package com.mycompany.integrador.model;
  */
 public class Funcionario {
     private Long id;
+    private String cpf;
     private String nome;
-    private int idade;
+    private String telefone;
     private String email;
+    private String senha;
+    private Long enderecoId;
+
+    // Constructor vacío
     public Funcionario() {
     }
-    
-    // Construtor sem o campo 'id'
-    public Funcionario(String nome, int idade, String email, String imagePath) {
+
+    // Constructor sin el campo 'id'
+    public Funcionario(String cpf, String nome, String telefone, String email, String senha, Long enderecoId) {
+        this.cpf = cpf;
         this.nome = nome;
-        this.idade = idade;
+        this.telefone = telefone;
         this.email = email;
-    }
- 
-    public Funcionario(Long id, String nome, int idade, String email, String imagePath) {
-        this.id = id;
-        this.nome = nome;
-        this.idade = idade;
-        this.email = email;
+        this.senha = senha;
+        this.enderecoId = enderecoId;
     }
 
+    // Constructor con todos los campos
+    public Funcionario(Long id, String cpf, String nome, String telefone, String email, String senha, Long enderecoId) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+        this.enderecoId = enderecoId;
+    }
+
+    // Getters y setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -46,12 +67,12 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public int getIdade() {
-        return idade;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getEmail() {
@@ -61,11 +82,22 @@ public class Funcionario {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-   
-    
-    
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Long getEnderecoId() {
+        return enderecoId;
+    }
+
+    public void setEnderecoId(Long enderecoId) {
+        this.enderecoId = enderecoId;
+    }
 }
 
 

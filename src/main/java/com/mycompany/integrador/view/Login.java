@@ -4,9 +4,11 @@
  */
 package com.mycompany.integrador.view;
 
+import com.mycompany.integrador.model.service.FuncionarioService;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -142,6 +144,11 @@ public class Login extends javax.swing.JFrame {
         loginButton.setForeground(new java.awt.Color(51, 51, 51));
         loginButton.setText("Login");
         loginButton.setBorder(null);
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
+        });
         backGround.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 80, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,6 +184,28 @@ public class Login extends javax.swing.JFrame {
         passwordField.setText("");
         passwordField.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_passwordFieldMousePressed
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        // TODO add your handling code here:
+    String idText = userField.getText(); // Suponiendo que tienes un JTextField para el ID
+    String senha = new String(passwordField.getPassword()); // Suponiendo que tienes un JPasswordField para la contraseña
+    
+    try {
+        Long id = Long.parseLong(idText);
+        FuncionarioService funcionarioService = new FuncionarioService();
+        
+        if (funcionarioService.verificarCredenciais(id, senha)) {
+            System.out.println("Login bem-sucedido!");
+        } else {
+            JOptionPane.showMessageDialog(null,"ID ou Senha Incorreto","Error",
+JOptionPane.ERROR_MESSAGE);;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null,"Acceso Denegado","Error",
+JOptionPane.ERROR_MESSAGE);;
+    }
+        
+    }//GEN-LAST:event_loginButtonMouseClicked
 
     /**
      * @param args the command line arguments
