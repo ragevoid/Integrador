@@ -4,26 +4,36 @@
  */
 package com.mycompany.integrador.view;
 
+import com.mycompany.integrador.model.Evento;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /**
  *
  * @author Ricardo
  */
 public class Agenda extends javax.swing.JFrame {
 private Calendar calendar;
+private Map<Date, List<Evento>> eventosPorData;
     /**
      * Creates new form Agenda
      */
     public Agenda() {
+        eventosPorData = new HashMap<>();
         initComponents();
         initializeCalendar();
+
     }
     
     /**
@@ -65,7 +75,10 @@ private Calendar calendar;
         jDayChooser1.addPropertyChangeListener("day", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("day")) {
-                    System.out.println("Selected Day: " + evt.getNewValue());
+                    int day = (int) evt.getNewValue();
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(jYearChooser1.getYear(), jMonthChooser1.getMonth(), day);
+                    showEventosForDay(selectedDate.getTime());
                 }
             }
         });
@@ -112,12 +125,28 @@ private Calendar calendar;
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Agenda().setVisible(true);
+                Agenda agenda = new Agenda();
+                agenda.setVisible(true);
+
+                // Ejemplo de añadir eventos
+                Calendar cal = Calendar.getInstance();
+                
+                // Evento 1
+                cal.set(2024, Calendar.JUNE, 22); // Establece la fecha deseada
+                Evento evento1 = new Evento(cal.getTime(), "10:00", "Reunión importante");
+                agenda.addEvento(evento1);
+                
+                // Evento 2
+                cal.set(2024, Calendar.JUNE, 23); // Establece la fecha deseada
+                Evento evento2 = new Evento(cal.getTime(), "15:00", "Consulta médica");
+                agenda.addEvento(evento2);
             }
         });
     }
+    
+    
       private void initializeCalendar() {
         calendar = Calendar.getInstance();
         jMonthChooser1.setMonth(calendar.get(Calendar.MONTH));
@@ -132,6 +161,23 @@ private Calendar calendar;
         jDayChooser1.setMonth(selectedMonth);
         jDayChooser1.setYear(selectedYear);
     }
+        public void addEvento(Evento evento) {
+        List<Evento> eventos = eventosPorData.getOrDefault(evento.getData(), new ArrayList<>());
+        eventos.add(evento);
+        eventosPorData.put(evento.getData(), eventos);
+    }
+
+    private void showEventosForDay(Date date) {
+        List<Evento> eventos = eventosPorData.get(date);
+        if (eventos != null) {
+            for (Evento evento : eventos) {
+                System.out.println(evento);
+            }
+        } else {
+            System.out.println("Não tem eventos para esta Data");
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDayChooser jDayChooser1;
