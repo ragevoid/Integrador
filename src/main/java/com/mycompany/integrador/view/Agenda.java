@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.Evento;
@@ -21,6 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.mycompany.integrador.model.Evento;
+import java.awt.Color;
+import java.awt.Component;
+import java.time.LocalDate;
+import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
         
 /**
  *
@@ -28,15 +31,16 @@ import java.util.*;
  */
 public class Agenda extends javax.swing.JFrame {
 private Calendar calendar;
+private List<Evento> eventos;
+
     /**
      * Creates new form Agenda
      */
     public Agenda() {
         initComponents();
         initializeCalendar();
+        eventos = new ArrayList<>();
         this.setLocationRelativeTo(null);
-        
-
     }
     
     /**
@@ -47,16 +51,30 @@ private Calendar calendar;
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        agendaBackGroundPanel = new javax.swing.JPanel();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jDayChooser1 = new com.toedter.calendar.JDayChooser();
+        EventosPanelBackGround = new javax.swing.JPanel();
+        scrollTableEventos = new javax.swing.JScrollPane();
+        eventosTable = new javax.swing.JTable();
+        eventosButtonPanel = new javax.swing.JPanel();
+        adicionarEventoButton = new javax.swing.JButton();
+        apagarEventoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(800, 420));
+        setMinimumSize(new java.awt.Dimension(800, 420));
+        setPreferredSize(new java.awt.Dimension(800, 420));
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        agendaBackGroundPanel.setBackground(new java.awt.Color(51, 51, 51));
+        agendaBackGroundPanel.setMaximumSize(new java.awt.Dimension(800, 420));
+        agendaBackGroundPanel.setMinimumSize(new java.awt.Dimension(800, 420));
+        agendaBackGroundPanel.setPreferredSize(new java.awt.Dimension(800, 420));
+        agendaBackGroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        agendaBackGroundPanel.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 140, 30));
         jMonthChooser1.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -65,7 +83,7 @@ private Calendar calendar;
                 }
             }
         });
-        jPanel1.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
+        agendaBackGroundPanel.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 110, 30));
         jYearChooser1.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -74,39 +92,99 @@ private Calendar calendar;
                 }
             }
         });
-        jPanel1.add(jDayChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 330, 310));
+
+        jDayChooser1.setDecorationBackgroundColor(new java.awt.Color(0, 153, 255));
+        jDayChooser1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jDayChooser1FocusGained(evt);
+            }
+        });
+        agendaBackGroundPanel.add(jDayChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 330, 290));
         jDayChooser1.addPropertyChangeListener("day", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("day")) {
                     int day = (int) evt.getNewValue();
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(jYearChooser1.getYear(), jMonthChooser1.getMonth(), day);
+                    diaEnEvento(selectedDate.get(Calendar.DAY_OF_MONTH));
 
                     // Imprime el día seleccionado en la consola
-                    System.out.println("Día seleccionado: " + selectedDate.get(Calendar.DAY_OF_MONTH));
+                    System.out.println("Día seleccionado: " + selectedDate.getTime());
                 }
             }
         });
+
+        EventosPanelBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        eventosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Cita Medica", "12:00"},
+                {null, null}
+            },
+            new String [] {
+                "Descripçao", "Hora"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        eventosTable.setColumnSelectionAllowed(true);
+        scrollTableEventos.setViewportView(eventosTable);
+        eventosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        EventosPanelBackGround.add(scrollTableEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 280));
+
+        eventosButtonPanel.setLayout(new java.awt.GridLayout());
+
+        adicionarEventoButton.setText("Adicionar Evento");
+        adicionarEventoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adicionarEventoButtonMouseClicked(evt);
+            }
+        });
+        eventosButtonPanel.add(adicionarEventoButton);
+
+        apagarEventoButton.setText("Apagar Evento");
+        eventosButtonPanel.add(apagarEventoButton);
+
+        EventosPanelBackGround.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 50));
+
+        agendaBackGroundPanel.add(EventosPanelBackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 300, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void adicionarEventoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adicionarEventoButtonMouseClicked
+        // TODO add your handling code here:
+        eventosTeste();
+        imprimirEventos();
+    }//GEN-LAST:event_adicionarEventoButtonMouseClicked
+
+    private void jDayChooser1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDayChooser1FocusGained
+        // TODO add your handling code here:
+    
+    }//GEN-LAST:event_jDayChooser1FocusGained
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -133,6 +211,7 @@ private Calendar calendar;
         /* Create and display the form */
         
           java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Agenda agenda = new Agenda();
                 agenda.setVisible(true);
@@ -154,13 +233,55 @@ private Calendar calendar;
         calendar.set(selectedYear, selectedMonth, 1);
         jDayChooser1.setMonth(selectedMonth);
         jDayChooser1.setYear(selectedYear);
+        System.out.println(eventos);
+    }
+    public void eventosTeste() {
+        // Crear los eventos y agregarlos a la lista
+        Evento evento1 = new Evento(new Date(), "10:00", "Reunión de equipo");
+        Evento evento2 = new Evento(new Date(), "15:30", "Presentación de proyecto");
+
+        eventos.add(evento1);
+        eventos.add(evento2);
     }
     
+     public void imprimirEventos() {
+        System.out.println("Lista de eventos:");
+        for (Evento evento : eventos) {
+            System.out.println("Fecha: " + evento.getData() +
+                               ", Hora: " + evento.getHora() +
+                               ", Descripción: " + evento.getDescricao());
+        }
+    }
+ 
+ public void diaEnEvento(int diaDelMes) {
+    boolean eventosEncontrados = false; // Bandera para verificar si se encontraron eventos
 
+    // Supongamos que tienes una lista de eventos llamada "eventos"
+    for (Evento evento : eventos) {
+        Calendar fechaEvento = Calendar.getInstance();
+        fechaEvento.setTime(evento.getData());
+        if (fechaEvento.get(Calendar.DAY_OF_MONTH) == diaDelMes) {
+            System.out.println("Evento para el día " + diaDelMes + ": " + evento.getDescricao());
+            eventosEncontrados = true;
+        }
+    }
+
+    if (!eventosEncontrados) {
+        System.out.println("No existen eventos para el día: " + diaDelMes);
+    }
+}
+
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel EventosPanelBackGround;
+    private javax.swing.JButton adicionarEventoButton;
+    private javax.swing.JPanel agendaBackGroundPanel;
+    private javax.swing.JButton apagarEventoButton;
+    private javax.swing.JPanel eventosButtonPanel;
+    private javax.swing.JTable eventosTable;
     private com.toedter.calendar.JDayChooser jDayChooser1;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
-    private javax.swing.JPanel jPanel1;
     private com.toedter.calendar.JYearChooser jYearChooser1;
+    private javax.swing.JScrollPane scrollTableEventos;
     // End of variables declaration//GEN-END:variables
 }
