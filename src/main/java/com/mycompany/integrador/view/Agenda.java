@@ -19,20 +19,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+        
 /**
  *
  * @author Ricardo
  */
 public class Agenda extends javax.swing.JFrame {
 private Calendar calendar;
-private Map<Date, List<Evento>> eventosPorData;
     /**
      * Creates new form Agenda
      */
     public Agenda() {
-        eventosPorData = new HashMap<>();
         initComponents();
         initializeCalendar();
+        
 
     }
     
@@ -78,7 +80,9 @@ private Map<Date, List<Evento>> eventosPorData;
                     int day = (int) evt.getNewValue();
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(jYearChooser1.getYear(), jMonthChooser1.getMonth(), day);
-                    showEventosForDay(selectedDate.getTime());
+
+                    // Imprime el día seleccionado en la consola
+                    System.out.println("Día seleccionado: " + selectedDate.get(Calendar.DAY_OF_MONTH));
                 }
             }
         });
@@ -125,23 +129,11 @@ private Map<Date, List<Evento>> eventosPorData;
         //</editor-fold>
 
         /* Create and display the form */
+        
           java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Agenda agenda = new Agenda();
                 agenda.setVisible(true);
-
-                // Ejemplo de añadir eventos
-                Calendar cal = Calendar.getInstance();
-                
-                // Evento 1
-                cal.set(2024, Calendar.JUNE, 22); // Establece la fecha deseada
-                Evento evento1 = new Evento(cal.getTime(), "10:00", "Reunión importante");
-                agenda.addEvento(evento1);
-                
-                // Evento 2
-                cal.set(2024, Calendar.JUNE, 23); // Establece la fecha deseada
-                Evento evento2 = new Evento(cal.getTime(), "15:00", "Consulta médica");
-                agenda.addEvento(evento2);
             }
         });
     }
@@ -160,22 +152,6 @@ private Map<Date, List<Evento>> eventosPorData;
         calendar.set(selectedYear, selectedMonth, 1);
         jDayChooser1.setMonth(selectedMonth);
         jDayChooser1.setYear(selectedYear);
-    }
-        public void addEvento(Evento evento) {
-        List<Evento> eventos = eventosPorData.getOrDefault(evento.getData(), new ArrayList<>());
-        eventos.add(evento);
-        eventosPorData.put(evento.getData(), eventos);
-    }
-
-    private void showEventosForDay(Date date) {
-        List<Evento> eventos = eventosPorData.get(date);
-        if (eventos != null) {
-            for (Evento evento : eventos) {
-                System.out.println(evento);
-            }
-        } else {
-            System.out.println("Não tem eventos para esta Data");
-        }
     }
     
 
