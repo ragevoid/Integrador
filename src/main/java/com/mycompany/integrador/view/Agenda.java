@@ -20,6 +20,7 @@ import java.util.*;
 import com.mycompany.integrador.model.Evento;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.PopupMenu;
 import java.time.LocalDate;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +42,7 @@ private List<Evento> eventos;
         initializeCalendar();
         eventos = new ArrayList<>();
         this.setLocationRelativeTo(null);
+       
     }
     
     /**
@@ -51,7 +53,6 @@ private List<Evento> eventos;
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         agendaBackGroundPanel = new javax.swing.JPanel();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
@@ -67,7 +68,6 @@ private List<Evento> eventos;
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 420));
         setMinimumSize(new java.awt.Dimension(800, 420));
-        setPreferredSize(new java.awt.Dimension(800, 420));
 
         agendaBackGroundPanel.setBackground(new java.awt.Color(51, 51, 51));
         agendaBackGroundPanel.setMaximumSize(new java.awt.Dimension(800, 420));
@@ -101,7 +101,9 @@ private List<Evento> eventos;
         });
         agendaBackGroundPanel.add(jDayChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 330, 290));
         jDayChooser1.addPropertyChangeListener("day", new PropertyChangeListener() {
+
             public void propertyChange(PropertyChangeEvent evt) {
+                apagarEventosTabela();
                 if (evt.getPropertyName().equals("day")) {
                     int day = (int) evt.getNewValue();
                     Calendar selectedDate = Calendar.getInstance();
@@ -118,8 +120,7 @@ private List<Evento> eventos;
 
         eventosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Cita Medica", "12:00"},
-                {null, null}
+                {"Cita Medica", "12:00"}
             },
             new String [] {
                 "Descripçao", "Hora"
@@ -139,7 +140,7 @@ private List<Evento> eventos;
 
         EventosPanelBackGround.add(scrollTableEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 280));
 
-        eventosButtonPanel.setLayout(new java.awt.GridLayout());
+        eventosButtonPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         adicionarEventoButton.setText("Adicionar Evento");
         adicionarEventoButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,9 +148,19 @@ private List<Evento> eventos;
                 adicionarEventoButtonMouseClicked(evt);
             }
         });
+        adicionarEventoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adicionarEventoButtonActionPerformed(evt);
+            }
+        });
         eventosButtonPanel.add(adicionarEventoButton);
 
         apagarEventoButton.setText("Apagar Evento");
+        apagarEventoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                apagarEventoButtonActionPerformed(evt);
+            }
+        });
         eventosButtonPanel.add(apagarEventoButton);
 
         EventosPanelBackGround.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 50));
@@ -164,22 +175,32 @@ private List<Evento> eventos;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void adicionarEventoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adicionarEventoButtonMouseClicked
-        // TODO add your handling code here:
-        eventosTeste();
-        imprimirEventos();
+        // TODO add your handling code here
+
     }//GEN-LAST:event_adicionarEventoButtonMouseClicked
 
     private void jDayChooser1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDayChooser1FocusGained
         // TODO add your handling code here:
     
     }//GEN-LAST:event_jDayChooser1FocusGained
+
+    private void apagarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apagarEventoButtonActionPerformed
+        // TODO add your handling code here:
+        apagarEventosTabela();
+    }//GEN-LAST:event_apagarEventoButtonActionPerformed
+
+    private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
+        // TODO add your handling code here:
+         EventoTela eventoTela = new EventoTela();
+            eventoTela.setVisible(true);
+    }//GEN-LAST:event_adicionarEventoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,7 +256,7 @@ private List<Evento> eventos;
         jDayChooser1.setYear(selectedYear);
         System.out.println(eventos);
     }
-    public void eventosTeste() {
+        public void eventosTeste() {
         // Crear los eventos y agregarlos a la lista
         Evento evento1 = new Evento(new Date(), "10:00", "Reunión de equipo");
         Evento evento2 = new Evento(new Date(), "15:30", "Presentación de proyecto");
@@ -252,6 +273,20 @@ private List<Evento> eventos;
                                ", Descripción: " + evento.getDescricao());
         }
     }
+     
+ public void addEventoTabela() {
+     DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
+        
+        for (Evento evento : eventos) {
+            Object[] row = { evento.getDescricao(), evento.getHora()};
+            model.addRow(row);
+        }
+}
+ 
+ public void apagarEventosTabela(){
+     DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
+      model.setRowCount(0);
+ }
  
  public void diaEnEvento(int diaDelMes) {
     boolean eventosEncontrados = false; // Bandera para verificar si se encontraron eventos
@@ -263,11 +298,14 @@ private List<Evento> eventos;
         if (fechaEvento.get(Calendar.DAY_OF_MONTH) == diaDelMes) {
             System.out.println("Evento para el día " + diaDelMes + ": " + evento.getDescricao());
             eventosEncontrados = true;
+
+         
         }
     }
-
     if (!eventosEncontrados) {
         System.out.println("No existen eventos para el día: " + diaDelMes);
+    }else{
+                addEventoTabela();
     }
 }
 

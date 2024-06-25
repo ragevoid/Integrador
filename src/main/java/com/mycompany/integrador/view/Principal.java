@@ -59,7 +59,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo2.png"))); // NOI18N
         jLabel2.setToolTipText("");
-        PrincipalBackGround.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 600, 370));
+        PrincipalBackGround.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 600, 370));
 
         jPanel1.setBackground(new java.awt.Color(64, 64, 64));
         jPanel1.setFocusable(false);

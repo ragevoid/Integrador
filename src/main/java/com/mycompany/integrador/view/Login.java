@@ -21,28 +21,12 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        setLocationCenter();
+        backGround.requestFocusInWindow();
+        setLocationRelativeTo(null);
         setVisible(true);
-        
+
     }
-        public Login(int moveWidth, int moveHeight) {    
-        initComponents();
-        setLocationMove(moveWidth, moveHeight);
-        setVisible(true);
-    }
- public void setLocationCenter(){
-        setLocationMove(0, 0);
-    }
-  public void setLocationMove(int moveWidth, int moveHeight) {
-        // Obtenemos el tamaño de la pantalla.
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        // Obtenemos el tamaño de nuestro frame.
-        Dimension frameSize = this.getSize();
-        frameSize.width = frameSize.width > screenSize.width?screenSize.width:frameSize.width;
-        frameSize.height = frameSize.height > screenSize.height?screenSize.height:frameSize.height;   
-        // We define the location. Definimos la localización.
-        setLocation((screenSize.width - frameSize.width) / 2 + moveWidth, (screenSize.height - frameSize.height) / 2 + moveHeight);        
-    }
+        int tentativa = 0;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,7 +50,6 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quadra Manager");
-        setPreferredSize(new java.awt.Dimension(720, 480));
         setResizable(false);
 
         backGround.setBackground(new java.awt.Color(51, 51, 51));
@@ -90,6 +73,8 @@ public class Login extends javax.swing.JFrame {
         userField.setForeground(new java.awt.Color(153, 153, 153));
         userField.setText("Número de Usuario");
         userField.setBorder(null);
+        userField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        userField.setNextFocusableComponent(passwordField);
         userField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userFieldMousePressed(evt);
@@ -178,12 +163,12 @@ public class Login extends javax.swing.JFrame {
 
     private void userFieldMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userFieldMousePressed
         // TODO add your handling code here:
-        userField.setText("");
+                        userField.setText("");
         userField.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_userFieldMousePressed
 
     private void userFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userFieldKeyPressed
-
+             // TODO add your handling code here:
         if(evt.getKeyCode() == 10){
         passwordField.requestFocusInWindow();
         } 
@@ -204,9 +189,14 @@ public class Login extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-           String idText = userField.getText(); // Suponiendo que tienes un JTextField para el ID
-    String senha = new String(passwordField.getPassword()); // Suponiendo que tienes un JPasswordField para la contraseña
-    
+    String idText = userField.getText();
+    String senha = new String(passwordField.getPassword());
+        System.out.println(tentativa);
+        if(tentativa > 1){
+         JOptionPane.showMessageDialog(null,"Muitas Tentativas","Error",
+JOptionPane.ERROR_MESSAGE);;
+            this.dispose();
+        }
     try {
         Long id = Long.parseLong(idText);
         FuncionarioService funcionarioService = new FuncionarioService();
@@ -218,13 +208,15 @@ public class Login extends javax.swing.JFrame {
             principal.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null,"ID ou Senha Incorreto","Error",
-JOptionPane.ERROR_MESSAGE);;
+JOptionPane.ERROR_MESSAGE);; 
+tentativa++;
         }
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null,"Acceso Denegado","Error",
 JOptionPane.ERROR_MESSAGE);;
+tentativa++;
     }
-        
+     
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
