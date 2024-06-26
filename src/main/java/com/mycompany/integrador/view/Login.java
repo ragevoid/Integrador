@@ -96,6 +96,7 @@ public class Login extends javax.swing.JFrame {
         passwordField.setForeground(new java.awt.Color(153, 153, 153));
         passwordField.setText("jPasswordField1");
         passwordField.setBorder(null);
+        passwordField.setNextFocusableComponent(loginButton);
         passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 passwordFieldFocusGained(evt);

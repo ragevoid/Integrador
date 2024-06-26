@@ -23,6 +23,7 @@ import java.awt.Component;
 import java.awt.PopupMenu;
 import java.time.LocalDate;
 import javax.swing.JButton;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
         
@@ -193,7 +194,9 @@ private List<Evento> eventos;
 
     private void apagarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apagarEventoButtonActionPerformed
         // TODO add your handling code here:
-        apagarEventosTabela();
+        int selectedRow = eventosTable.getSelectedRow();
+        Object eventoSeleccionado = eventosTable.getValueAt(selectedRow, 0);
+        System.out.println(eventoSeleccionado);
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
 
     private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
