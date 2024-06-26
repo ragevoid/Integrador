@@ -121,7 +121,7 @@ private List<Evento> eventos;
 
         eventosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Cita Medica", "12:00"}
+
             },
             new String [] {
                 "Descripçao", "Hora"
@@ -197,6 +197,7 @@ private List<Evento> eventos;
         int selectedRow = eventosTable.getSelectedRow();
         Object eventoSeleccionado = eventosTable.getValueAt(selectedRow, 0);
         System.out.println(eventoSeleccionado);
+        apagarEventosTabela();
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
 
     private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
@@ -287,8 +288,9 @@ private List<Evento> eventos;
 }
  
  public void apagarEventosTabela(){
+     
      DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
-      model.setRowCount(0);
+     model.setRowCount(0);
  }
  
  public void diaEnEvento(int diaDelMes) {
