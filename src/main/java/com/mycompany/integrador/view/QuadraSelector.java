@@ -80,8 +80,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         System.out.println(selectedQuadra);
         Agenda agenda = new Agenda();
         agenda.quadraLabel.setText(selectedQuadra);
-        agenda.setVisible(true);
-        
+        agenda.setVisible(true);     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
