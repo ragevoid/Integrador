@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConectionPostgres {
     private static final String URL = "jdbc:postgresql://localhost:5432/quadraManager"; // URL corregida
     private static final String USUARIO = "postgres";
-    private static final String SENHA = "";
+    private static final String SENHA = "28579994";
 
     public static Connection getConnection() {
         try {

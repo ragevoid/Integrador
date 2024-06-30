@@ -145,8 +145,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void iniciarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarAgendaActionPerformed
         // TODO add your handling code here:
-                        Agenda agenda = new Agenda();
-        agenda.setVisible(true);
+        QuadraSelector quadraSelector = new QuadraSelector();
+        quadraSelector.setVisible(true);
     }//GEN-LAST:event_iniciarAgendaActionPerformed
 
     /**

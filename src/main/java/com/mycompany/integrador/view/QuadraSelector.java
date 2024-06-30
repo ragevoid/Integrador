@@ -3,18 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.integrador.view;
+import com.mycompany.integrador.model.Evento;
+import com.mycompany.integrador.model.Quadra;
+import com.mycompany.integrador.model.service.QuadraService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author ricardo.gonzalez
  */
 public class QuadraSelector extends javax.swing.JFrame {
+    private List<Quadra> quadras;
+    private QuadraService quadraService;
+    public String selectedQuadra;
 
     /**
      * Creates new form QuadraSelector
      */
     public QuadraSelector() {
         initComponents();
+        quadras = new ArrayList<>();
+        quadraService = new QuadraService();
+        listarQuadras();
     }
 
     /**
@@ -32,30 +46,18 @@ public class QuadraSelector extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, -1, -1));
 
         jButton1.setText("jButton1");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(178, 178, 178))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,6 +72,17 @@ public class QuadraSelector extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        selectedQuadra = jComboBox1.getSelectedItem().toString();
+        
+        System.out.println(selectedQuadra);
+        Agenda agenda = new Agenda();
+        agenda.quadraLabel.setText(selectedQuadra);
+        agenda.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +118,21 @@ public class QuadraSelector extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public void listarQuadras(){
+        quadras = quadraService.listarQuadras();
+         System.out.println("Lista de quadras:");
+        for (Quadra quadra : quadras) {
+            System.out.println("Nome: " + quadra.getNome());}
+        popularComboBox();
+    }
+   public void popularComboBox() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Quadra quadra : quadras) {
+            model.addElement(quadra.getNome());
+        }
+        jComboBox1.setModel(model);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;

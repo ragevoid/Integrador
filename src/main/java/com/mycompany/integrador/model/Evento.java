@@ -5,22 +5,25 @@ import java.util.Date;
 public class Evento {
     private int id;
     private Date data;
-    private String hora;
+    private String horaEntrada;
+    private String horaSaida;
     private String descricao;
     private String quadra;
 
-    public Evento(int id, Date data, String hora, String descricao, String quadra) {
+    public Evento(int id, Date data, String horaEntrada, String horaSaida, String descricao, String quadra) {
         this.id = id;
         this.data = data;
-        this.hora = hora;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
         this.descricao = descricao;
         this.quadra = quadra;
     }
-    
-    //Constructor Sem ID
-     public Evento(Date data, String hora, String descricao, String quadra) {
+
+    //Constructor sem ID
+    public Evento(Date data, String horaEntrada, String horaSaida, String descricao, String quadra) {
         this.data = data;
-        this.hora = hora;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
         this.descricao = descricao;
         this.quadra = quadra;
     }
@@ -41,12 +44,20 @@ public class Evento {
         this.data = data;
     }
 
-    public String getHora() {
-        return hora;
+    public String getHoraEntrada() {
+        return horaEntrada;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setHoraEntrada(String horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public String getHoraSaida() {
+        return horaSaida;
+    }
+
+    public void setHoraSaida(String horaSaida) {
+        this.horaSaida = horaSaida;
     }
 
     public String getDescricao() {
@@ -64,5 +75,10 @@ public class Evento {
     public void setQuadra(String quadra) {
         this.quadra = quadra;
     }
+    
+    
+    
+
+
 
 }

@@ -5,6 +5,7 @@
 package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.Evento;
+import com.mycompany.integrador.model.service.EventoService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 public class EventoTela extends javax.swing.JFrame {
     private List<Evento> eventos;
+    private EventoService eventoService;
+    
     /**
      * Creates new form EventoTela
      */
@@ -25,7 +28,7 @@ public class EventoTela extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         eventos = new ArrayList<>();
-        
+        eventoService = new EventoService();
     }
 
     /**
@@ -37,15 +40,15 @@ public class EventoTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        timeSelectorDisplay1 = new examples.TimeSelectorDisplay();
-        timeSelectorListener1 = new examples.TimeSelectorListener();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        timePicker1 = new com.github.lgooddatepicker.components.TimePicker();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionText = new javax.swing.JTextArea();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        timePicker1 = new com.github.lgooddatepicker.components.TimePicker();
+        timePicker2 = new com.github.lgooddatepicker.components.TimePicker();
+        quadraLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,18 +60,22 @@ public class EventoTela extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 150, 50));
-        jPanel1.add(datePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 420, 40));
-        jPanel1.add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 420, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 150, 50));
 
         descriptionText.setColumns(20);
         descriptionText.setRows(5);
         jScrollPane1.setViewportView(descriptionText);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 420, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 420, -1));
+        jPanel1.add(datePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        jPanel1.add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
+        jPanel1.add(timePicker2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sintetica", "Grama", "Telhada", "Pequena" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 420, 40));
+        quadraLabel.setText("Quadra A");
+        jPanel1.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, -1, 20));
+
+        jLabel2.setText("Eventos para a quadra:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +85,7 @@ public class EventoTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
         );
 
         pack();
@@ -88,14 +95,14 @@ public class EventoTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         LocalDate localDate = datePicker1.getDate();
         Date data = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        String hora = timePicker1.getTimeStringOrEmptyString();
+        String horaEntrada = timePicker1.getTimeStringOrEmptyString();
+        String horaSaida=timePicker2.getTimeStringOrEmptyString();
         String descripcao= descriptionText.getText();
-        String quadra = jComboBox1.getSelectedItem().toString();
+        String quadra = quadraLabel.getText();
+        System.out.println(quadra);
+        Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, quadra);
+        eventoService.salvarEvento(evento);
         
-        creaEvento(data,hora,descripcao,quadra);
-        
-        
-
     }//GEN-LAST:event_jButton1ActionPerformed
         
     /**
@@ -131,28 +138,21 @@ public class EventoTela extends javax.swing.JFrame {
                 new EventoTela().setVisible(true);
             }
         });
-    }
-    
-    
-    public static void creaEvento(Date data, String hora,String descripcao, String quadra){
-    Evento evento = new Evento(data, hora, descripcao);
-            System.out.println("data " + data);
-            System.out.println("hora " + hora);
-            System.out.println("Descripcao " + descripcao);
-            System.out.println("Quadra " + quadra);
-            
     };
+    
+    
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JTextArea descriptionText;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel quadraLabel;
     private com.github.lgooddatepicker.components.TimePicker timePicker1;
-    private examples.TimeSelectorDisplay timeSelectorDisplay1;
-    private examples.TimeSelectorListener timeSelectorListener1;
+    private com.github.lgooddatepicker.components.TimePicker timePicker2;
     // End of variables declaration//GEN-END:variables
 }
