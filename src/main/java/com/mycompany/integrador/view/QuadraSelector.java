@@ -29,6 +29,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         quadras = new ArrayList<>();
         quadraService = new QuadraService();
         listarQuadras();
+        this.setLocationRelativeTo(null);  
     }
 
     /**
@@ -44,7 +45,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -81,6 +82,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         Agenda agenda = new Agenda();
         agenda.quadraLabel.setText(selectedQuadra);
         agenda.setVisible(true);     
+         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

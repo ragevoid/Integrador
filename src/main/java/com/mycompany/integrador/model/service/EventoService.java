@@ -63,7 +63,7 @@ public class EventoService {
     
     
         public List<Evento> listarEventos() {
-        String sql = "SELECT id, data, hora_entrada, hora_saida, descricao, quadra FROM evento";
+        String sql = "SELECT id, data, horaEntrada, horaSaida, descricao, quadra FROM evento";
         List<Evento> eventos = new ArrayList<>();
 
         try {
@@ -74,8 +74,8 @@ public class EventoService {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Date data = rs.getDate("data");
-                String horaEntrada = rs.getString("hora_entrada");
-                String horaSaida = rs.getString("hora_saida");
+                String horaEntrada = rs.getString("horaEntrada");
+                String horaSaida = rs.getString("horaSaida");
                 String descricao = rs.getString("descricao");
                 String quadra = rs.getString("quadra");
                 eventos.add(new Evento(id, data, horaEntrada, horaSaida, descricao, quadra));

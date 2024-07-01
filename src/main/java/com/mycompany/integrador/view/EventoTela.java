@@ -50,7 +50,7 @@ public class EventoTela extends javax.swing.JFrame {
         quadraLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -102,6 +102,7 @@ public class EventoTela extends javax.swing.JFrame {
         System.out.println(quadra);
         Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, quadra);
         eventoService.salvarEvento(evento);
+         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
         

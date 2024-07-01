@@ -32,7 +32,8 @@ private EventoService eventoService;
         initializeCalendar();
         eventos = new ArrayList<>();
         eventoService = new EventoService();
-        this.setLocationRelativeTo(null);    
+        this.setLocationRelativeTo(null); 
+        listarEventos();
         
     }
     
@@ -307,9 +308,18 @@ private EventoService eventoService;
     }
 }
  
-  public void atualizarEventos() {
-    eventos = eventoService.listarEventos();
-}
+ public void listarEventos(){
+        eventos = eventoService.listarEventos();
+         System.out.println("Lista de Eventos:");
+        for (Evento evento : eventos) {
+            System.out.println("Nome: " + evento.getId());
+            System.out.println("Nome: " + evento.getData());
+            System.out.println("Nome: " + evento.getHoraEntrada());
+            System.out.println("Nome: " + evento.getHoraSaida());
+            System.out.println("Nome: " + evento.getDescricao());
+            System.out.println("Nome: " + evento.getQuadra());
+                    }
+    }
   
   public String setQuadra(String quadra){
    return quadra;
