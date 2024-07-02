@@ -56,49 +56,10 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="com.toedter.calendar.JMonthChooser" name="jMonthChooser1">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jMonthChooser1.addPropertyChangeListener(new PropertyChangeListener() {&#xa;    @Override&#xa;    public void propertyChange(PropertyChangeEvent evt) {&#xa;        if (&quot;month&quot;.equals(evt.getPropertyName())) {&#xa;            updateDayChooser();&#xa;        }&#xa;    }&#xa;});"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.toedter.calendar.JMonthChooser()"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="40" y="170" width="140" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jYearChooser1.addPropertyChangeListener(new PropertyChangeListener() {&#xa;    @Override&#xa;    public void propertyChange(PropertyChangeEvent evt) {&#xa;        if (&quot;year&quot;.equals(evt.getPropertyName())) {&#xa;            updateDayChooser();&#xa;        }&#xa;    }&#xa;});"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="260" y="170" width="110" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="com.toedter.calendar.JDayChooser" name="jDayChooser1">
-          <Properties>
-            <Property name="decorationBackgroundColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jDayChooser1FocusGained"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jDayChooser1.addPropertyChangeListener(&quot;day&quot;, new PropertyChangeListener() {&#xa;&#xa;    public void propertyChange(PropertyChangeEvent evt) {&#xa;apagarEventosTabela();&#xa;        if (evt.getPropertyName().equals(&quot;day&quot;)) {&#xa;            int day = (int) evt.getNewValue();&#xa;            Calendar selectedDate = Calendar.getInstance();&#xa;            selectedDate.set(jYearChooser1.getYear(), jMonthChooser1.getMonth(), day);&#xa;            diaEnEvento(selectedDate.get(Calendar.DAY_OF_MONTH));&#xa;&#xa;            // Imprime el d&#xed;a seleccionado en la consola&#xa;            System.out.println(&quot;D&#xed;a seleccionado: &quot; + selectedDate.getTime());&#xa;        }&#xa;    }&#xa;});"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="40" y="220" width="330" height="290"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Container class="javax.swing.JPanel" name="EventosPanelBackGround">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="470" y="180" width="300" height="-1"/>
+              <AbsoluteConstraints x="470" y="100" width="300" height="-1"/>
             </Constraint>
           </Constraints>
 
@@ -121,13 +82,19 @@
                 <Component class="javax.swing.JTable" name="eventosTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="0">
+                      <Table columnCount="3" rowCount="0">
                         <Column editable="true" title="Descrip&#xe7;ao" type="java.lang.String"/>
                         <Column editable="true" title="Hora" type="java.lang.String"/>
+                        <Column editable="true" title="Data" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="1">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
@@ -204,6 +171,17 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="0" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCalendar1MouseClicked"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jCalendar1PropertyChange"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="30" y="100" width="380" height="330"/>
             </Constraint>
           </Constraints>
         </Component>
