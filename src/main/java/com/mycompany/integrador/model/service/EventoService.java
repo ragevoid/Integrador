@@ -66,19 +66,24 @@ public class EventoService {
         public List<Evento> listarEventos(String dataSelected) {
         String sql = "SELECT id, data, horaEntrada, horaSaida, descricao, quadra FROM evento WHERE data = ?";
         List<Evento> eventos = new ArrayList<>();
-
+        
         try {
             conexao = ConectionPostgres.getConnection();
             stmt = conexao.prepareStatement(sql);
 
             // Converter String para Date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date data = dateFormat.parse(dataSelected);
-
-            // Definir o parâmetro da consulta
-            stmt.setDate(1, new java.sql.Date(data.getTime()));
             
-            rs = stmt.executeQuery();
+           // Converter String para Date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = dateFormat.parse(dataSelected);
+        java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+        
+        System.out.println(sqlDate);
+
+        // Definir o parâmetro da consulta
+        stmt.setDate(1,sqlDate);
+
+        rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -144,19 +149,39 @@ public class EventoService {
     }
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+       public List<Date> listarDatasEventos() {
+        String sql = "SELECT DISTINCT data FROM evento";
+        List<Date> datas = new ArrayList<>();
+
+        try {
+            Connection conexao = ConectionPostgres.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Date dataEvento = rs.getDate("data");
+                datas.add(dataEvento);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                ConectionPostgres.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        return datas;
+    }
+                         
 }
   
 

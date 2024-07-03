@@ -7,11 +7,14 @@ package com.mycompany.integrador.view;
 import com.mycompany.integrador.model.Evento;
 import com.mycompany.integrador.model.service.EventoService;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -93,17 +96,21 @@ public class EventoTela extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       
         LocalDate localDate = datePicker1.getDate();
         Date data = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String horaEntrada = timePicker1.getTimeStringOrEmptyString();
         String horaSaida=timePicker2.getTimeStringOrEmptyString();
         String descripcao= descriptionText.getText();
         String quadra = quadraLabel.getText();
-        System.out.println(quadra);
+         if (comprobarHoras(horaEntrada, horaSaida) == true){
+        JOptionPane.showMessageDialog(null,"Error no digitamento da hora","Error",
+JOptionPane.ERROR_MESSAGE);
+        }else {
         Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, quadra);
         eventoService.salvarEvento(evento);
          this.dispose();
-        
+         }
     }//GEN-LAST:event_jButton1ActionPerformed
         
     /**
@@ -141,7 +148,20 @@ public class EventoTela extends javax.swing.JFrame {
         });
     };
     
-    
+    public static boolean comprobarHoras(String hora1, String hora2) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        
+        try {
+            LocalTime time1 = LocalTime.parse(hora1, formatter);
+            LocalTime time2 = LocalTime.parse(hora2, formatter);
+            
+            // Retorna true si hora1 está después de hora2
+            return time1.isAfter(time2);
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de hora inválido");
+            return false;  // O puedes lanzar una excepción, según tu preferencia
+        }
+    }
     
     
     

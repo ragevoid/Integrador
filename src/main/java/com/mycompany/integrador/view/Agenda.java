@@ -1,18 +1,17 @@
 package com.mycompany.integrador.view;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.List;
 
 import com.mycompany.integrador.model.Evento;
-import com.mycompany.integrador.model.HighlightEvaluator;
-import com.mycompany.integrador.model.Quadra;
-import com.mycompany.integrador.model.service.QuadraService;
 import com.mycompany.integrador.model.service.EventoService;
+import java.awt.Color;
+import java.awt.Component;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JPanel;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -22,10 +21,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Ricardo
  */
 public class Agenda extends javax.swing.JFrame {
-private Calendar calendar;
 private List<Evento> eventos;
 private EventoService eventoService;
 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+List<Date> datas;
+
+    
 
     /**
      * Creates new form Agenda
@@ -35,8 +36,8 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         eventos = new ArrayList<>();
         eventoService = new EventoService();
         this.setLocationRelativeTo(null); 
-      //  listarEventos();
         
+
     }
     
     /**
@@ -166,7 +167,6 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         eventos.clear();
         //DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
        // model.setRowCount(0);
-        imprimirEventos();
         addEventoTabela();
 
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
@@ -188,9 +188,17 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Object newValue = evt.getNewValue();
         if (newValue instanceof Calendar) {
             Calendar calendar = (Calendar) newValue;
-            System.out.println(calendar.get(Calendar.DAY_OF_MONTH)); 
+            String selectedDate = dateFormat.format(calendar.getTime());
+            
+         System.out.println(selectedDate);
+         eventos = eventoService.listarEventos(selectedDate);
+         addEventoTabela();
         }
     }
+        
+        
+        
+        
     }//GEN-LAST:event_jCalendar1PropertyChange
 
     /**
@@ -232,10 +240,6 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
     
     
-        public void eventosTeste() {
-
-    }
-    
      public void imprimirEventos() {
         System.out.println("Lista de eventos:");
         for (Evento evento : eventos) {
@@ -260,27 +264,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
      DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
      model.setRowCount(0);
  }
- 
- public void diaEnEvento(int diaDelMes) {
-    boolean eventosEncontrados = false; // Bandera para verificar si se encontraron eventos
 
-    // Supongamos que tienes una lista de eventos llamada "eventos"
-    for (Evento evento : eventos) {
-        Calendar fechaEvento = Calendar.getInstance();
-        fechaEvento.setTime(evento.getData());
-        if (fechaEvento.get(Calendar.DAY_OF_MONTH) == diaDelMes) {
-            System.out.println("Evento para el día " + diaDelMes + ": " + evento.getDescricao());
-            eventosEncontrados = true;
-
-         
-        }
-    }
-    if (!eventosEncontrados) {
-        System.out.println("No existen eventos para el día: " + diaDelMes);
-    }else{
-                addEventoTabela();
-    }
-}
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables

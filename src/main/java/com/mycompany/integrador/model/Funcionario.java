@@ -17,9 +17,6 @@ public class Funcionario {
     private String senha;
     private Long enderecoId;
 
-    // Constructor vacío
-    public Funcionario() {
-    }
 
     // Constructor sin el campo 'id'
     public Funcionario(String cpf, String nome, String telefone, String email, String senha, Long enderecoId) {
