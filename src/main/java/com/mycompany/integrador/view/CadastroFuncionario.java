@@ -47,6 +47,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private final FuncionarioService funcionarioService;
     private final CidadeService cidadeService;
     private final ValidarCPFCNPJService validarCPFCNPJService;
+
     /**
      * Creates new form CadastroFuncionario
      */
@@ -54,7 +55,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         initComponents();
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
-
+        setLocationRelativeTo(null);
         getContentPane().setLayout(null);
         
         

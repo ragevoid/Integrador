@@ -206,6 +206,8 @@ JOptionPane.ERROR_MESSAGE);;
             System.out.println("Login bem-sucedido!");
             this.dispose();
             Principal principal = new Principal();
+            int idUser = Integer.parseInt(userField.getText());
+            principal.userCodeLabel.setText(funcionarioService.getNome(idUser));
             principal.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null,"ID ou Senha Incorreto","Error",
