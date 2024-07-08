@@ -19,7 +19,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
@@ -258,7 +257,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jComboBoxCidade = new javax.swing.JComboBox<>();
         jFormattedTextFieldCPF = new javax.swing.JFormattedTextField();
         jFormattedTextFieldCEP = new javax.swing.JFormattedTextField();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -280,9 +278,12 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jTextFieldCodigo.setEditable(false);
         jTextFieldCodigo.setEnabled(false);
         jTextFieldCodigo.setMinimumSize(new java.awt.Dimension(70, 30));
+        jTextFieldCodigo.setNextFocusableComponent(jTextFieldNome);
 
         jLabelNome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelNome.setText("Nome:");
+
+        jTextFieldNome.setNextFocusableComponent(jFormattedTextFieldCPF);
 
         jLabelCPF.setText("CPF:");
 
@@ -367,9 +368,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 255));
-        jButton2.setText("Alterar Senha");
-
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,9 +400,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                         .addComponent(jLabelConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPasswordFieldConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(132, 132, 132)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -413,13 +410,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                             .addComponent(jLabelCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
                                 .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldNome))
+                                .addComponent(jLabelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
                                 .addComponent(jTextFieldEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -433,14 +428,17 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                                 .addComponent(jFormattedTextFieldCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFuncionarioLayout.createSequentialGroup()
+                                .addComponent(jLabelCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 44, Short.MAX_VALUE))
         );
         jPanelFuncionarioLayout.setVerticalGroup(
             jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,7 +483,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                     .addComponent(jLabelConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordFieldConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -613,11 +610,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Funcionario funcionario = new Funcionario(senhaChars, confirmarSenhaChars, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
+            Funcionario funcionario = new Funcionario(senha, confirmarSenha, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
             funcionarioService.salvarFuncionario(funcionario);
         } else { // Caso contrário, é uma edição de pessoa existente
 
-            Funcionario funcionarioEditado = new Funcionario(codigoint, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
+            Funcionario funcionarioEditado = new Funcionario(senha, confirmarSenha, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
             funcionarioEditado.setCodigo((int) jTableDadosFuncionario.getValueAt(rowIndex, 0)); // Define o Código da pessoa
             funcionarioService.atualizarFuncionario(funcionarioEditado);
             rowIndex = -1; // Reseta o índice da linha após a edição
@@ -755,22 +752,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "As senhas não correspondem. Por favor, tente novamente.");
             return;
         }
-
-        /*String senhaCriptografada;
-        try {
-            senhaCriptografada = PasswordUtils.encryptPassword(senhaChars);
-        } catch (NoSuchAlgorithmException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao criptografar a senha.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String confirmarSenhaCriptografada;
-        try {
-            confirmarSenhaCriptografada = PasswordUtils.encryptPassword(confirmarSenhaChars);
-        } catch (NoSuchAlgorithmException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao criptografar a senha.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }*/
 
         // Limpando o array de caracteres da senha após o uso
         Arrays.fill(senhaChars, ' ');
@@ -938,7 +919,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEditar;

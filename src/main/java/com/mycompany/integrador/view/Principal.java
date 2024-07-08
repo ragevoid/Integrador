@@ -89,6 +89,11 @@ public class Principal extends javax.swing.JFrame {
 
         usersMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
         usersMenu.setText("Usuarios");
+        usersMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usersMenuActionPerformed(evt);
+            }
+        });
         cadatroMenu.add(usersMenu);
 
         clientesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -148,6 +153,14 @@ public class Principal extends javax.swing.JFrame {
         QuadraSelector quadraSelector = new QuadraSelector();
         quadraSelector.setVisible(true);
     }//GEN-LAST:event_iniciarAgendaActionPerformed
+
+    private void usersMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersMenuActionPerformed
+                       java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_usersMenuActionPerformed
 
     /**
      * @param args the command line arguments
