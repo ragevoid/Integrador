@@ -5,7 +5,9 @@
 package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Funcionario;
+import com.mycompany.integrador.util.BuscarCodigoService;
 import com.mycompany.integrador.util.ConectionPostgres;
+import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,16 +15,308 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author jose.zanandrea
+ */
 public class FuncionarioService {
+    
     Connection conexao = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
     public FuncionarioService() {
-        conexao = ConectionPostgres.getConnection();
+        conexao = conexaoBD.getConnection();
+    }
+
+    public Funcionario salvarFuncionario(Funcionario funcionario) {
+        String sql = "INSERT INTO funcionario (cpf_funcionario, nome_funcionario, telefone_funcionario, email_funcionario, senha_funcionario,"
+                + " endereco_funcionario, numero_funcionario, CEP_funcionario, bairro_funcionario, cidade_funcionario, confirmaSenha_funcionario) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, funcionario.getCPF());
+            stmt.setString(2, funcionario.getNome());
+            stmt.setString(3, funcionario.getTelefone());
+            stmt.setString(4, funcionario.getEmail());
+            stmt.setString(5, funcionario.getSenha());
+            stmt.setString(6, funcionario.getEndereco());
+            stmt.setString(7, funcionario.getNumero());
+            stmt.setString(8, funcionario.getCEP());
+            stmt.setString(9, funcionario.getBairro());
+            stmt.setInt(10, funcionario.getCidade());
+            stmt.setString(11, funcionario.getConfirmaSenha());
+
+            // Executando o comando SQL
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return funcionario;
     }
     
-      public boolean verificarCredenciais(Long id, String senha) {
+        public Funcionario atualizarFuncionario(Funcionario funcionario) {
+        String sql = "UPDATE funcionario SET codigo_funcionario = ?, cpf_funcionario = ?, nome_funcionario = ?, telefone_funcionario = ?, email_funcionario = ?, "
+                + "endereco_funcionario = ?, numero_funcionario = ?, CEP_funcionario = ?, bairro_funcionario = ?, cidade_funcionario = ? "
+                + " WHERE codigo_funcionario = ?";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, funcionario.getCodigo());
+            stmt.setString(2, funcionario.getCPF());
+            stmt.setString(3, funcionario.getNome());
+            stmt.setString(4, funcionario.getTelefone());
+            stmt.setString(5, funcionario.getEmail());
+            //stmt.setString(6, funcionario.getSenha());
+            stmt.setString(6, funcionario.getEndereco());
+            stmt.setString(7, funcionario.getNumero());
+            stmt.setString(8, funcionario.getCEP());
+            stmt.setString(9, funcionario.getBairro());
+            stmt.setInt(10, funcionario.getCidade());
+            //stmt.setString(12, funcionario.getConfirmaSenha());
+            
+            //condição where
+            stmt.setInt(11, funcionario.getCodigo());
+
+            // Executando o comando SQL
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return funcionario;
+    }
+
+    public List<Funcionario> listarFuncionarios() {
+        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
+                + " endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario "
+                + " FROM funcionario";
+        List<Funcionario> funcionarios = new ArrayList<>();
+
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+
+            // Executando o comando SQL
+            rs = stmt.executeQuery();
+
+            // Processando os resultados
+            while (rs.next()) {
+                int codigo = rs.getInt("codigo_funcionario");
+                String nome = rs.getString("nome_funcionario");
+                String email = rs.getString("email_funcionario");
+                String CPF = rs.getString("CPF_funcionario");
+                String telefone = rs.getString("telefone_funcionario");
+                //String senha = rs.getString("senha_funcionario");
+                //String confirmaSenha = rs.getString("confirmaSenha_funcionario");
+                String endereco = rs.getString("endereco_funcionario");
+                String numero = rs.getString("numero_funcionario");
+                String CEP = rs.getString("CEP_funcionario");
+                String bairro = rs.getString("bairro_funcionario");
+                int cidade = rs.getInt("cidade_funcionario");
+
+                funcionarios.add(new Funcionario(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        return funcionarios;
+    }
+    
+    public Funcionario localizarFuncionarioPorCodigo(int codigo) {
+        Funcionario funcionario = null;
+        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
+                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
+                + " confirmaSenha_funcionario FROM funcionario"
+                + " WHERE codigo_funcionario = ?";
+
+        try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, codigo);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int codigoFuncionario = rs.getInt("codigo_funcionario");
+                    String senha = rs.getString("senha_funcionario");
+                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
+                    String nome = rs.getString("nome_funcionario");
+                    String CPF = rs.getString("CPF_funcionario");
+                    String telefone = rs.getString("telefone_funcionario");
+                    String email = rs.getString("email_funcionario");
+                    String endereco = rs.getString("endereco_funcionario");
+                    String numero = rs.getString("numero_funcionario");
+                    String CEP = rs.getString("CEP_funcionario");
+                    String bairro = rs.getString("bairro_funcionario");
+                    int cidade = rs.getInt("cidade_funcionario");
+                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        }
+
+        return funcionario;
+    }
+    
+    public Funcionario localizarFuncionarioPorNome(String nomeFuncionario) {
+        Funcionario funcionario = null;
+        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
+                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
+                + " confirmaSenha_funcionario FROM funcionario"
+                + " WHERE nome_funcionario LIKE ? ";
+
+        try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeFuncionario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int codigoFuncionario = rs.getInt("codigo_funcionario");
+                    String senha = rs.getString("senha_funcionario");
+                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
+                    String nome = rs.getString("nome_funcionario");
+                    String CPF = rs.getString("CPF_funcionario");
+                    String telefone = rs.getString("telefone_funcionario");
+                    String email = rs.getString("email_funcionario");
+                    String endereco = rs.getString("endereco_funcionario");
+                    String numero = rs.getString("numero_funcionario");
+                    String CEP = rs.getString("CEP_funcionario");
+                    String bairro = rs.getString("bairro_funcionario");
+                    int cidade = rs.getInt("cidade_funcionario");
+                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        }
+
+        return funcionario;
+    }
+    
+    public Funcionario localizarFuncionarioPorCPF(String CPFFuncionario) {
+        Funcionario funcionario = null;
+        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
+                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
+                + " confirmaSenha_funcionario FROM funcionario"
+                + " WHERE CPF_funcionario LIKE ? ";
+
+        try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, CPFFuncionario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int codigoFuncionario = rs.getInt("codigo_funcionario");
+                    String senha = rs.getString("senha_funcionario");
+                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
+                    String nome = rs.getString("nome_funcionario");
+                    String CPF = rs.getString("CPF_funcionario");
+                    String telefone = rs.getString("telefone_funcionario");
+                    String email = rs.getString("email_funcionario");
+                    String endereco = rs.getString("endereco_funcionario");
+                    String numero = rs.getString("numero_funcionario");
+                    String CEP = rs.getString("CEP_funcionario");
+                    String bairro = rs.getString("bairro_funcionario");
+                    int cidade = rs.getInt("cidade_funcionario");
+                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        }
+
+        return funcionario;
+    }
+    
+    public boolean excluirFuncionario(int codigo) {
+        String sql = "DELETE FROM funcionario WHERE codigo_funcionario = ?";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+
+            // Executando o comando SQL
+            int linhasAfetadas = stmt.executeUpdate();
+
+            // Retorna verdadeiro se uma linha foi afetada, falso caso contrário
+                return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar dados: " + e.getMessage());
+            return false;
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+    
+    public int getMaxCodigoFuncionario() {
+        BuscarCodigoService service = new BuscarCodigoService();
+        return service.getMaxCodigo("funcionario", "codigo_funcionario");
+    }
+    
+    
+          public boolean verificarCredenciais(Long id, String senha) {
         String sql = "SELECT COUNT(*) FROM funcionario WHERE codigo_funcionario = ? AND senha_funcionario = ?";
         try {
             conexao = ConectionPostgres.getConnection();
@@ -40,174 +334,13 @@ public class FuncionarioService {
             try {
                 if (rs != null) rs.close();
                 if (stmt != null) stmt.close();
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
         return false;
       }
-    
-    
-    public Funcionario salvarFuncionario(Funcionario funcionario) {
-        String sql = "INSERT INTO funcionario (cpf_funcionario, nome_funcionario, telefone_funcionario, email_funcionario, senha_funcionario, endereco_funcionario) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, funcionario.getCpf());
-            stmt.setString(2, funcionario.getNome());
-            stmt.setString(3, funcionario.getTelefone());
-            stmt.setString(4, funcionario.getEmail());
-            stmt.setString(5, funcionario.getSenha());
-            stmt.setLong(6, funcionario.getEnderecoId());
 
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos com sucesso!");
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao inserir dados: " + e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-        return funcionario;
-    }
-
-    public Funcionario atualizarFuncionario(Funcionario funcionario) {
-        String sql = "UPDATE funcionario SET cpf_funcionario = ?, nome_funcionario = ?, telefone_funcionario = ?, email_funcionario = ?, senha_funcionario = ?, endereco_funcionario = ? WHERE codigo_funcionario = ?";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, funcionario.getCpf());
-            stmt.setString(2, funcionario.getNome());
-            stmt.setString(3, funcionario.getTelefone());
-            stmt.setString(4, funcionario.getEmail());
-            stmt.setString(5, funcionario.getSenha());
-            stmt.setLong(6, funcionario.getEnderecoId());
-            stmt.setLong(7, funcionario.getId());
-
-            stmt.executeUpdate();
-            System.out.println("Dados atualizados com sucesso!");
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar dados: " + e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-        return funcionario;
-    }
-
-    public List<Funcionario> listarFuncionarios() {
-        String sql = "SELECT codigo_funcionario, cpf_funcionario, nome_funcionario, telefone_funcionario, email_funcionario, senha_funcionario, endereco_funcionario FROM funcionario";
-        List<Funcionario> funcionarios = new ArrayList<>();
-
-        try {
-            stmt = conexao.prepareStatement(sql);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Long id = rs.getLong("codigo_funcionario");
-                String cpf = rs.getString("cpf_funcionario");
-                String nome = rs.getString("nome_funcionario");
-                String telefone = rs.getString("telefone_funcionario");
-                String email = rs.getString("email_funcionario");
-                String senha = rs.getString("senha_funcionario");
-                Long enderecoId = rs.getLong("endereco_funcionario");
-
-                Funcionario funcionario = new Funcionario(id, cpf, nome, telefone, email, senha, enderecoId);
-                funcionarios.add(funcionario);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao selecionar dados: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-
-        return funcionarios;
-    }
-
-    public Funcionario encontrarFuncionarioPorId(Long id) {
-        Funcionario funcionario = null;
-        String sql = "SELECT codigo_funcionario, cpf_funcionario, nome_funcionario, telefone_funcionario, email_funcionario, senha_funcionario, endereco_funcionario FROM funcionario WHERE codigo_funcionario = ?";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, id);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                String cpf = rs.getString("cpf_funcionario");
-                String nome = rs.getString("nome_funcionario");
-                String telefone = rs.getString("telefone_funcionario");
-                String email = rs.getString("email_funcionario");
-                String senha = rs.getString("senha_funcionario");
-                Long enderecoId = rs.getLong("endereco_funcionario");
-
-                funcionario = new Funcionario(id, cpf, nome, telefone, email, senha, enderecoId);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao selecionar dados: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-
-        return funcionario;
-    }
-
-    public boolean excluirFuncionario(Long id) {
-        String sql = "DELETE FROM funcionario WHERE codigo_funcionario = ?";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, id);
-
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao deletar dados: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-    }
 }
 

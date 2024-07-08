@@ -1,100 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.integrador.model;
+
 
 /**
  *
- * @author Ricardo
+ * @author jose.zanandrea
  */
-public class Funcionario {
-    private Long id;
-    private String cpf;
-    private String nome;
-    private String telefone;
-    private String email;
+public class Funcionario extends Pessoa {
+
     private String senha;
-    private Long enderecoId;
+    private String confirmaSenha;
 
-
-    // Constructor sin el campo 'id'
-    public Funcionario(String cpf, String nome, String telefone, String email, String senha, Long enderecoId) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
+    // Construtor com senha e código
+    public Funcionario(String senha, String confirmaSenha, int codigo, String nome, String CPF, String telefone, String email, String endereco, String numero, String CEP, String bairro, int cidade) {
+        super(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
         this.senha = senha;
-        this.enderecoId = enderecoId;
+        this.confirmaSenha = confirmaSenha;
     }
 
-    // Constructor con todos los campos
-    public Funcionario(Long id, String cpf, String nome, String telefone, String email, String senha, Long enderecoId) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
+    // Construtor com senha sem código
+    public Funcionario(String senha, String confirmaSenha, String nome, String CPF, String telefone, String email, String endereco, String numero, String CEP, String bairro, int cidade) {
+        super(nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
         this.senha = senha;
-        this.enderecoId = enderecoId;
+        this.confirmaSenha = confirmaSenha;
     }
 
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    // Construtor sem senha e com código
+    public Funcionario(int codigo, String nome, String CPF, String telefone, String email, String endereco, String numero, String CEP, String bairro, int cidade) {
+        super(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
     }
 
     public String getSenha() {
         return senha;
     }
 
+    public String getConfirmaSenha() {
+        return confirmaSenha;
+    }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public Long getEnderecoId() {
-        return enderecoId;
+    public void setConfirmaSenha(String confirmaSenha) {
+        this.confirmaSenha = confirmaSenha;
     }
 
-    public void setEnderecoId(Long enderecoId) {
-        this.enderecoId = enderecoId;
-    }
 }
-
-
