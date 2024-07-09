@@ -52,12 +52,22 @@ public class EventoTela extends javax.swing.JFrame {
         timePicker2 = new com.github.lgooddatepicker.components.TimePicker();
         quadraLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Adicionar Evento");
+        jButton1.setBackground(new java.awt.Color(0, 153, 204));
+        jButton1.setBorderPainted(false);
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -69,22 +79,51 @@ public class EventoTela extends javax.swing.JFrame {
         descriptionText.setRows(5);
         jScrollPane1.setViewportView(descriptionText);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 420, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 380, -1));
         jPanel1.add(datePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
-        jPanel1.add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
-        jPanel1.add(timePicker2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, -1, -1));
+        jPanel1.add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 200, -1));
+        jPanel1.add(timePicker2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 200, -1));
 
         quadraLabel.setText("Quadra A");
-        jPanel1.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, -1, 20));
+        quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
+        jPanel1.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 130, 40));
 
-        jLabel2.setText("Eventos para a quadra:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
+        jLabel2.setText("Eventos para:");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 160, 40));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 410, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 200, -1));
+
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Modalidade");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setText("Data");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("Hora Entrada");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
+
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Hora Saida");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,6 +151,10 @@ JOptionPane.ERROR_MESSAGE);
          this.dispose();
          }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
         
     /**
      * @param args the command line arguments
@@ -138,6 +181,7 @@ JOptionPane.ERROR_MESSAGE);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EventoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -169,9 +213,15 @@ JOptionPane.ERROR_MESSAGE);
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JTextArea descriptionText;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     public javax.swing.JLabel quadraLabel;
     private com.github.lgooddatepicker.components.TimePicker timePicker1;
     private com.github.lgooddatepicker.components.TimePicker timePicker2;
