@@ -26,7 +26,8 @@ public class Login extends javax.swing.JFrame {
         setVisible(true);
 
     }
-        int tentativa = 0;
+    int tentativa = 0;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +89,9 @@ public class Login extends javax.swing.JFrame {
         userField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 userFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                userFieldKeyTyped(evt);
             }
         });
         backGround.add(userField, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 210, 40));
@@ -164,63 +168,73 @@ public class Login extends javax.swing.JFrame {
 
     private void userFieldMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userFieldMousePressed
         // TODO add your handling code here:
-                        userField.setText("");
-        userField.setForeground(new Color(204,204,204));
+        userField.setText("");
+        userField.setForeground(new Color(204, 204, 204));
     }//GEN-LAST:event_userFieldMousePressed
 
     private void userFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userFieldKeyPressed
-             // TODO add your handling code here:
-        if(evt.getKeyCode() == 10){
-        passwordField.requestFocusInWindow();
-        } 
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            passwordField.requestFocusInWindow();
+        }
     }//GEN-LAST:event_userFieldKeyPressed
 
     private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
         // TODO add your handling code here:
         passwordField.setText("");
-        passwordField.setForeground(new Color(204,204,204));
+        passwordField.setForeground(new Color(204, 204, 204));
     }//GEN-LAST:event_passwordFieldFocusGained
 
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         // TODO add your handling code here:
-                if(evt.getKeyCode() == 10){
-                    loginButton.doClick();
-        } 
+        if (evt.getKeyCode() == 10) {
+            loginButton.doClick();
+        }
     }//GEN-LAST:event_passwordFieldKeyPressed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-    String idText = userField.getText();
-    String senha = new String(passwordField.getPassword());
-        System.out.println(tentativa);
-        if(tentativa > 1){
-         JOptionPane.showMessageDialog(null,"Muitas Tentativas","Error",
-JOptionPane.ERROR_MESSAGE);;
-            this.dispose();
-        }
-    try {
-        Long id = Long.parseLong(idText);
-        FuncionarioService funcionarioService = new FuncionarioService();
+        String idText = userField.getText();
+        String senha = new String(passwordField.getPassword());
+    
         
-        if (funcionarioService.verificarCredenciais(id, senha)) {
-            System.out.println("Login bem-sucedido!");
+        System.out.println(tentativa);
+        if (tentativa > 1) {
+            JOptionPane.showMessageDialog(null, "Muitas Tentativas", "Error",
+                    JOptionPane.ERROR_MESSAGE);;
             this.dispose();
-            Principal principal = new Principal();
-            int idUser = Integer.parseInt(userField.getText());
-            principal.userCodeLabel.setText(funcionarioService.getNome(idUser));
-            principal.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null,"ID ou Senha Incorreto","Error",
-JOptionPane.ERROR_MESSAGE);; 
-tentativa++;
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null,"Acceso Denegado","Error",
-JOptionPane.ERROR_MESSAGE);;
-tentativa++;
-    }
-     
+        try {
+            Long id = Long.parseLong(idText);
+            FuncionarioService funcionarioService = new FuncionarioService();
+
+            if (funcionarioService.verificarCredenciais(id, senha)) {
+                System.out.println("Login bem-sucedido!");
+                this.dispose();
+                Principal principal = new Principal();
+                int idUser = Integer.parseInt(userField.getText());
+                principal.userCodeLabel.setText(funcionarioService.getNome(idUser));
+                principal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario ou Senha Incorreto", "Error",
+                        JOptionPane.ERROR_MESSAGE);;
+                tentativa++;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Acceso Negado", "Error",
+                    JOptionPane.ERROR_MESSAGE);;
+            tentativa++;
+        }
+
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void userFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userFieldKeyTyped
+        // TODO add your handling code here:
+        String car = "0123456789";
+        if (!car.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_userFieldKeyTyped
 
     /**
      * @param args the command line arguments
