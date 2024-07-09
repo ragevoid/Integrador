@@ -63,17 +63,15 @@ public class EventoService {
 }
     
     
-        public List<Evento> listarEventos(String dataSelected) {
-        String sql = "SELECT id, data, horaEntrada, horaSaida, descricao, quadra FROM evento WHERE data = ?";
-        List<Evento> eventos = new ArrayList<>();
-        
-        try {
-            conexao = ConectionPostgres.getConnection();
-            stmt = conexao.prepareStatement(sql);
+public List<Evento> listarEventos(String dataSelected) {
+    String sql = "SELECT codigo_evento, data_evento, horaEntrada_evento, horaSaida_evento, descripcao_evento, codigo_quadra, codigo_cliente, codigo_modalidade FROM evento WHERE data_evento = ?";
+    List<Evento> eventos = new ArrayList<>();
+    
+    try {
+        conexao = ConectionPostgres.getConnection();
+        stmt = conexao.prepareStatement(sql);
 
-            // Converter String para Date
-            
-           // Converter String para Date
+        // Converter String para Date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDate = dateFormat.parse(dataSelected);
         java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
@@ -81,39 +79,41 @@ public class EventoService {
         System.out.println(sqlDate);
 
         // Definir o parâmetro da consulta
-        stmt.setDate(1,sqlDate);
+        stmt.setDate(1, sqlDate);
 
         rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                Date dataEvento = rs.getDate("data");
-                String horaEntrada = rs.getString("horaEntrada");
-                String horaSaida = rs.getString("horaSaida");
-                String descricao = rs.getString("descricao");
-                String quadra = rs.getString("quadra");
-                eventos.add(new Evento(id, dataEvento, horaEntrada, horaSaida, descricao, quadra));
-            }
+        while (rs.next()) {
+            int codigo_evento = rs.getInt("codigo_evento");
+            Date dataEvento = rs.getDate("data_evento");
+            String horaEntrada = rs.getString("horaEntrada_evento");
+            String horaSaida = rs.getString("horaSaida_evento");
+            String descricao = rs.getString("descripcao_evento");
+            String quadra = rs.getString("codigo_quadra");
+            int codigo_cliente = rs.getInt("codigo_cliente");
+            int codigo_modalidade = rs.getInt("codigo_modalidade");
 
-        } catch (SQLException | java.text.ParseException e) {
-            System.err.println("Erro ao selecionar dados: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                ConectionPostgres.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, quadra, codigo_cliente, codigo_modalidade));
         }
 
-        return eventos;
+    } catch (SQLException | java.text.ParseException e) {
+        System.err.println("Erro ao selecionar dados: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            ConectionPostgres.fecharConexao(conexao);
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
     }
-        
+
+    return eventos;
+}
                 public void apagarEventos(String dataSelected, String descricao) {
         String sql = "DELETE FROM evento WHERE data = ? AND descricao = ?";
 
