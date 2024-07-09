@@ -35,7 +35,7 @@ public class Principal extends javax.swing.JFrame {
         PrincipalBackGround = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        UserCodeLabel = new javax.swing.JLabel();
+        userCodeLabel = new javax.swing.JLabel();
         principalDataLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         cadatroMenu = new javax.swing.JMenu();
@@ -65,11 +65,11 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setFocusable(false);
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
-        UserCodeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        UserCodeLabel.setForeground(new java.awt.Color(0, 153, 204));
-        UserCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        UserCodeLabel.setText("UserCodeLabel");
-        jPanel1.add(UserCodeLabel);
+        userCodeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        userCodeLabel.setForeground(new java.awt.Color(0, 153, 204));
+        userCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userCodeLabel.setText("UserCodeLabel");
+        jPanel1.add(userCodeLabel);
 
         principalDataLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         principalDataLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -199,7 +199,6 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PrincipalBackGround;
-    private javax.swing.JLabel UserCodeLabel;
     private javax.swing.JMenu agendaMenu;
     private javax.swing.JMenu cadatroMenu;
     private javax.swing.JMenuItem clientesMenu;
@@ -210,6 +209,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem modalidadesMenu;
     private javax.swing.JLabel principalDataLabel;
     private javax.swing.JMenuItem quadrasMenu;
+    public javax.swing.JLabel userCodeLabel;
     private javax.swing.JMenuItem usersMenu;
     // End of variables declaration//GEN-END:variables
 }

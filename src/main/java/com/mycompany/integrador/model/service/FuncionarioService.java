@@ -341,6 +341,44 @@ public class FuncionarioService {
         }
         return false;
       }
+public String getNome(int codigoFuncionario) {
+    String sql = "SELECT nome_funcionario FROM funcionario WHERE codigo_funcionario = ?";
+    String nomeFuncionario = null;
 
+    try {
+        // Obtendo a conexão
+        conexao = conexaoBD.getConnection();
+
+        // Preparando a instrução SQL
+        stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, codigoFuncionario);
+
+        // Executando o comando SQL
+        rs = stmt.executeQuery();
+
+        // Processando os resultados
+        if (rs.next()) {
+            nomeFuncionario = rs.getString("nome_funcionario");
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao selecionar dados: " + e.getMessage());
+    } finally {
+        // Fechando os recursos
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            conexaoBD.fecharConexao(conexao);
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
+
+    return nomeFuncionario;
+}
 }
 

@@ -1,3 +1,4 @@
+/*
 package com.mycompany.integrador.view;
 
 import java.util.ArrayList;

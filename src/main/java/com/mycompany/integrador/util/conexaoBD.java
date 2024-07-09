@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @author jose.zanandrea
  */
 public class conexaoBD {
-    private static final String URL = "jdbc:postgresql://localhost:5432/inquadra";
+    private static final String URL = "jdbc:postgresql://localhost:5432/quadraManager";
     private static final String USUARIO = "postgres";
     private static final String SENHA = "senac23";
 
