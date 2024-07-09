@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +76,7 @@ public class ClienteService {
     
         public Cliente atualizarCliente(Cliente cliente) {
         String sql = "UPDATE cliente SET cpf_cliente = ?, nome_cliente = ?, telefone_cliente = ?, email_cliente = ?, datanascimento_cliente, "
-                + "endereco_funcionario = ?, numero_funcionario = ?, CEP_funcionario = ?, bairro_funcionario = ?, cidade_funcionario = ? "
+                + "endereco_cliente = ?, numero_cliente = ?, CEP_cliente = ?, bairro_cliente = ?, cidade_cliente = ? "
                 + " WHERE codigo_cliente = ?";
         try {
             // Obtendo a conexão
@@ -121,9 +122,9 @@ public class ClienteService {
     }
 
     public List<Cliente> listarClientes() {
-        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
-                + " endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario "
-                + " FROM funcionario";
+        String sql = "SELECT codigo_cliente, nome_cliente, cpf_cliente, email_cliente, telefone_cliente, datanascimento_cliente, "
+                + " endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente "
+                + " FROM cliente";
         List<Cliente> clientes = new ArrayList<>();
 
         try {
@@ -138,19 +139,19 @@ public class ClienteService {
 
             // Processando os resultados
             while (rs.next()) {
-                int codigo = rs.getInt("codigo_funcionario");
-                String nome = rs.getString("nome_funcionario");
-                String email = rs.getString("email_funcionario");
-                String CPF = rs.getString("CPF_funcionario");
-                String telefone = rs.getString("telefone_funcionario");
+                int codigo = rs.getInt("codigo_cliente");
+                String nome = rs.getString("nome_cliente");
+                String email = rs.getString("email_cliente");
+                String CPF = rs.getString("cpf_cliente");
+                String telefone = rs.getString("telefone_cliente");
+                Date dataNascimento = rs.getDate("datanascimento_cliente");
+                String endereco = rs.getString("endereco_cliente");
+                String numero = rs.getString("numero_cliente");
+                String CEP = rs.getString("cep_cliente");
+                String bairro = rs.getString("bairro_cliente");
+                int cidade = rs.getInt("cidade_cliente");
 
-                String endereco = rs.getString("endereco_funcionario");
-                String numero = rs.getString("numero_funcionario");
-                String CEP = rs.getString("CEP_funcionario");
-                String bairro = rs.getString("bairro_funcionario");
-                int cidade = rs.getInt("cidade_funcionario");
-
-                clientes.add(new Cliente(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade, ));
+                clientes.add(new Cliente(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento ));
             }
 
         } catch (SQLException e) {
@@ -170,15 +171,15 @@ public class ClienteService {
             }
         }
 
-        return funcionarios;
+        return clientes;
     }
     
-    public Funcionario localizarFuncionarioPorCodigo(int codigo) {
-        Funcionario funcionario = null;
-        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
-                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
-                + " confirmaSenha_funcionario FROM funcionario"
-                + " WHERE codigo_funcionario = ?";
+    public Cliente localizarClientePorCodigo(int codigo) {
+        Cliente cliente = null;
+        String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
+                + " senha_cliente, endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente, "
+                + " FROM cliente"
+                + " WHERE codigo_cliente = ?";
 
         try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
@@ -187,18 +188,17 @@ public class ClienteService {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int codigoFuncionario = rs.getInt("codigo_funcionario");
-                    String senha = rs.getString("senha_funcionario");
-                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
                     String nome = rs.getString("nome_funcionario");
                     String CPF = rs.getString("CPF_funcionario");
                     String telefone = rs.getString("telefone_funcionario");
                     String email = rs.getString("email_funcionario");
+                    Date dataNascimento = rs.getDate("datanascimento_cliente");
                     String endereco = rs.getString("endereco_funcionario");
                     String numero = rs.getString("numero_funcionario");
                     String CEP = rs.getString("CEP_funcionario");
                     String bairro = rs.getString("bairro_funcionario");
                     int cidade = rs.getInt("cidade_funcionario");
-                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                    cliente = new Cliente(codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento);
                 }
             }
 
@@ -206,35 +206,34 @@ public class ClienteService {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         }
 
-        return funcionario;
+        return cliente;
     }
     
-    public Funcionario localizarFuncionarioPorNome(String nomeFuncionario) {
-        Funcionario funcionario = null;
-        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
-                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
-                + " confirmaSenha_funcionario FROM funcionario"
-                + " WHERE nome_funcionario LIKE ? ";
+    public Cliente localizarClientePorNome(String nomeCliente) {
+        Cliente cliente = null;
+        String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
+                + " senha_cliente, endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente, "
+                + " FROM cliente"
+                + " WHERE nome_cliente LIKE ? ";
 
         try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, nomeFuncionario);
+            stmt.setString(1, nomeCliente);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int codigoFuncionario = rs.getInt("codigo_funcionario");
-                    String senha = rs.getString("senha_funcionario");
-                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
                     String nome = rs.getString("nome_funcionario");
                     String CPF = rs.getString("CPF_funcionario");
                     String telefone = rs.getString("telefone_funcionario");
                     String email = rs.getString("email_funcionario");
+                    Date dataNascimento = rs.getDate("datanascimento_cliente");
                     String endereco = rs.getString("endereco_funcionario");
                     String numero = rs.getString("numero_funcionario");
                     String CEP = rs.getString("CEP_funcionario");
                     String bairro = rs.getString("bairro_funcionario");
                     int cidade = rs.getInt("cidade_funcionario");
-                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                    cliente = new Cliente(codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade, dataNascimento);
                 }
             }
 
@@ -242,35 +241,34 @@ public class ClienteService {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         }
 
-        return funcionario;
+        return cliente;
     }
     
-    public Funcionario localizarFuncionarioPorCPF(String CPFFuncionario) {
-        Funcionario funcionario = null;
-        String sql = "SELECT codigo_funcionario, nome_funcionario, CPF_funcionario, email_funcionario, telefone_funcionario, "
-                + " senha_funcionario, endereco_funcionario, numero_funcionario, cep_funcionario, bairro_funcionario, cidade_funcionario, "
-                + " confirmaSenha_funcionario FROM funcionario"
-                + " WHERE CPF_funcionario LIKE ? ";
+    public Cliente localizarClientePorCPF(String CPFCliente) {
+        Cliente cliente = null;
+        String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
+                + " senha_cliente, endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente, "
+                + " FROM cliente"
+                + " WHERE CPF_cliente LIKE ? ";
 
         try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, CPFFuncionario);
+            stmt.setString(1, CPFCliente);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int codigoFuncionario = rs.getInt("codigo_funcionario");
-                    String senha = rs.getString("senha_funcionario");
-                    String confirmaSenha = rs.getString("confirmaSenha_funcionario");
                     String nome = rs.getString("nome_funcionario");
                     String CPF = rs.getString("CPF_funcionario");
                     String telefone = rs.getString("telefone_funcionario");
                     String email = rs.getString("email_funcionario");
+                    Date dataNascimento = rs.getDate("datanascimento_cliente");
                     String endereco = rs.getString("endereco_funcionario");
                     String numero = rs.getString("numero_funcionario");
                     String CEP = rs.getString("CEP_funcionario");
                     String bairro = rs.getString("bairro_funcionario");
                     int cidade = rs.getInt("cidade_funcionario");
-                    funcionario = new Funcionario(senha, confirmaSenha, codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade);
+                    cliente = new Cliente(codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade, dataNascimento);
                 }
             }
 
@@ -278,11 +276,11 @@ public class ClienteService {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         }
 
-        return funcionario;
+        return cliente;
     }
     
-    public boolean excluirFuncionario(int codigo) {
-        String sql = "DELETE FROM funcionario WHERE codigo_funcionario = ?";
+    public boolean excluirCliente(int codigo) {
+        String sql = "DELETE FROM cliente WHERE codigo_cliente = ?";
         try {
             // Obtendo a conexão
             conexao = conexaoBD.getConnection();
@@ -313,37 +311,10 @@ public class ClienteService {
         }
     }
     
-    public int getMaxCodigoFuncionario() {
+    public int getMaxCodigoCliente() {
         BuscarCodigoService service = new BuscarCodigoService();
-        return service.getMaxCodigo("funcionario", "codigo_funcionario");
+        return service.getMaxCodigo("cliente", "codigo_cliente");
     }
-    
-    
-          public boolean verificarCredenciais(Long id, String senha) {
-        String sql = "SELECT COUNT(*) FROM funcionario WHERE codigo_funcionario = ? AND senha_funcionario = ?";
-        try {
-            conexao = ConectionPostgres.getConnection();
-            stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, id);
-            stmt.setString(2, senha);
-            rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                return rs.getInt(1) > 0; // Devuelve true si se encuentra un registro
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao verificar credenciais: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-        return false;
-      }
 
 }
 
