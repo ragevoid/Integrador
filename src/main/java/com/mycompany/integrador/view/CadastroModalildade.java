@@ -4,7 +4,6 @@
  */
 package com.mycompany.integrador.view;
 
-import com.mycompany.integrador.model.Cliente;
 import com.mycompany.integrador.model.Modalidade;
 import com.mycompany.integrador.model.service.ModalidadeService;
 import com.mycompany.integrador.util.CombinedFilter;
@@ -13,10 +12,6 @@ import com.mycompany.integrador.util.LocalizarService;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -55,7 +50,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
         tableModel = (DefaultTableModel) jTableDadosModalidade.getModel();
         modalidadeService = new ModalidadeService();
 
-        listarClientes();
+        listarModalidades();
         configureTable();
 
     }
@@ -123,7 +118,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelFuncionario = new javax.swing.JPanel();
+        jPanelModalidade = new javax.swing.JPanel();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCodigo = new javax.swing.JTextField();
         jLabelNomeModalidade = new javax.swing.JLabel();
@@ -132,7 +127,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDadosModalidade = new javax.swing.JTable();
         jButtonCadastrar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonSalvarTela = new javax.swing.JButton();
         jFormattedTextFieldValor = new javax.swing.JFormattedTextField();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -143,11 +138,11 @@ public class CadastroModalildade extends javax.swing.JFrame {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Cliente");
+        setTitle("Cadastro de Modalidade");
         setBackground(new java.awt.Color(204, 255, 255));
 
-        jPanelFuncionario.setBackground(new java.awt.Color(153, 153, 153));
-        jPanelFuncionario.setPreferredSize(new java.awt.Dimension(1250, 700));
+        jPanelModalidade.setBackground(new java.awt.Color(153, 153, 153));
+        jPanelModalidade.setPreferredSize(new java.awt.Dimension(1250, 700));
 
         jLabelCodigo.setText("Código:");
 
@@ -166,11 +161,11 @@ public class CadastroModalildade extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "CPF", "Email", "Telefone", "Endereco", "Numero", "CEP", "Bairro", "Cidade", "Data Nascimento", "Edit", "Delete"
+                "Código", "Nome", "Valor R$", "Edit", "Delete"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -184,24 +179,8 @@ public class CadastroModalildade extends javax.swing.JFrame {
             jTableDadosModalidade.getColumnModel().getColumn(1).setResizable(false);
             jTableDadosModalidade.getColumnModel().getColumn(1).setPreferredWidth(300);
             jTableDadosModalidade.getColumnModel().getColumn(2).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(2).setPreferredWidth(120);
             jTableDadosModalidade.getColumnModel().getColumn(3).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(3).setPreferredWidth(200);
             jTableDadosModalidade.getColumnModel().getColumn(4).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTableDadosModalidade.getColumnModel().getColumn(5).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(5).setPreferredWidth(200);
-            jTableDadosModalidade.getColumnModel().getColumn(6).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(6).setPreferredWidth(50);
-            jTableDadosModalidade.getColumnModel().getColumn(7).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(7).setPreferredWidth(120);
-            jTableDadosModalidade.getColumnModel().getColumn(8).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(8).setPreferredWidth(100);
-            jTableDadosModalidade.getColumnModel().getColumn(9).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(9).setPreferredWidth(120);
-            jTableDadosModalidade.getColumnModel().getColumn(10).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(11).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(12).setResizable(false);
         }
 
         jButtonCadastrar.setBackground(new java.awt.Color(51, 153, 255));
@@ -213,23 +192,23 @@ public class CadastroModalildade extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 255));
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSalvarTela.setBackground(new java.awt.Color(204, 204, 255));
+        jButtonSalvarTela.setText("Salvar");
+        jButtonSalvarTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonSalvarTelaActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanelFuncionarioLayout = new javax.swing.GroupLayout(jPanelFuncionario);
-        jPanelFuncionario.setLayout(jPanelFuncionarioLayout);
-        jPanelFuncionarioLayout.setHorizontalGroup(
-            jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
-                .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanelModalidadeLayout = new javax.swing.GroupLayout(jPanelModalidade);
+        jPanelModalidade.setLayout(jPanelModalidadeLayout);
+        jPanelModalidadeLayout.setHorizontalGroup(
+            jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFuncionarioLayout.createSequentialGroup()
+                    .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelModalidadeLayout.createSequentialGroup()
                             .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,30 +216,30 @@ public class CadastroModalildade extends javax.swing.JFrame {
                             .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTextFieldNome))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFuncionarioLayout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelModalidadeLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(326, 326, 326)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanelFuncionarioLayout.setVerticalGroup(
-            jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
+        jPanelModalidadeLayout.setVerticalGroup(
+            jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -336,7 +315,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanelFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanelModalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,7 +330,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -372,7 +351,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
-        novoCliente();
+        novaModalidade();
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -384,8 +363,8 @@ public class CadastroModalildade extends javax.swing.JFrame {
         int codigoint = Integer.parseInt(codigo);
         JOptionPane.showMessageDialog(null,
                 "Deseja realmente excluir os dados selecionados?", "Excluir Modalidade", JOptionPane.YES_NO_CANCEL_OPTION);        
-        clienteService.excluirCliente(codigoint);
-        listarClientes();
+        modalidadeService.excluirModalidade(codigoint);
+        listarModalidades();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -399,54 +378,36 @@ public class CadastroModalildade extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLocalizarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        CarregarClienteSelecionado();
+        CarregarModalidadeSelecionada();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        salvarCliente();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonSalvarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarTelaActionPerformed
+        salvarModalidade();
+    }//GEN-LAST:event_jButtonSalvarTelaActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
 
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
-        String CPF = jFormattedTextFieldCPF.getText();
-        String telefone = jTextFieldTelefone.getText();
-        String email = jTextFieldEmail.getText();
-        String endereco = jTextFieldEndereco.getText();
-        String numero = jTextFieldNumero.getText();
-        String CEP = jFormattedTextFieldCEP.getText();
-        String bairro = jTextFieldBairro.getText();
-        String dataNascimento = jFormattedTextFielddataNascimento.getText();
-
-        Date dataNascimentoDate = null;
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
-
-        try {
-            dataNascimentoDate = df.parse(dataNascimento);
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
-            return;
-        }
-
-        int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
+        String valor = jFormattedTextFieldValor.getText();
+        float valorfloat = Float.parseFloat(valor);
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Cliente cliente = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
-            clienteService.salvarCliente(cliente);
-        } else { // Caso contrário, é uma edição de pessoa existente
+            Modalidade modalidade = new Modalidade(nome, valorfloat);
+            modalidadeService.salvarModalidade(modalidade);
+        } else { // Caso contrário, é uma edição de modalidade existente
 
-            Cliente clienteEditado = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
-            clienteEditado.setCodigo((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
-            clienteService.atualizarCliente(clienteEditado);
+            Modalidade modalidadeEditada = new Modalidade(nome, valorfloat);
+            modalidadeEditada.setCodigo_modalidade((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            modalidadeService.atualizarModalidade(modalidadeEditada);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
 
         //novoFuncionario();
         limparCampos();
-        listarClientes();
+        listarModalidades();
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     /**
@@ -547,7 +508,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
         } else { // Caso contrário, é uma edição de pessoa existente
 
             Modalidade modalidadeEditada = new Modalidade(nome, valorfloat);
-            modalidadeEditada.setCodigo((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            modalidadeEditada.setCodigo_modalidade((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
             modalidadeService.atualizarModalidade(modalidadeEditada);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
@@ -555,38 +516,27 @@ public class CadastroModalildade extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,
                 "Dados inseridos com sucesso!", "Sucesso", JOptionPane.OK_OPTION);
         limparCampos();
-        listarClientes();
+        listarModalidades();
     }
 
-    private void listarClientes() {
+    private void listarModalidades() {
         tableModel.setRowCount(0);
 
-        clienteService.listarClientes().forEach(cliente -> {
-            tableModel.addRow(new Object[]{cliente.getCodigo(), cliente.getNome(), cliente.getCPF(), cliente.getEmail(), cliente.getTelefone(), 
-                cliente.getEndereco(), cliente.getNumero(), cliente.getCEP(), cliente.getBairro(), cliente.getCidade(), cliente.getDataNascimento()});
+        modalidadeService.listarModalidade().forEach(modalidade -> {
+            tableModel.addRow(new Object[]{modalidade.getCodigo_modalidade(), modalidade.getNome_modalidade(), modalidade.getValor_modalidade()});
         });
     }
 
-    private void novoCliente() {
+    private void novaModalidade() {
         limparCampos();
-        atualizarCodigoCliente();
+        atualizarCodigoModalidade();
         jTextFieldNome.requestFocus();
-        aplicarMascaraCPF();
-        carregarCidades();
     }
 
     private void limparCampos() {
         jTextFieldCodigo.setText("");
         jTextFieldNome.setText("");
-        jFormattedTextFieldCPF.setText("");
-        jTextFieldEmail.setText("");
-        jTextFieldTelefone.setText("");
-        jTextFieldEndereco.setText("");
-        jTextFieldNumero.setText("");
-        jFormattedTextFieldCEP.setText("");
-        jTextFieldBairro.setText("");
-        jFormattedTextFielddataNascimento.setText("");
-        jComboBoxCidade.removeAllItems();
+        jFormattedTextFieldValor.setText("");
     }
 
     class ButtonEditor extends DefaultCellEditor {
@@ -622,7 +572,7 @@ public class CadastroModalildade extends javax.swing.JFrame {
                 switch (label) {
                     case "Edit":
                         if (rowIndex != -1) {
-                            CarregarClienteSelecionado();
+                            CarregarModalidadeSelecionada();
                             break;
                         }
                     case "Delete":
@@ -631,8 +581,8 @@ public class CadastroModalildade extends javax.swing.JFrame {
                             int selectedRow = jTableDadosModalidade.getSelectedRow();
                             if (selectedRow != -1) {
                                 int localCodigo = (int) jTableDadosModalidade.getValueAt(selectedRow, 0);
-                                clienteService.excluirCliente(localCodigo);
-                                listarClientes();
+                                modalidadeService.excluirModalidade(localCodigo);
+                                listarModalidades();
                             }
                             JOptionPane.showMessageDialog(editorComponent, "Registro removido com sucesso!!");
                             break;
@@ -664,42 +614,37 @@ public class CadastroModalildade extends javax.swing.JFrame {
             String criterio = result.getCriterio();
             String pesquisa = result.getValor();
 
-            localizarCliente(criterio, pesquisa);
+            localizarModalidade(criterio, pesquisa);
         }
     }
 
-    private void localizarCliente(String criterio, String valor) {
-        Cliente cliente = null;
+    private void localizarModalidade(String criterio, String valor) {
+        Modalidade modalidade = null;
 
         try {
             switch (criterio) {
                 case "Código":
                     int codigo = Integer.parseInt(valor);
-                    cliente = clienteService.localizarClientePorCodigo(codigo);
-                    CarregarClienteSelecionado();
+                    modalidade = modalidadeService.localizarModalidadePorCodigo(codigo);
+                    CarregarModalidadeSelecionada();
                     break;
                 case "Nome":
-                    cliente = clienteService.localizarClientePorNome(valor);
-                    CarregarClienteSelecionado();
-                    break;
-                case "CPF":
-                    cliente = clienteService.localizarClientePorCPF(valor);
-                    CarregarClienteSelecionado();
+                    modalidade = modalidadeService.localizarModalidadePorNome(valor);
+                    CarregarModalidadeSelecionada();
                     break;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "O valor do código deve ser um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (cliente != null) {
-            // Exibir os detalhes do funcionário localizado
-            JOptionPane.showMessageDialog(this, "Funcionário localizado:\n" + cliente.getNome(), "Funcionário Encontrado", JOptionPane.INFORMATION_MESSAGE);
+        if (modalidade != null) {
+            // Exibir os detalhes da modalidade localizada
+            JOptionPane.showMessageDialog(this, "Funcionário localizado:\n" + modalidade.getNome_modalidade(), "Modalidade Encontrada", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Funcionário não encontrado.", "Funcionário Não Encontrado", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Modalidade não encontrada.", "Modalidade Não Encontrada", JOptionPane.WARNING_MESSAGE);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEditar;
@@ -708,11 +653,12 @@ public class CadastroModalildade extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLocalizar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonSalvarTela;
     private javax.swing.JFormattedTextField jFormattedTextFieldValor;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JLabel jLabelNomeModalidade;
     private javax.swing.JLabel jLabelValor;
-    private javax.swing.JPanel jPanelFuncionario;
+    private javax.swing.JPanel jPanelModalidade;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableDadosModalidade;
     private javax.swing.JTextField jTextFieldCodigo;

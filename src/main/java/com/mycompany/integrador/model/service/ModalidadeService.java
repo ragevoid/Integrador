@@ -69,7 +69,7 @@ public class ModalidadeService {
             stmt.setFloat(3, modalidade.getValor_modalidade());
             
             //condição where
-            stmt.setInt(1, modalidade.getCodigo_modalidade());
+            stmt.setInt(4, modalidade.getCodigo_modalidade());
 
             // Executando o comando SQL
             stmt.executeUpdate();
@@ -139,5 +139,90 @@ public class ModalidadeService {
         return service.getMaxCodigo("modalidade", "codigo_modalidade");
     }
          
+         public boolean excluirModalidade(int codigo) {
+        String sql = "DELETE FROM modalidade WHERE codigo_modalidade = ?";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+
+            // Executando o comando SQL
+            int linhasAfetadas = stmt.executeUpdate();
+
+            // Retorna verdadeiro se uma linha foi afetada, falso caso contrário
+                return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar dados: " + e.getMessage());
+            return false;
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
          
+    public Modalidade localizarModalidadePorCodigo(int codigo) {
+        Modalidade modalidade = null;
+        String sql = "SELECT codigo_modalidade, nome_modalidade, valor_modalidade "
+                + " FROM modalidade"
+                + " WHERE codigo_modalidade = ?";
+
+        try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, codigo);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int codigoModalidade = rs.getInt("codigo_modalidade");                    
+                    String nome = rs.getString("nome_modalidade");
+                    float valor = rs.getFloat("valor_modalidade");
+                    
+                    modalidade = new Modalidade(codigoModalidade, nome,valor );
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        }
+
+        return modalidade;
+    }
+    
+    public Modalidade localizarModalidadePorNome(String nomeModalidade) {
+        Modalidade modalidade = null;
+        String sql = "SELECT codigo_modalidade, nome_modalidade, valor_modalidade "
+                + " FROM modalidade"
+                + " WHERE nome_modalidade LIKE ? ";
+
+        try (Connection conexao = conexaoBD.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeModalidade);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int codigoModalidade = rs.getInt("codigo_modalidade");                    
+                    String nome = rs.getString("nome_modalidade");
+                    float valor = rs.getFloat("valor_modalidade");
+                    
+                    modalidade = new Modalidade(codigoModalidade, nome,valor );
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        }
+
+        return modalidade;
+    }
+                 
 }

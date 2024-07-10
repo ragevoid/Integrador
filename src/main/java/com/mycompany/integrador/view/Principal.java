@@ -107,6 +107,11 @@ public class Principal extends javax.swing.JFrame {
 
         modalidadesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK));
         modalidadesMenu.setText("Modalidades");
+        modalidadesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modalidadesMenuActionPerformed(evt);
+            }
+        });
         cadatroMenu.add(modalidadesMenu);
 
         quadrasMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -165,6 +170,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_usersMenuActionPerformed
+
+    private void modalidadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modalidadesMenuActionPerformed
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroModalildade().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_modalidadesMenuActionPerformed
 
     /**
      * @param args the command line arguments
