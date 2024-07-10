@@ -5,6 +5,7 @@
 package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Modalidade;
+import com.mycompany.integrador.util.BuscarCodigoService;
 import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +24,74 @@ public class ModalidadeService {
     ResultSet rs = null;
 
     
+    public Modalidade salvarModalidade(Modalidade modalidade) {
+        String sql = "INSERT INTO modalidade (nome_modalidade, valor_modalidade) VALUES (?, ?)";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, modalidade.getNome_modalidade());
+            stmt.setFloat(2, modalidade.getValor_modalidade());
+         
+            // Executando o comando SQL
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return modalidade;
+    }
     
-     public List<Modalidade> listarModalidade() {
+     public Modalidade atualizarModalidade(Modalidade modalidade) {
+        String sql = "UPDATE modalidade SET codigo_modalidade = ?, nome_modalidade = ?, valor_modalidade = ? "
+                + " WHERE codigo_modalidade = ?";
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, modalidade.getCodigo_modalidade());
+            stmt.setString(2, modalidade.getNome_modalidade());
+            stmt.setFloat(3, modalidade.getValor_modalidade());
+            
+            //condição where
+            stmt.setInt(1, modalidade.getCodigo_modalidade());
+
+            // Executando o comando SQL
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return modalidade;
+    }
+     
+    public List<Modalidade> listarModalidade() {
         String sql = "SELECT * FROM modalidade";
         List<Modalidade> modalidades = new ArrayList<>();
 
@@ -66,4 +133,11 @@ public class ModalidadeService {
 
         return modalidades;
     }
+     
+         public int getMaxCodigoModalidade() {
+        BuscarCodigoService service = new BuscarCodigoService();
+        return service.getMaxCodigo("modalidade", "codigo_modalidade");
+    }
+         
+         
 }
