@@ -60,6 +60,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         quadraLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 420));
@@ -121,11 +122,15 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         agendaBackGroundPanel.add(EventosPanelBackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 300, -1));
 
+        quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
         quadraLabel.setText("Quadra A");
-        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 100, -1));
+        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 120, -1));
 
-        jLabel1.setText("Agenda para a Quadra: ");
-        agendaBackGroundPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Agenda para:");
+        agendaBackGroundPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         jCalendar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -138,6 +143,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             }
         });
         agendaBackGroundPanel.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 330));
+        agendaBackGroundPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 740, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -277,6 +283,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private javax.swing.JTable eventosTable;
     private com.toedter.calendar.JCalendar jCalendar1;
     public javax.swing.JLabel jLabel1;
+    private javax.swing.JSeparator jSeparator1;
     public javax.swing.JLabel quadraLabel;
     private javax.swing.JScrollPane scrollTableEventos;
     // End of variables declaration//GEN-END:variables
