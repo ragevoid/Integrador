@@ -5,9 +5,7 @@
 package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Cliente;
-import com.mycompany.integrador.model.Funcionario;
 import com.mycompany.integrador.util.BuscarCodigoService;
-import com.mycompany.integrador.util.ConectionPostgres;
 import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

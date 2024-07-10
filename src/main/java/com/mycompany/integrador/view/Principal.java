@@ -145,7 +145,11 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clientesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuActionPerformed
-        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroCliente().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_clientesMenuActionPerformed
 
     private void iniciarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarAgendaActionPerformed
