@@ -26,7 +26,7 @@ public class QuadraService {
         conexao = ConectionPostgres.getConnection();
     }
      public List<Quadra> listarQuadras() {
-        String sql = "SELECT codigo_quadra, nome_quadra, tipoquadra_quadra, modalidade_quadra, tamanho_quadra FROM quadra";
+        String sql = "SELECT codigo_quadra, nome_quadra, tipoquadra_quadra, tamanho_quadra FROM quadra";
         List<Quadra> quadras = new ArrayList<>();
 
         try {
@@ -38,9 +38,8 @@ public class QuadraService {
                 long id = rs.getInt("codigo_quadra");
                 String nome = rs.getString("nome_quadra");
                 int tipo = rs.getInt("tipoquadra_quadra");
-                int modalidade = rs.getInt("modalidade_quadra");
                 double tamanho = rs.getDouble("tamanho_quadra");
-                quadras.add(new Quadra(id, nome, tamanho, tipo, modalidade));
+                quadras.add(new Quadra(id, nome, tamanho, tipo));
             }
 
         } catch (SQLException e) {

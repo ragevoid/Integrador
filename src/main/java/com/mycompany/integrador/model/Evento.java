@@ -8,30 +8,30 @@ public class Evento {
     private String horaEntrada;
     private String horaSaida;
     private String descricao;
-    private String quadra;
+    private int codigo_quadra;
     private int codigo_cliente;
-    private int codigo_odalidade;
+    private int codigo_modalidade;
 
-    public Evento(int id, Date data, String horaEntrada, String horaSaida, String descricao, String quadra, int codigo_cliente, int codigo_odalidade) {
+    public Evento(int id, Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade) {
         this.id = id;
         this.data = data;
         this.horaEntrada = horaEntrada;
         this.horaSaida = horaSaida;
         this.descricao = descricao;
-        this.quadra = quadra;
+        this.codigo_quadra = codigo_quadra;
         this.codigo_cliente = codigo_cliente;
-        this.codigo_odalidade = codigo_odalidade;
+        this.codigo_modalidade = codigo_modalidade;
     }
 
-    //constructor sem id
-    public Evento(Date data, String horaEntrada, String horaSaida, String descricao, String quadra, int codigo_cliente, int codigo_odalidade) {
+    
+    public Evento(Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade) {
         this.data = data;
         this.horaEntrada = horaEntrada;
         this.horaSaida = horaSaida;
         this.descricao = descricao;
-        this.quadra = quadra;
+        this.codigo_quadra = codigo_quadra;
         this.codigo_cliente = codigo_cliente;
-        this.codigo_odalidade = codigo_odalidade;
+        this.codigo_modalidade = codigo_modalidade;
     }
 
     public int getId() {
@@ -74,12 +74,12 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public String getQuadra() {
-        return quadra;
+    public int getCodigo_quadra() {
+        return codigo_quadra;
     }
 
-    public void setQuadra(String quadra) {
-        this.quadra = quadra;
+    public void setCodigo_quadra(int codigo_quadra) {
+        this.codigo_quadra = codigo_quadra;
     }
 
     public int getCodigo_cliente() {
@@ -90,16 +90,15 @@ public class Evento {
         this.codigo_cliente = codigo_cliente;
     }
 
-    public int getCodigo_odalidade() {
-        return codigo_odalidade;
+    public int getCodigo_modalidade() {
+        return codigo_modalidade;
     }
 
-    public void setCodigo_odalidade(int codigo_odalidade) {
-        this.codigo_odalidade = codigo_odalidade;
+    public void setCodigo_modalidade(int codigo_modalidade) {
+        this.codigo_modalidade = codigo_modalidade;
     }
 
-    
-    
+ 
 
 
 }

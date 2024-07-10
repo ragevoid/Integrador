@@ -36,7 +36,7 @@ public class EventoService {
         stmt.setString(2, evento.getHoraEntrada());
         stmt.setString(3, evento.getHoraSaida());
         stmt.setString(4, evento.getDescricao());
-        stmt.setString(5, evento.getQuadra());
+        stmt.setInt(5, evento.getCodigo_quadra());
 
         stmt.executeUpdate();
         System.out.println("Dados inseridos com sucesso!");
@@ -89,11 +89,11 @@ public List<Evento> listarEventos(String dataSelected) {
             String horaEntrada = rs.getString("horaEntrada_evento");
             String horaSaida = rs.getString("horaSaida_evento");
             String descricao = rs.getString("descripcao_evento");
-            String quadra = rs.getString("codigo_quadra");
+            int codigo_quadra = rs.getInt("codigo_quadra");
             int codigo_cliente = rs.getInt("codigo_cliente");
             int codigo_modalidade = rs.getInt("codigo_modalidade");
 
-            eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, quadra, codigo_cliente, codigo_modalidade));
+            eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, codigo_quadra, codigo_cliente, codigo_modalidade));
         }
 
     } catch (SQLException | java.text.ParseException e) {

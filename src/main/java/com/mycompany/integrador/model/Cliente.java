@@ -30,6 +30,6 @@ public class Cliente extends Pessoa {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
+    }   
 }
 

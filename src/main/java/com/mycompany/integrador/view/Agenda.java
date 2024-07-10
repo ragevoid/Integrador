@@ -1,6 +1,7 @@
-/*
+
 package com.mycompany.integrador.view;
 
+import com.mycompany.integrador.model.Cliente;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -25,7 +26,6 @@ public class Agenda extends javax.swing.JFrame {
 private List<Evento> eventos;
 private EventoService eventoService;
 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-List<Date> datas;
 
     
 

@@ -13,21 +13,21 @@ public class Quadra {
     private String nome;
     private double tamanho;
     private int tipo;
-    private int modalidade;
 
-    public Quadra(Long id, String nome, double tamanho, int tipo, int modalidade) {
+
+    public Quadra(Long id, String nome, double tamanho, int tipo) {
         this.id = id;
         this.nome = nome;
         this.tamanho = tamanho;
         this.tipo = tipo;
-        this.modalidade = modalidade;
+
     }
 //Constructor sem ID
-    public Quadra(String nome, double tamanho, int tipo, int modalidade) {
+    public Quadra(String nome, double tamanho, int tipo) {
         this.nome = nome;
         this.tamanho = tamanho;
         this.tipo = tipo;
-        this.modalidade = modalidade;
+
     }
 
     public Long getId() {
@@ -60,14 +60,6 @@ public class Quadra {
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
-    }
-
-    public int getModalidade() {
-        return modalidade;
-    }
-
-    public void setModalidade(int modalidade) {
-        this.modalidade = modalidade;
     }
     
     
