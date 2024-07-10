@@ -99,7 +99,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         Agenda agenda = new Agenda();
         agenda.quadraLabel.setText(selectedQuadra);
         agenda.setVisible(true);     
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -148,7 +148,7 @@ public class QuadraSelector extends javax.swing.JFrame {
    public void popularComboBox() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Quadra quadra : quadras) {
-            model.addElement(quadra.getNome());
+            model.addElement(quadra.getId() +" - "+ quadra.getNome());
         }
         jComboBox1.setModel(model);
     }

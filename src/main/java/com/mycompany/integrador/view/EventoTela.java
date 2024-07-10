@@ -18,6 +18,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,10 +101,10 @@ public class EventoTela extends javax.swing.JFrame {
         jPanel1.add(horaEntradaPicker, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 200, -1));
         jPanel1.add(horaSaidaPicker, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 200, -1));
 
-        quadraLabel.setText("Quadra A");
+        quadraLabel.setText("1 - Quadra 1");
         quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
-        jPanel1.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 130, 40));
+        jPanel1.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 200, 40));
 
         jLabel2.setText("Eventos para:");
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -165,16 +166,28 @@ public class EventoTela extends javax.swing.JFrame {
         String horaSaida = horaSaidaPicker.getTimeStringOrEmptyString();
         String descripcao = descriptionText.getText();
         String quadra = quadraLabel.getText();
-        int codigo_modalidade;
-        int codigo_cliente;
-        /* if (comprobarHoras(horaEntrada, horaSaida) == true){
-        JOptionPane.showMessageDialog(null,"Error no digitamento da hora","Error",
-JOptionPane.ERROR_MESSAGE);
-        }else {
-        Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, quadra);
-        eventoService.salvarEvento(evento);
-         this.dispose();
-         }*/
+        int codigo_quadra = pegarId(quadra);
+        String cliente = clienteCombo.getSelectedItem().toString();
+        int codigo_cliente = pegarId(cliente);
+        String modalidade = modalidadeCombo.getSelectedItem().toString();
+        int codigo_modalidade = pegarId(modalidade);
+
+        if (comprobarHoras(horaEntrada, horaSaida) == true) {
+            JOptionPane.showMessageDialog(null, "Error no digitamento da hora", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, codigo_quadra, codigo_cliente, codigo_modalidade);
+            if (eventoService.validarHora(evento)) {
+                JOptionPane.showMessageDialog(null, "Error ja existe uma hora marcada para esse dia", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                eventoService.salvarEvento(evento);
+              //  this.dispose();
+            }
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void modalidadeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modalidadeComboActionPerformed
@@ -247,6 +260,15 @@ JOptionPane.ERROR_MESSAGE);
         modalidades = modalidadeService.listarModalidade();
         for (Modalidade modalidade : modalidades) {
             modalidadeCombo.addItem(modalidade.getCodigo_modalidade() + "-" + modalidade.getNome_modalidade());
+        }
+    }
+
+    public int pegarId(String string) {
+        if (string != null && !string.isEmpty()) {
+            char idChar = string.charAt(0);
+            return Integer.parseInt(String.valueOf(idChar));
+        } else {
+            throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
     }
 

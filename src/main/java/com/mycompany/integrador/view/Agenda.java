@@ -125,7 +125,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
         quadraLabel.setText("Quadra A");
-        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 120, -1));
+        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 230, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
