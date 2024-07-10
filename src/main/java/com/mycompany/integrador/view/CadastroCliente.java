@@ -5,10 +5,10 @@
 package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.Cidade;
-import com.mycompany.integrador.model.Funcionario;
+import com.mycompany.integrador.model.Cliente;
 import com.mycompany.integrador.model.service.CidadeService;
+import com.mycompany.integrador.model.service.ClienteService;
 import com.mycompany.integrador.util.CombinedFilter;
-import com.mycompany.integrador.model.service.FuncionarioService;
 import com.mycompany.integrador.util.ValidarCPFCNPJService;
 import com.mycompany.integrador.util.ButtonRenderer;
 import com.mycompany.integrador.util.LocalizarService;
@@ -19,8 +19,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -44,7 +46,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private int rowIndex = -1; // Adicionando variável para armazenar o índice da linha selecionada
     private int codigo;
     private final DefaultTableModel tableModel;
-    private final FuncionarioService funcionarioService;
+    private final ClienteService clienteService;
     private final CidadeService cidadeService;
     private final ValidarCPFCNPJService validarCPFCNPJService;
     /**
@@ -67,13 +69,13 @@ public class CadastroCliente extends javax.swing.JFrame {
         aplicarFormatoCEP(jFormattedTextFieldCEP);
 
 
-        tableModel = (DefaultTableModel) jTableDadosFuncionario.getModel();
-        funcionarioService = new FuncionarioService();
+        tableModel = (DefaultTableModel) jTableDadosCliente.getModel();
+        clienteService = new ClienteService();
         cidadeService = new CidadeService();
         validarCPFCNPJService = new ValidarCPFCNPJService();
 
         aplicarMascaraCPF();
-        listarFuncionarios();
+        listarClientes();
         configureTable();
 
     }
@@ -151,45 +153,44 @@ public class CadastroCliente extends javax.swing.JFrame {
         doc.setDocumentFilter(new CombinedFilter(limite, false)); // Filtro de minúsculas
     }
     
-    private void atualizarCodigoFuncionario() {
+    private void atualizarCodigoCliente() {
         try {
-            int maxCodigo = funcionarioService.getMaxCodigoFuncionario();
+            int maxCodigo = clienteService.getMaxCodigoCliente();
             jTextFieldCodigo.setText(String.valueOf(maxCodigo));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao obter o código da cidade: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao obter o código da cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void configureTable() {
-        jTableDadosFuncionario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jTableDadosFuncionario.getSelectionModel().addListSelectionListener(e -> {
-            rowIndex = jTableDadosFuncionario.getSelectedRow();
+        jTableDadosCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableDadosCliente.getSelectionModel().addListSelectionListener(e -> {
+            rowIndex = jTableDadosCliente.getSelectedRow();
         });
 
         // Renderizador para os botões
-        jTableDadosFuncionario.getColumn("Edit").setCellRenderer(new ButtonRenderer("Edit"));
-        jTableDadosFuncionario.getColumn("Delete").setCellRenderer(new ButtonRenderer("Delete"));
+        jTableDadosCliente.getColumn("Edit").setCellRenderer(new ButtonRenderer("Edit"));
+        jTableDadosCliente.getColumn("Delete").setCellRenderer(new ButtonRenderer("Delete"));
 
         // Editor para os botões
-        jTableDadosFuncionario.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), "Edit", jTableDadosFuncionario));
-        jTableDadosFuncionario.getColumn("Delete").setCellEditor(new ButtonEditor(new JCheckBox(), "Delete", jTableDadosFuncionario));
+        jTableDadosCliente.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), "Edit", jTableDadosCliente));
+        jTableDadosCliente.getColumn("Delete").setCellEditor(new ButtonEditor(new JCheckBox(), "Delete", jTableDadosCliente));
 
     }
 
-    private void CarregarFuncionarioSelecionado() {
-        int codigo = (int) jTableDadosFuncionario.getValueAt(rowIndex, 0);
+    private void CarregarClienteSelecionado() {
+        int codigo = (int) jTableDadosCliente.getValueAt(rowIndex, 0);
         String codigoStr = String.valueOf(codigo);
-        String nome = (String) jTableDadosFuncionario.getValueAt(rowIndex, 1);
-        String CPF = (String) jTableDadosFuncionario.getValueAt(rowIndex, 2);
-        String email = (String) jTableDadosFuncionario.getValueAt(rowIndex, 3);
-        String telefone = (String) jTableDadosFuncionario.getValueAt(rowIndex, 4);
-        String endereco = (String) jTableDadosFuncionario.getValueAt(rowIndex, 5);
-        String numero = (String) jTableDadosFuncionario.getValueAt(rowIndex, 6);
-        String CEP = (String) jTableDadosFuncionario.getValueAt(rowIndex, 7);
-        String bairro = (String) jTableDadosFuncionario.getValueAt(rowIndex, 8);
-        int codigoCidade = (int) jTableDadosFuncionario.getValueAt(rowIndex, 9);
-        //String senha = (String) jTableDadosFuncionario.getValueAt(rowIndex, 10);
-        //String confirmarSenha = (String) jTableDadosFuncionario.getValueAt(rowIndex, 11);
+        String nome = (String) jTableDadosCliente.getValueAt(rowIndex, 1);
+        String CPF = (String) jTableDadosCliente.getValueAt(rowIndex, 2);
+        String email = (String) jTableDadosCliente.getValueAt(rowIndex, 3);
+        String telefone = (String) jTableDadosCliente.getValueAt(rowIndex, 4);
+        String endereco = (String) jTableDadosCliente.getValueAt(rowIndex, 5);
+        String numero = (String) jTableDadosCliente.getValueAt(rowIndex, 6);
+        String CEP = (String) jTableDadosCliente.getValueAt(rowIndex, 7);
+        String bairro = (String) jTableDadosCliente.getValueAt(rowIndex, 8);
+        int codigoCidade = (int) jTableDadosCliente.getValueAt(rowIndex, 9);
+        Date dataNascimento = (Date) jTableDadosCliente.getValueAt(rowIndex, 10);
 
         // Preencha os campos com os dados do funcionario selecionado para edição 
         jTextFieldCodigo.setText(codigoStr);
@@ -201,8 +202,19 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldNumero.setText(numero);
         jFormattedTextFieldCEP.setText(CEP);
         jTextFieldBairro.setText(bairro);
-        //jPasswordFieldConfirmaSenha.setText(confirmarSenha);
-        //jPasswordFieldSenha.setText(senha);
+        
+        String dataNascimento1 = jFormattedTextFielddataNascimento.getText();
+
+        Date dataNascimentoDate = null;
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
+
+        try {
+            dataNascimentoDate = df.parse(dataNascimento1);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
+            return;
+        }
+        jFormattedTextFielddataNascimento.setText(dataNascimento1);
 
         String nomeCidade = cidadeService.getNomeCidade(codigoCidade);
 
@@ -211,13 +223,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         jComboBoxCidade.addItem(nomeCidade); // Adiciona o nome da cidade ao combobox
         jComboBoxCidade.setSelectedItem(nomeCidade); // Seleciona o nome da cidade
 
-        jPasswordFieldSenha.setEditable(false);
-        jPasswordFieldConfirmaSenha.setEditable(false);
     }
 
-    public void editarFuncionario(int row) {
-        jTableDadosFuncionario.setRowSelectionInterval(row, row);
-        CarregarFuncionarioSelecionado();
+    public void editarCliente(int row) {
+        jTableDadosCliente.setRowSelectionInterval(row, row);
+        CarregarClienteSelecionado();
     }
 
     /**
@@ -240,7 +250,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabelTelefone = new javax.swing.JLabel();
         jTextFieldTelefone = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableDadosFuncionario = new javax.swing.JTable();
+        jTableDadosCliente = new javax.swing.JTable();
         jButtonCadastrar = new javax.swing.JButton();
         jLabelCEP = new javax.swing.JLabel();
         jTextFieldEndereco = new javax.swing.JTextField();
@@ -254,7 +264,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jFormattedTextFieldCPF = new javax.swing.JFormattedTextField();
         jFormattedTextFieldCEP = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextFielddataNascimento = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -296,46 +306,47 @@ public class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jTableDadosFuncionario.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDadosCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "CPF", "Email", "Telefone", "Endereco", "Numero", "CEP", "Bairro", "Cidade", "Edit", "Delete"
+                "Código", "Nome", "CPF", "Email", "Telefone", "Endereco", "Numero", "CEP", "Bairro", "Cidade", "Data Nascimento", "Edit", "Delete"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableDadosFuncionario);
-        if (jTableDadosFuncionario.getColumnModel().getColumnCount() > 0) {
-            jTableDadosFuncionario.getColumnModel().getColumn(0).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(0).setPreferredWidth(70);
-            jTableDadosFuncionario.getColumnModel().getColumn(1).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(1).setPreferredWidth(300);
-            jTableDadosFuncionario.getColumnModel().getColumn(2).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(2).setPreferredWidth(120);
-            jTableDadosFuncionario.getColumnModel().getColumn(3).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(3).setPreferredWidth(200);
-            jTableDadosFuncionario.getColumnModel().getColumn(4).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTableDadosFuncionario.getColumnModel().getColumn(5).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(5).setPreferredWidth(200);
-            jTableDadosFuncionario.getColumnModel().getColumn(6).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(6).setPreferredWidth(50);
-            jTableDadosFuncionario.getColumnModel().getColumn(7).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(7).setPreferredWidth(120);
-            jTableDadosFuncionario.getColumnModel().getColumn(8).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(8).setPreferredWidth(100);
-            jTableDadosFuncionario.getColumnModel().getColumn(9).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(9).setPreferredWidth(120);
-            jTableDadosFuncionario.getColumnModel().getColumn(10).setResizable(false);
-            jTableDadosFuncionario.getColumnModel().getColumn(11).setResizable(false);
+        jScrollPane1.setViewportView(jTableDadosCliente);
+        if (jTableDadosCliente.getColumnModel().getColumnCount() > 0) {
+            jTableDadosCliente.getColumnModel().getColumn(0).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTableDadosCliente.getColumnModel().getColumn(1).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTableDadosCliente.getColumnModel().getColumn(2).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(2).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(3).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(3).setPreferredWidth(200);
+            jTableDadosCliente.getColumnModel().getColumn(4).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(4).setPreferredWidth(100);
+            jTableDadosCliente.getColumnModel().getColumn(5).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(5).setPreferredWidth(200);
+            jTableDadosCliente.getColumnModel().getColumn(6).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(6).setPreferredWidth(50);
+            jTableDadosCliente.getColumnModel().getColumn(7).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(7).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(8).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(8).setPreferredWidth(100);
+            jTableDadosCliente.getColumnModel().getColumn(9).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(9).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(10).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(11).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(12).setResizable(false);
         }
 
         jButtonCadastrar.setBackground(new java.awt.Color(51, 153, 255));
@@ -422,7 +433,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jFormattedTextFielddataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelFuncionarioLayout.createSequentialGroup()
                                 .addComponent(jLabelBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -477,7 +488,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jComboBoxCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFielddataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -573,8 +584,6 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        getAccessibleContext().setAccessibleName("Cadastro de Cliente");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -588,11 +597,11 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        salvarFuncionario();
+        salvarCliente();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
-        novoFuncionario();
+        novoCliente();
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -603,9 +612,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         JOptionPane.showMessageDialog(null,
-                "Deseja realmente excluir os dados selecionados?", "Excluir Funciónario", JOptionPane.YES_NO_CANCEL_OPTION);        
-        funcionarioService.excluirFuncionario(codigoint);
-        listarFuncionarios();
+                "Deseja realmente excluir os dados selecionados?", "Excluir Cliente", JOptionPane.YES_NO_CANCEL_OPTION);        
+        clienteService.excluirCliente(codigoint);
+        listarClientes();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -619,11 +628,11 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLocalizarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        CarregarFuncionarioSelecionado();
+        CarregarClienteSelecionado();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        salvarFuncionario();
+        salvarCliente();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBoxCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCidadeActionPerformed
@@ -639,41 +648,39 @@ public class CadastroCliente extends javax.swing.JFrame {
         String CPF = jFormattedTextFieldCPF.getText();
         String telefone = jTextFieldTelefone.getText();
         String email = jTextFieldEmail.getText();
-        char[] senhaChars = jPasswordFieldSenha.getPassword();
-        String senha = new String(senhaChars); // Obtém a senha como String
-        char[] confirmarSenhaChars = jPasswordFieldConfirmaSenha.getPassword();
-        String confirmarSenha = new String(confirmarSenhaChars); // Obtém a confirmação da senha como String
         String endereco = jTextFieldEndereco.getText();
         String numero = jTextFieldNumero.getText();
         String CEP = jFormattedTextFieldCEP.getText();
         String bairro = jTextFieldBairro.getText();
+        String dataNascimento = jFormattedTextFielddataNascimento.getText();
 
-        int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
+        Date dataNascimentoDate = null;
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
 
-        if (!senha.equals(confirmarSenha)) {
-            JOptionPane.showMessageDialog(null, "As senhas não correspondem. Por favor, tente novamente.");
+        try {
+            dataNascimentoDate = df.parse(dataNascimento);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
             return;
         }
 
-        // Limpando o array de caracteres da senha após o uso
-        Arrays.fill(senhaChars, ' ');
-        Arrays.fill(confirmarSenhaChars, ' ');
+        int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Funcionario funcionario = new Funcionario(senha, confirmarSenha, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
-            funcionarioService.salvarFuncionario(funcionario);
+            Cliente cliente = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
+            clienteService.salvarCliente(cliente);
         } else { // Caso contrário, é uma edição de pessoa existente
 
-            Funcionario funcionarioEditado = new Funcionario(senha, confirmarSenha, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
-            funcionarioEditado.setCodigo((int) jTableDadosFuncionario.getValueAt(rowIndex, 0)); // Define o Código da pessoa
-            funcionarioService.atualizarFuncionario(funcionarioEditado);
+            Cliente clienteEditado = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
+            clienteEditado.setCodigo((int) jTableDadosCliente.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            clienteService.atualizarCliente(clienteEditado);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
 
         //novoFuncionario();
         limparCampos();
-        listarFuncionarios();
+        listarClientes();
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     private void jTextFieldTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefoneKeyTyped
@@ -739,65 +746,61 @@ public class CadastroCliente extends javax.swing.JFrame {
         });*/
     }
 
-    private void salvarFuncionario() {
+    private void salvarCliente() {
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
         String CPF = jFormattedTextFieldCPF.getText();
         String telefone = jTextFieldTelefone.getText();
         String email = jTextFieldEmail.getText();
-        char[] senhaChars = jPasswordFieldSenha.getPassword();
-        String senha = new String(senhaChars); // Obtém a senha como String
-        char[] confirmarSenhaChars = jPasswordFieldConfirmaSenha.getPassword();
-        String confirmarSenha = new String(confirmarSenhaChars); // Obtém a confirmação da senha como String
         String endereco = jTextFieldEndereco.getText();
         String numero = jTextFieldNumero.getText();
         String CEP = jFormattedTextFieldCEP.getText();
         String bairro = jTextFieldBairro.getText();
+        String dataNascimento = jFormattedTextFielddataNascimento.getText();
 
-        int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
+        Date dataNascimentoDate = null;
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
 
-        if (!senha.equals(confirmarSenha)) {
-            // Lógica para lidar com senhas não correspondentes
-            JOptionPane.showMessageDialog(null, "As senhas não correspondem. Por favor, tente novamente.");
+        try {
+            dataNascimentoDate = df.parse(dataNascimento);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
             return;
         }
 
-        // Limpando o array de caracteres da senha após o uso
-        Arrays.fill(senhaChars, ' ');
-        Arrays.fill(confirmarSenhaChars, ' ');
+        int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Funcionario funcionario = new Funcionario(senha, confirmarSenha, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
-            funcionarioService.salvarFuncionario(funcionario);
+            Cliente cliente = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
+            clienteService.salvarCliente(cliente);
         } else { // Caso contrário, é uma edição de pessoa existente
 
-            Funcionario funcionarioEditado = new Funcionario(codigoint, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade);
-            funcionarioEditado.setCodigo((int) jTableDadosFuncionario.getValueAt(rowIndex, 0)); // Define o Código da pessoa
-            funcionarioService.atualizarFuncionario(funcionarioEditado);
+            Cliente clienteEditado = new Cliente(codigoint, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
+            clienteEditado.setCodigo((int) jTableDadosCliente.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            clienteService.atualizarCliente(clienteEditado);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
 
         JOptionPane.showMessageDialog(null,
                 "Dados inseridos com sucesso!", "Sucesso", JOptionPane.OK_OPTION);
         limparCampos();
-        listarFuncionarios();
+        listarClientes();
     }
 
-    private void listarFuncionarios() {
+    private void listarClientes() {
         tableModel.setRowCount(0);
 
-        funcionarioService.listarFuncionarios().forEach(funcionario -> {
-            tableModel.addRow(new Object[]{funcionario.getCodigo(), funcionario.getNome(), funcionario.getCPF(), funcionario.getEmail(),
-                funcionario.getTelefone(), funcionario.getEndereco(), funcionario.getNumero(), funcionario.getCEP(), funcionario.getBairro(), funcionario.getCidade(),
-                funcionario.getSenha(), funcionario.getConfirmaSenha()});
+        clienteService.listarClientes().forEach(cliente -> {
+            tableModel.addRow(new Object[]{cliente.getCodigo(), cliente.getNome(), cliente.getCPF(), cliente.getEmail(), cliente.getTelefone(), 
+                cliente.getEndereco(), cliente.getNumero(), cliente.getCEP(), cliente.getBairro(), cliente.getCidade(), cliente.getDataNascimento()});
         });
     }
 
-    private void novoFuncionario() {
+    private void novoCliente() {
         limparCampos();
-        atualizarCodigoFuncionario();
+        atualizarCodigoCliente();
         jTextFieldNome.requestFocus();
         aplicarMascaraCPF();
         carregarCidades();
@@ -813,8 +816,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldNumero.setText("");
         jFormattedTextFieldCEP.setText("");
         jTextFieldBairro.setText("");
-        jPasswordFieldConfirmaSenha.setText("");
-        jPasswordFieldSenha.setText("");
+        jFormattedTextFielddataNascimento.setText("");
         jComboBoxCidade.removeAllItems();
     }
 
@@ -851,17 +853,17 @@ public class CadastroCliente extends javax.swing.JFrame {
                 switch (label) {
                     case "Edit":
                         if (rowIndex != -1) {
-                            CarregarFuncionarioSelecionado();
+                            CarregarClienteSelecionado();
                             break;
                         }
                     case "Delete":
                         int excluir = JOptionPane.showConfirmDialog(editorComponent, "Tem certeza?");
                         if (excluir == 0) {
-                            int selectedRow = jTableDadosFuncionario.getSelectedRow();
+                            int selectedRow = jTableDadosCliente.getSelectedRow();
                             if (selectedRow != -1) {
-                                int localCodigo = (int) jTableDadosFuncionario.getValueAt(selectedRow, 0);
-                                funcionarioService.excluirFuncionario(localCodigo);
-                                listarFuncionarios();
+                                int localCodigo = (int) jTableDadosCliente.getValueAt(selectedRow, 0);
+                                clienteService.excluirCliente(localCodigo);
+                                listarClientes();
                             }
                             JOptionPane.showMessageDialog(editorComponent, "Registro removido com sucesso!!");
                             break;
@@ -893,36 +895,36 @@ public class CadastroCliente extends javax.swing.JFrame {
             String criterio = result.getCriterio();
             String pesquisa = result.getValor();
 
-            localizarFuncionario(criterio, pesquisa);
+            localizarCliente(criterio, pesquisa);
         }
     }
 
-    private void localizarFuncionario(String criterio, String valor) {
-        Funcionario funcionario = null;
+    private void localizarCliente(String criterio, String valor) {
+        Cliente cliente = null;
 
         try {
             switch (criterio) {
                 case "Código":
                     int codigo = Integer.parseInt(valor);
-                    funcionario = funcionarioService.localizarFuncionarioPorCodigo(codigo);
-                    CarregarFuncionarioSelecionado();
+                    cliente = clienteService.localizarClientePorCodigo(codigo);
+                    CarregarClienteSelecionado();
                     break;
                 case "Nome":
-                    funcionario = funcionarioService.localizarFuncionarioPorNome(valor);
-                    CarregarFuncionarioSelecionado();
+                    cliente = clienteService.localizarClientePorNome(valor);
+                    CarregarClienteSelecionado();
                     break;
                 case "CPF":
-                    funcionario = funcionarioService.localizarFuncionarioPorCPF(valor);
-                    CarregarFuncionarioSelecionado();
+                    cliente = clienteService.localizarClientePorCPF(valor);
+                    CarregarClienteSelecionado();
                     break;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "O valor do código deve ser um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (funcionario != null) {
+        if (cliente != null) {
             // Exibir os detalhes do funcionário localizado
-            JOptionPane.showMessageDialog(this, "Funcionário localizado:\n" + funcionario.getNome(), "Funcionário Encontrado", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Funcionário localizado:\n" + cliente.getNome(), "Funcionário Encontrado", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Funcionário não encontrado.", "Funcionário Não Encontrado", JOptionPane.WARNING_MESSAGE);
         }
@@ -938,9 +940,9 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSair;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox<String> jComboBoxCidade;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextFieldCEP;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
+    private javax.swing.JFormattedTextField jFormattedTextFielddataNascimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBairro;
     private javax.swing.JLabel jLabelCEP;
@@ -954,7 +956,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTelefone;
     private javax.swing.JPanel jPanelFuncionario;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableDadosFuncionario;
+    private javax.swing.JTable jTableDadosCliente;
     private javax.swing.JTextField jTextFieldBairro;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldEmail;
