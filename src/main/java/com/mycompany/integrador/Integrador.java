@@ -4,6 +4,8 @@
 
 package com.mycompany.integrador;
 
+import com.mycompany.integrador.view.Login;
+
 /**
  *
  * @author Ricardo
@@ -11,6 +13,11 @@ package com.mycompany.integrador;
 public class Integrador {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Login().setVisible(true);
+            }
+        });
     }
 }
