@@ -32,7 +32,7 @@ public class EventoService {
         conexao = ConectionPostgres.getConnection();
     }
 
-    private Time formatTime(String timeString) {
+    public Time formatTime(String timeString) {
         // Adicionar segundos se necessário para garantir o formato correto
         if (timeString.length() == 5) {
             timeString = timeString + ":00";
@@ -162,38 +162,54 @@ public class EventoService {
         }
     }
     
-    public boolean validarHora(Evento evento) {
-    String sql = "SELECT COUNT(*) FROM evento WHERE data_evento = ? " +
-                 "AND ((horaEntrada_evento > ? AND horaSaida_evento < ?)";
-    boolean isHoraDisponivel = true;
+public boolean validarHora(Evento evento) {
+        String sql = "SELECT COUNT(*) FROM evento WHERE data_evento = ? AND " +
+                     "(horaEntrada_evento BETWEEN ? + interval '1 minute' AND ? - interval '1 minute' " +
+                     "OR horaSaida_evento BETWEEN ? + interval '1 minute' AND ? - interval '1 minute');";
 
-    try {
-        stmt = conexao.prepareStatement(sql);
-        stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
-        stmt.setTime(2, formatTime(evento.getHoraSaida()));
-        stmt.setTime(3, formatTime(evento.getHoraEntrada()));
-        stmt.setTime(4, formatTime(evento.getHoraEntrada()));
-        stmt.setTime(5, formatTime(evento.getHoraSaida()));
+        boolean isHoraDisponivel = true;
+        Connection conexao = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next() && rs.getInt(1) > 0) {
-            isHoraDisponivel = false;
-        }
-    } catch (SQLException e) {
-        System.err.println("Erro ao validar hora: " + e.getMessage());
-    } finally {
+        Time horaEntrada = formatTime(evento.getHoraEntrada());
+        Time horaSaida = formatTime(evento.getHoraSaida());
+      
+        
+        
         try {
-            if (stmt != null) {
-                stmt.close();
+            conexao = ConectionPostgres.getConnection();
+            stmt = conexao.prepareStatement(sql);
+            
+            stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));;
+            stmt.setTime(2, horaEntrada);
+            stmt.setTime(3, horaSaida);
+            stmt.setTime(4, horaEntrada);
+            stmt.setTime(5, horaSaida);
+
+            rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                isHoraDisponivel = false;
             }
-            ConectionPostgres.fecharConexao(conexao);
         } catch (SQLException e) {
-            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            System.err.println("Erro ao validar hora: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conexao != null) {
+                    ConectionPostgres.fecharConexao(conexao);
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
         }
+        return isHoraDisponivel;
     }
-    return isHoraDisponivel;
-}
-    
-    
-    
+
+
 }
