@@ -175,7 +175,7 @@ public class Principal extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroModalildade().setVisible(true);
+                new CadastroModalidade().setVisible(true);
             }
         });
     }//GEN-LAST:event_modalidadesMenuActionPerformed

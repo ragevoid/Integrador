@@ -12,21 +12,26 @@ import com.mycompany.integrador.util.LocalizarService;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
  * @author jose.zanandrea
  */
-public class CadastroModalildade extends javax.swing.JFrame {
+public class CadastroModalidade extends javax.swing.JFrame {
 
     private int rowIndex = -1; // Adicionando variável para armazenar o índice da linha selecionada
     private int codigo;
@@ -35,26 +40,22 @@ public class CadastroModalildade extends javax.swing.JFrame {
     /**
      * Creates new form CadastroFuncionario
      */
-    public CadastroModalildade() {
+    public CadastroModalidade() {
         initComponents();
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
 
         getContentPane().setLayout(null);
         
-        
-        
         aplicarUpperCaseFilter(jTextFieldNome, 60);
-
 
         tableModel = (DefaultTableModel) jTableDadosModalidade.getModel();
         modalidadeService = new ModalidadeService();
 
         listarModalidades();
         configureTable();
-
     }
-    
+       
     public static void aplicarUpperCaseFilter(JTextField textField, int limite) {
         AbstractDocument doc = (AbstractDocument) textField.getDocument();
         doc.setDocumentFilter(new CombinedFilter(limite, true)); // Filtro de maiúsculas
@@ -427,14 +428,70 @@ public class CadastroModalildade extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroModalildade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroModalildade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroModalildade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroModalildade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroFuncionario().setVisible(true);
+            }
         //</editor-fold>
 
         /* Create and display the form 
