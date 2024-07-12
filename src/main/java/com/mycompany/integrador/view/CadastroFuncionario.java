@@ -9,7 +9,7 @@ import com.mycompany.integrador.model.Funcionario;
 import com.mycompany.integrador.model.service.CidadeService;
 import com.mycompany.integrador.util.CombinedFilter;
 import com.mycompany.integrador.model.service.FuncionarioService;
-import com.mycompany.integrador.util.ValidarCPFCNPJService;
+import com.mycompany.integrador.util.ValidacoesService;
 import com.mycompany.integrador.util.ButtonRenderer;
 import com.mycompany.integrador.util.LocalizarService;
 import java.awt.Component;
@@ -33,6 +33,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
+import javax.xml.validation.Validator;
 //import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -46,7 +47,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private final DefaultTableModel tableModel;
     private final FuncionarioService funcionarioService;
     private final CidadeService cidadeService;
-    private final ValidarCPFCNPJService validarCPFCNPJService;
+    private final ValidacoesService validacoesService;
 
     /**
      * Creates new form CadastroFuncionario
@@ -71,7 +72,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         tableModel = (DefaultTableModel) jTableDadosFuncionario.getModel();
         funcionarioService = new FuncionarioService();
         cidadeService = new CidadeService();
-        validarCPFCNPJService = new ValidarCPFCNPJService();
+        validacoesService = new ValidacoesService();
 
         aplicarMascaraCPF();
         listarFuncionarios();
@@ -120,11 +121,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             return;
         }
 
-        String textoFormatado = validarCPFCNPJService.formatarCpfCnpj(texto);
+        String textoFormatado = validacoesService.formatarCpfCnpj(texto);
         jFormattedTextFieldCPF.setText(textoFormatado);
 
         if (textoFormatado.length() == 14) {
-            boolean valido = validarCPFCNPJService.validarCpf(textoFormatado);
+            boolean valido = validacoesService.validarCpf(textoFormatado);
             if (!valido) {
                 JOptionPane.showMessageDialog(this,
                         "CPF inválido!", "Erro de validação", JOptionPane.ERROR_MESSAGE);
@@ -139,6 +140,15 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+        
+    public boolean validarEmailField() {
+        if (!validacoesService.validarEmail(jTextFieldEmail)) {
+            JOptionPane.showMessageDialog(null, "Email inválido. Verifique!");
+            jTextFieldEmail.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     
@@ -643,6 +653,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxCidadeActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+
         salvarFuncionario();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -685,6 +696,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         salvarFuncionario();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -731,6 +743,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }
 
     private void salvarFuncionario() {
+        
+        if (!validarEmailField()) {
+            return;
+        }
+        
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
@@ -749,10 +766,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
 
         if (!senha.equals(confirmarSenha)) {
-            // Lógica para lidar com senhas não correspondentes
             JOptionPane.showMessageDialog(null, "As senhas não correspondem. Por favor, tente novamente.");
             return;
-        }
+        }      
 
         // Limpando o array de caracteres da senha após o uso
         Arrays.fill(senhaChars, ' ');

@@ -73,7 +73,7 @@ public class ClienteService {
     }
     
         public Cliente atualizarCliente(Cliente cliente) {
-        String sql = "UPDATE cliente SET cpf_cliente = ?, nome_cliente = ?, telefone_cliente = ?, email_cliente = ?, datanascimento_cliente, "
+        String sql = "UPDATE cliente SET cpf_cliente = ?, nome_cliente = ?, telefone_cliente = ?, email_cliente = ?, datanascimento_cliente = ?, "
                 + "endereco_cliente = ?, numero_cliente = ?, CEP_cliente = ?, bairro_cliente = ?, cidade_cliente = ? "
                 + " WHERE codigo_cliente = ?";
         try {

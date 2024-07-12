@@ -9,7 +9,7 @@ import com.mycompany.integrador.model.Cliente;
 import com.mycompany.integrador.model.service.CidadeService;
 import com.mycompany.integrador.model.service.ClienteService;
 import com.mycompany.integrador.util.CombinedFilter;
-import com.mycompany.integrador.util.ValidarCPFCNPJService;
+import com.mycompany.integrador.util.ValidacoesService;
 import com.mycompany.integrador.util.ButtonRenderer;
 import com.mycompany.integrador.util.LocalizarService;
 import java.awt.Component;
@@ -48,7 +48,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private final DefaultTableModel tableModel;
     private final ClienteService clienteService;
     private final CidadeService cidadeService;
-    private final ValidarCPFCNPJService validarCPFCNPJService;
+    private final ValidacoesService validacoesService;
     /**
      * Creates new form CadastroFuncionario
      */
@@ -67,12 +67,13 @@ public class CadastroCliente extends javax.swing.JFrame {
         aplicarUpperCaseFilter(jTextFieldEndereco, 60);
         aplicarUpperCaseFilter(jTextFieldBairro, 40);
         aplicarFormatoCEP(jFormattedTextFieldCEP);
+        configurarMascaraDataNascimento(jFormattedTextFielddataNascimento);
 
 
         tableModel = (DefaultTableModel) jTableDadosCliente.getModel();
         clienteService = new ClienteService();
         cidadeService = new CidadeService();
-        validarCPFCNPJService = new ValidarCPFCNPJService();
+        validacoesService = new ValidacoesService();
 
         aplicarMascaraCPF();
         listarClientes();
@@ -121,11 +122,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             return;
         }
 
-        String textoFormatado = validarCPFCNPJService.formatarCpfCnpj(texto);
+        String textoFormatado = validacoesService.formatarCpfCnpj(texto);
         jFormattedTextFieldCPF.setText(textoFormatado);
 
         if (textoFormatado.length() == 14) {
-            boolean valido = validarCPFCNPJService.validarCpf(textoFormatado);
+            boolean valido = validacoesService.validarCpf(textoFormatado);
             if (!valido) {
                 JOptionPane.showMessageDialog(this,
                         "CPF inválido!", "Erro de validação", JOptionPane.ERROR_MESSAGE);
@@ -139,6 +140,26 @@ public class CadastroCliente extends javax.swing.JFrame {
             maskFormatter.install(campoCEP);
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean validarEmailField() {
+        if (!validacoesService.validarEmail(jTextFieldEmail)) {
+            JOptionPane.showMessageDialog(null, "Email inválido. Verifique!");
+            jTextFieldEmail.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    
+    public void configurarMascaraDataNascimento(JFormattedTextField jFormattedTextFieldDataNascimento) {
+        try {
+            MaskFormatter maskFormatter = new MaskFormatter("##/##/####");
+            maskFormatter.setPlaceholderCharacter('_');
+            maskFormatter.install(jFormattedTextFieldDataNascimento);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao configurar a máscara de data de nascimento.");
         }
     }
 
@@ -203,7 +224,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jFormattedTextFieldCEP.setText(CEP);
         jTextFieldBairro.setText(bairro);
         
-        String dataNascimento1 = jFormattedTextFielddataNascimento.getText();
+        /*String dataNascimento1 = jFormattedTextFielddataNascimento.getText();
 
         Date dataNascimentoDate = null;
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
@@ -214,7 +235,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
             return;
         }
-        jFormattedTextFielddataNascimento.setText(dataNascimento1);
+        jFormattedTextFielddataNascimento.setText(dataNascimento1);*/
 
         String nomeCidade = cidadeService.getNomeCidade(codigoCidade);
 
@@ -597,6 +618,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        
         salvarCliente();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -747,6 +769,11 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     private void salvarCliente() {
+        
+                if (!validarEmailField()) {
+            return;
+        }
+                
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
@@ -771,11 +798,11 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         int codigoCidade = cidadeService.getCodigoCidade(jComboBoxCidade.getSelectedItem().toString());
 
-        if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
+        if (rowIndex == -1) { // Se rowIndex for -1, é um novo cliente.
 
             Cliente cliente = new Cliente(nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
             clienteService.salvarCliente(cliente);
-        } else { // Caso contrário, é uma edição de pessoa existente
+        } else { // Caso contrário, é uma edição de cliente existente
 
             Cliente clienteEditado = new Cliente(codigoint, nome, CPF, telefone, email, endereco, numero, CEP, bairro, codigoCidade, dataNascimentoDate);
             clienteEditado.setCodigo((int) jTableDadosCliente.getValueAt(rowIndex, 0)); // Define o Código da pessoa

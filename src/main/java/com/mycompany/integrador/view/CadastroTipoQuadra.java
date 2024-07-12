@@ -5,27 +5,23 @@
 package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.Modalidade;
-import com.mycompany.integrador.model.service.ModalidadeService;
+import com.mycompany.integrador.model.TipoQuadra;
+import com.mycompany.integrador.model.service.TipoQuadraService;
 import com.mycompany.integrador.util.CombinedFilter;
 import com.mycompany.integrador.util.ButtonRenderer;
 import com.mycompany.integrador.util.LocalizarService;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -36,7 +32,7 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
     private int rowIndex = -1; // Adicionando variável para armazenar o índice da linha selecionada
     private int codigo;
     private final DefaultTableModel tableModel;
-    private final ModalidadeService modalidadeService;
+    private final TipoQuadraService tipoQuadraService;
     /**
      * Creates new form CadastroFuncionario
      */
@@ -49,10 +45,10 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         
         aplicarUpperCaseFilter(jTextFieldNome, 60);
 
-        tableModel = (DefaultTableModel) jTableDadosModalidade.getModel();
-        modalidadeService = new ModalidadeService();
+        tableModel = (DefaultTableModel) jTableDadosTipoQuadra.getModel();
+        tipoQuadraService = new TipoQuadraService();
 
-        listarModalidades();
+        listarTipoQuadras();
         configureTable();
     }
        
@@ -66,48 +62,45 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         doc.setDocumentFilter(new CombinedFilter(limite, false)); // Filtro de minúsculas
     }
     
-    private void atualizarCodigoModalidade() {
+    private void atualizarCodigoTipoQuadra() {
         try {
-            int maxCodigo = modalidadeService.getMaxCodigoModalidade();
+            int maxCodigo = tipoQuadraService.getMaxCodigoTipoQuadra();
             jTextFieldCodigo.setText(String.valueOf(maxCodigo));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao obter o código da Modalidade: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao obter o código do Tipo de Quadra: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void configureTable() {
-        jTableDadosModalidade.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jTableDadosModalidade.getSelectionModel().addListSelectionListener(e -> {
-            rowIndex = jTableDadosModalidade.getSelectedRow();
+        jTableDadosTipoQuadra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableDadosTipoQuadra.getSelectionModel().addListSelectionListener(e -> {
+            rowIndex = jTableDadosTipoQuadra.getSelectedRow();
         });
 
         // Renderizador para os botões
-        jTableDadosModalidade.getColumn("Edit").setCellRenderer(new ButtonRenderer("Edit"));
-        jTableDadosModalidade.getColumn("Delete").setCellRenderer(new ButtonRenderer("Delete"));
+        jTableDadosTipoQuadra.getColumn("Edit").setCellRenderer(new ButtonRenderer("Edit"));
+        jTableDadosTipoQuadra.getColumn("Delete").setCellRenderer(new ButtonRenderer("Delete"));
 
         // Editor para os botões
-        jTableDadosModalidade.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), "Edit", jTableDadosModalidade));
-        jTableDadosModalidade.getColumn("Delete").setCellEditor(new ButtonEditor(new JCheckBox(), "Delete", jTableDadosModalidade));
+        jTableDadosTipoQuadra.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), "Edit", jTableDadosTipoQuadra));
+        jTableDadosTipoQuadra.getColumn("Delete").setCellEditor(new ButtonEditor(new JCheckBox(), "Delete", jTableDadosTipoQuadra));
 
     }
 
-    private void CarregarModalidadeSelecionada() {
-        int codigo = (int) jTableDadosModalidade.getValueAt(rowIndex, 0);
+    private void CarregarTipoQuadraSelecionada() {
+        int codigo = (int) jTableDadosTipoQuadra.getValueAt(rowIndex, 0);
         String codigoStr = String.valueOf(codigo);
-        String nome = (String) jTableDadosModalidade.getValueAt(rowIndex, 1);
-        float valor = (float) jTableDadosModalidade.getValueAt(rowIndex, 2);
+        String nome = (String) jTableDadosTipoQuadra.getValueAt(rowIndex, 1);
 
         // Preencha os campos com os dados do funcionario selecionado para edição 
         jTextFieldCodigo.setText(codigoStr);
         jTextFieldNome.setText(nome);
-        String valorconvertido = String.valueOf(valor);
-        jFormattedTextFieldValor.setText(valorconvertido);
 
     }
 
     public void editarModalidade(int row) {
-        jTableDadosModalidade.setRowSelectionInterval(row, row);
-        CarregarModalidadeSelecionada();
+        jTableDadosTipoQuadra.setRowSelectionInterval(row, row);
+        CarregarTipoQuadraSelecionada();
     }
 
     /**
@@ -124,12 +117,10 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         jTextFieldCodigo = new javax.swing.JTextField();
         jLabelNomeModalidade = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
-        jLabelValor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableDadosModalidade = new javax.swing.JTable();
+        jTableDadosTipoQuadra = new javax.swing.JTable();
         jButtonCadastrar = new javax.swing.JButton();
         jButtonSalvarTela = new javax.swing.JButton();
-        jFormattedTextFieldValor = new javax.swing.JFormattedTextField();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
@@ -155,33 +146,30 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         jLabelNomeModalidade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelNomeModalidade.setText("Nome Modalidade:");
 
-        jLabelValor.setText("Valor:");
-
-        jTableDadosModalidade.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDadosTipoQuadra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "Valor R$", "Edit", "Delete"
+                "Código", "Nome", "Edit", "Delete"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableDadosModalidade);
-        if (jTableDadosModalidade.getColumnModel().getColumnCount() > 0) {
-            jTableDadosModalidade.getColumnModel().getColumn(0).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(0).setPreferredWidth(70);
-            jTableDadosModalidade.getColumnModel().getColumn(1).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(1).setPreferredWidth(300);
-            jTableDadosModalidade.getColumnModel().getColumn(2).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(3).setResizable(false);
-            jTableDadosModalidade.getColumnModel().getColumn(4).setResizable(false);
+        jScrollPane1.setViewportView(jTableDadosTipoQuadra);
+        if (jTableDadosTipoQuadra.getColumnModel().getColumnCount() > 0) {
+            jTableDadosTipoQuadra.getColumnModel().getColumn(0).setResizable(false);
+            jTableDadosTipoQuadra.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTableDadosTipoQuadra.getColumnModel().getColumn(1).setResizable(false);
+            jTableDadosTipoQuadra.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTableDadosTipoQuadra.getColumnModel().getColumn(2).setResizable(false);
+            jTableDadosTipoQuadra.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jButtonCadastrar.setBackground(new java.awt.Color(51, 153, 255));
@@ -218,11 +206,7 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTextFieldNome))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelModalidadeLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(326, 326, 326)
+                            .addGap(498, 498, 498)
                             .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -239,10 +223,8 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
                     .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
         );
@@ -348,11 +330,11 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
     }*/
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        salvarModalidade();
+        salvarTipoQuadra();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
-        novaModalidade();
+        novoTipoQuadra();
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -363,9 +345,9 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         JOptionPane.showMessageDialog(null,
-                "Deseja realmente excluir os dados selecionados?", "Excluir Modalidade", JOptionPane.YES_NO_CANCEL_OPTION);        
-        modalidadeService.excluirModalidade(codigoint);
-        listarModalidades();
+                "Deseja realmente excluir os dados selecionados?", "Excluir Tipo de Quadra", JOptionPane.YES_NO_CANCEL_OPTION);        
+        tipoQuadraService.excluirTipoQuadra(codigoint);
+        listarTipoQuadras();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -379,11 +361,11 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLocalizarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        CarregarModalidadeSelecionada();
+        CarregarTipoQuadraSelecionada();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonSalvarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarTelaActionPerformed
-        salvarModalidade();
+        salvarTipoQuadra();
     }//GEN-LAST:event_jButtonSalvarTelaActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
@@ -391,24 +373,22 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
-        String valor = jFormattedTextFieldValor.getText();
-        float valorfloat = Float.parseFloat(valor);
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Modalidade modalidade = new Modalidade(nome, valorfloat);
-            modalidadeService.salvarModalidade(modalidade);
+            TipoQuadra tipoQuadra = new TipoQuadra(nome);
+            tipoQuadraService.salvarTipoQuadra(tipoQuadra);
         } else { // Caso contrário, é uma edição de modalidade existente
 
-            Modalidade modalidadeEditada = new Modalidade(nome, valorfloat);
-            modalidadeEditada.setCodigo_modalidade((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
-            modalidadeService.atualizarModalidade(modalidadeEditada);
+            TipoQuadra tipoQuadraEditada = new TipoQuadra(nome);
+            tipoQuadraEditada.setCodigo((int) jTableDadosTipoQuadra.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            tipoQuadraService.atualizarTipoQuadra(tipoQuadraEditada);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
 
         //novoFuncionario();
         limparCampos();
-        listarModalidades();
+        listarTipoQuadras();
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     /**
@@ -437,275 +417,48 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CadastroTipoQuadra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroFuncionario().setVisible(true);
-            }
-        });*/
     }
 
-    private void salvarModalidade() {
+    private void salvarTipoQuadra() {
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
-        String valor = jFormattedTextFieldValor.getText();
-        float valorfloat = Float.parseFloat(valor);
 
         if (rowIndex == -1) { // Se rowIndex for -1, é uma nova pessoa
 
-            Modalidade modalidade = new Modalidade(nome, valorfloat);
-            modalidadeService.salvarModalidade(modalidade);
-        } else { // Caso contrário, é uma edição de pessoa existente
+            TipoQuadra tipoQuadra = new TipoQuadra(nome);
+            tipoQuadraService.salvarTipoQuadra(tipoQuadra);
+        } else { // Caso contrário, é uma edição de modalidade existente
 
-            Modalidade modalidadeEditada = new Modalidade(nome, valorfloat);
-            modalidadeEditada.setCodigo_modalidade((int) jTableDadosModalidade.getValueAt(rowIndex, 0)); // Define o Código da pessoa
-            modalidadeService.atualizarModalidade(modalidadeEditada);
+            TipoQuadra tipoQuadraEditada = new TipoQuadra(nome);
+            tipoQuadraEditada.setCodigo((int) jTableDadosTipoQuadra.getValueAt(rowIndex, 0)); // Define o Código da pessoa
+            tipoQuadraService.atualizarTipoQuadra(tipoQuadraEditada);
             rowIndex = -1; // Reseta o índice da linha após a edição
         }
 
         JOptionPane.showMessageDialog(null,
                 "Dados inseridos com sucesso!", "Sucesso", JOptionPane.OK_OPTION);
         limparCampos();
-        listarModalidades();
+        listarTipoQuadras();
     }
 
-    private void listarModalidades() {
+    private void listarTipoQuadras() {
         tableModel.setRowCount(0);
 
-        modalidadeService.listarModalidade().forEach(modalidade -> {
-            tableModel.addRow(new Object[]{modalidade.getCodigo_modalidade(), modalidade.getNome_modalidade(), modalidade.getValor_modalidade()});
+        tipoQuadraService.listarTipoQuadra().forEach(tipoQuadra -> {
+            tableModel.addRow(new Object[]{tipoQuadra.getCodigo(), tipoQuadra.getNome()});
         });
     }
 
-    private void novaModalidade() {
+    private void novoTipoQuadra() {
         limparCampos();
-        atualizarCodigoModalidade();
+        atualizarCodigoTipoQuadra();
         jTextFieldNome.requestFocus();
     }
 
     private void limparCampos() {
         jTextFieldCodigo.setText("");
         jTextFieldNome.setText("");
-        jFormattedTextFieldValor.setText("");
     }
 
     class ButtonEditor extends DefaultCellEditor {
@@ -741,17 +494,17 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
                 switch (label) {
                     case "Edit":
                         if (rowIndex != -1) {
-                            CarregarModalidadeSelecionada();
+                            CarregarTipoQuadraSelecionada();
                             break;
                         }
                     case "Delete":
                         int excluir = JOptionPane.showConfirmDialog(editorComponent, "Tem certeza?");
                         if (excluir == 0) {
-                            int selectedRow = jTableDadosModalidade.getSelectedRow();
+                            int selectedRow = jTableDadosTipoQuadra.getSelectedRow();
                             if (selectedRow != -1) {
-                                int localCodigo = (int) jTableDadosModalidade.getValueAt(selectedRow, 0);
-                                modalidadeService.excluirModalidade(localCodigo);
-                                listarModalidades();
+                                int localCodigo = (int) jTableDadosTipoQuadra.getValueAt(selectedRow, 0);
+                                tipoQuadraService.excluirTipoQuadra(localCodigo);
+                                listarTipoQuadras();
                             }
                             JOptionPane.showMessageDialog(editorComponent, "Registro removido com sucesso!!");
                             break;
@@ -783,34 +536,34 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
             String criterio = result.getCriterio();
             String pesquisa = result.getValor();
 
-            localizarModalidade(criterio, pesquisa);
+            localizarTipoQuadra(criterio, pesquisa);
         }
     }
 
-    private void localizarModalidade(String criterio, String valor) {
-        Modalidade modalidade = null;
+    private void localizarTipoQuadra(String criterio, String valor) {
+        TipoQuadra tipoQuadra = null;
 
         try {
             switch (criterio) {
                 case "Código":
                     int codigo = Integer.parseInt(valor);
-                    modalidade = modalidadeService.localizarModalidadePorCodigo(codigo);
-                    CarregarModalidadeSelecionada();
+                    tipoQuadra = tipoQuadraService.localizarTipoQuadraPorCodigo(codigo);
+                    CarregarTipoQuadraSelecionada();
                     break;
                 case "Nome":
-                    modalidade = modalidadeService.localizarModalidadePorNome(valor);
-                    CarregarModalidadeSelecionada();
+                    tipoQuadra = tipoQuadraService.localizarTipoQuadraPorNome(valor);
+                    CarregarTipoQuadraSelecionada();
                     break;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "O valor do código deve ser um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (modalidade != null) {
-            // Exibir os detalhes da modalidade localizada
-            JOptionPane.showMessageDialog(this, "Funcionário localizado:\n" + modalidade.getNome_modalidade(), "Modalidade Encontrada", JOptionPane.INFORMATION_MESSAGE);
+        if (tipoQuadra != null) {
+            // Exibir os detalhes do Tipo de Quadra localizada
+            JOptionPane.showMessageDialog(this, "Tipo de Quadra localizada:\n" + tipoQuadra.getNome(), "Tipo de Quadra Encontrada", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Modalidade não encontrada.", "Modalidade Não Encontrada", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tipo de Quadra não encontrada.", "Tipo de Quadra Não Encontrada", JOptionPane.WARNING_MESSAGE);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -823,13 +576,11 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSair;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonSalvarTela;
-    private javax.swing.JFormattedTextField jFormattedTextFieldValor;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JLabel jLabelNomeModalidade;
-    private javax.swing.JLabel jLabelValor;
     private javax.swing.JPanel jPanelModalidade;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableDadosModalidade;
+    private javax.swing.JTable jTableDadosTipoQuadra;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables

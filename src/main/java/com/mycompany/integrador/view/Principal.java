@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         clientesMenu = new javax.swing.JMenuItem();
         modalidadesMenu = new javax.swing.JMenuItem();
         quadrasMenu = new javax.swing.JMenuItem();
+        TipoQuadraMenu = new javax.swing.JMenuItem();
         agendaMenu = new javax.swing.JMenu();
         iniciarAgenda = new javax.swing.JMenuItem();
 
@@ -118,6 +119,15 @@ public class Principal extends javax.swing.JFrame {
         quadrasMenu.setText("Quadras");
         cadatroMenu.add(quadrasMenu);
 
+        TipoQuadraMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        TipoQuadraMenu.setText("Tipo de Quadras");
+        TipoQuadraMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TipoQuadraMenuActionPerformed(evt);
+            }
+        });
+        cadatroMenu.add(TipoQuadraMenu);
+
         jMenuBar1.add(cadatroMenu);
 
         agendaMenu.setText("Agenda");
@@ -180,6 +190,14 @@ public class Principal extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_modalidadesMenuActionPerformed
 
+    private void TipoQuadraMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoQuadraMenuActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroTipoQuadra().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_TipoQuadraMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -217,6 +235,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PrincipalBackGround;
+    private javax.swing.JMenuItem TipoQuadraMenu;
     private javax.swing.JMenu agendaMenu;
     private javax.swing.JMenu cadatroMenu;
     private javax.swing.JMenuItem clientesMenu;
