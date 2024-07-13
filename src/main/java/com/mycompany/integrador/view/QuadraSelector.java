@@ -96,7 +96,7 @@ public class QuadraSelector extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         selectedQuadra = jComboBox1.getSelectedItem().toString();
-        SelectedQuadraName = getStringAfterDash(selectedQuadra);
+        SelectedQuadraName = pegarNomeQuadra(selectedQuadra);
         
         System.out.println(selectedQuadra);
         Agenda agenda = new Agenda();
@@ -158,7 +158,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         jComboBox1.setModel(model);
     }
    
-    public static String getStringAfterDash(String input) {
+    public static String pegarNomeQuadra(String input) {
         int dashIndex = input.indexOf("-");
         return input.substring(dashIndex + 1);
     }

@@ -199,6 +199,8 @@ public class Agenda extends javax.swing.JFrame {
         // TODO add your handling code here:
         EventoTela eventoTela = new EventoTela();
         eventoTela.quadraLabel.setText(quadraLabel.getText());
+        
+        eventoTela.setTitle("Eventos - "+ pegarNomeQuadra(quadraLabel.getText()) );
         eventoTela.setVisible(true);
     }//GEN-LAST:event_adicionarEventoButtonActionPerformed
 
@@ -287,6 +289,11 @@ public class Agenda extends javax.swing.JFrame {
         } else {
             throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
+    }
+    
+          public static String pegarNomeQuadra(String input) {
+        int dashIndex = input.indexOf("-");
+        return input.substring(dashIndex + 1);
     }
 
 

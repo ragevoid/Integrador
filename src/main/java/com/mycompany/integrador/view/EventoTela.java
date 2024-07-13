@@ -269,6 +269,7 @@ public class EventoTela extends javax.swing.JFrame {
             throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
     }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
