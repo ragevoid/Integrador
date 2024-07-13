@@ -164,29 +164,27 @@ public class EventoTela extends javax.swing.JFrame {
         Date data = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String horaEntrada = horaEntradaPicker.getTimeStringOrEmptyString();
         String horaSaida = horaSaidaPicker.getTimeStringOrEmptyString();
-        String descripcao = descriptionText.getText();
+        String descricao = descriptionText.getText();
         String quadra = quadraLabel.getText();
-        int codigo_quadra = pegarId(quadra);
+        int codigoQuadra = pegarId(quadra);
         String cliente = clienteCombo.getSelectedItem().toString();
-        int codigo_cliente = pegarId(cliente);
+        int codigoCliente = pegarId(cliente);
         String modalidade = modalidadeCombo.getSelectedItem().toString();
-        int codigo_modalidade = pegarId(modalidade);
+        int codigoModalidade = pegarId(modalidade);
 
-        if (comprobarHoras(horaEntrada, horaSaida) == true) {
-            JOptionPane.showMessageDialog(null, "Error no digitamento da hora", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        if (comprobarHoras(horaEntrada, horaSaida)) {
+            JOptionPane.showMessageDialog(null, "Erro no digitamento da hora", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Evento evento = new Evento(data, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
+
+        if (!eventoService.validarHora(evento)) {
+            eventoService.salvarEvento(evento);
+            JOptionPane.showMessageDialog(null, "Evento salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            // this.dispose(); // Uncomment if you want to close the frame after saving
         } else {
-
-            Evento evento = new Evento(data, horaEntrada, horaSaida, descripcao, codigo_quadra, codigo_cliente, codigo_modalidade);
-            if (eventoService.validarHora(evento)) {
-                JOptionPane.showMessageDialog(null, "Error ja existe uma hora marcada para esse dia", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-
-            } else {
-                eventoService.salvarEvento(evento);
-              //  this.dispose();
-            }
-
+            JOptionPane.showMessageDialog(null, "Erro: já existe uma hora marcada para esse dia", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
