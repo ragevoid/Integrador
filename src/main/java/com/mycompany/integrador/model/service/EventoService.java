@@ -41,7 +41,7 @@ public class EventoService {
     }
 
     public Evento salvarEvento(Evento evento) {
-        
+
         String sql = "INSERT INTO evento (data_evento, horaEntrada_evento, horaSaida_evento, descripcao_evento, codigo_quadra, codigo_cliente, codigo_modalidade) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -75,11 +75,16 @@ public class EventoService {
             }
         }
         return evento;
-            }
-    
+    }
 
-    public List<Evento> listarEventos(String dataSelected) {
-        String sql = "SELECT codigo_evento, data_evento, horaEntrada_evento, horaSaida_evento, descripcao_evento, codigo_quadra, codigo_cliente, codigo_modalidade FROM evento WHERE data_evento = ?";
+    public List<Evento> listarEventos(String dataSelected, int quadra) {
+        String sql = "SELECT e.codigo_evento, e.data_evento, e.horaEntrada_evento, e.horaSaida_evento, e.descripcao_evento, "
+                + "q.nome_quadra, c.nome_cliente, m.nome_modalidade "
+                + "FROM evento e "
+                + "JOIN quadra q ON e.codigo_quadra = q.codigo_quadra "
+                + "JOIN cliente c ON e.codigo_cliente = c.codigo_cliente "
+                + "JOIN modalidade m ON e.codigo_modalidade = m.codigo_modalidade "
+                + "WHERE e.data_evento = ? AND e.codigo_quadra = ?";
         List<Evento> eventos = new ArrayList<>();
 
         try {
@@ -91,22 +96,23 @@ public class EventoService {
             Date parsedDate = dateFormat.parse(dataSelected);
             java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
 
-            // Definir o parâmetro da consulta
+            // Definir os parâmetros da consulta
             stmt.setDate(1, sqlDate);
+            stmt.setInt(2, quadra);
 
             rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int codigo_evento = rs.getInt("codigo_evento");
                 Date dataEvento = rs.getDate("data_evento");
-                Time horaEntrada = rs.getTime("horaEntrada_evento");
-                Time horaSaida = rs.getTime("horaSaida_evento");
+                String horaEntrada = rs.getString("horaEntrada_evento");
+                String horaSaida = rs.getString("horaSaida_evento");
                 String descricao = rs.getString("descripcao_evento");
-                int codigo_quadra = rs.getInt("codigo_quadra");
-                int codigo_cliente = rs.getInt("codigo_cliente");
-                int codigo_modalidade = rs.getInt("codigo_modalidade");
+                String nomeQuadra = rs.getString("nome_quadra");
+                String nomeCliente = rs.getString("nome_cliente");
+                String nomeModalidade = rs.getString("nome_modalidade");
 
-                eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada.toString(), horaSaida.toString(), descricao, codigo_quadra, codigo_cliente, codigo_modalidade));
+                eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, nomeQuadra, nomeCliente, nomeModalidade));
             }
 
         } catch (SQLException | ParseException e) {
@@ -119,7 +125,9 @@ public class EventoService {
                 if (stmt != null) {
                     stmt.close();
                 }
-                conexaoBD.fecharConexao(conexao);
+                if (conexao != null) {
+                    conexaoBD.fecharConexao(conexao);
+                }
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
@@ -128,89 +136,85 @@ public class EventoService {
         return eventos;
     }
 
-    public void apagarEventos(String dataSelected, String descricao) {
-        String sql = "DELETE FROM evento WHERE data_evento = ? AND descripcao_evento = ?";
+    public void apagarEventos(int codigo_evento) {
+        String sql = "DELETE FROM evento WHERE codigo_evento = ?";
 
         try {
             conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
 
-            // Converter a string de data para o tipo java.sql.Date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedDate = dateFormat.parse(dataSelected);
-            java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-
-            // Definir os parâmetros da consulta
-            stmt.setDate(1, sqlDate);
-            stmt.setString(2, descricao);
+            // Definir o parâmetro da consulta
+            stmt.setInt(1, codigo_evento);
 
             // Executar a instrução de delete
             int rowsAffected = stmt.executeUpdate();
             System.out.println("Número de registros deletados: " + rowsAffected);
 
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             System.err.println("Erro ao deletar dados: " + e.getMessage());
         } finally {
             try {
                 if (stmt != null) {
                     stmt.close();
                 }
-                conexaoBD.fecharConexao(conexao);
+                if (conexao != null) {
+                    conexaoBD.fecharConexao(conexao);
+                }
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
     }
-    
-public boolean validarHora(Evento evento) {
-      String sql = "SELECT COUNT(*) FROM evento WHERE data_evento = ? AND " +
-                 "((horaEntrada_evento BETWEEN ? AND ?) OR " +
-                 "(horaSaida_evento BETWEEN ? AND ?) OR " +
-                 "(? BETWEEN horaEntrada_evento AND horaSaida_evento) OR " +
-                 "(? BETWEEN horaEntrada_evento AND horaSaida_evento));";
 
-    boolean isHoraDisponivel = true;
-    Connection conexao = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
+    public boolean validarHora(Evento evento) {
+        String sql = "SELECT COUNT(*) FROM evento WHERE data_evento = ? AND "
+                + "((horaEntrada_evento BETWEEN ? AND ?) OR "
+                + "(horaSaida_evento BETWEEN ? AND ?) OR "
+                + "(? BETWEEN horaEntrada_evento AND horaSaida_evento) OR "
+                + "(? BETWEEN horaEntrada_evento AND horaSaida_evento));";
 
-    try {
-        Time horaEntrada = formatTime(evento.getHoraEntrada());
-        Time horaSaida = formatTime(evento.getHoraSaida());
+        boolean isHoraDisponivel = true;
+        Connection conexao = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-        conexao = conexaoBD.getConnection();
-        stmt = conexao.prepareStatement(sql);
-        stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
-        stmt.setTime(2, horaEntrada);
-        stmt.setTime(3, horaSaida);
-        stmt.setTime(4, horaEntrada);
-        stmt.setTime(5, horaSaida);
-        stmt.setTime(6, horaEntrada);
-        stmt.setTime(7, horaSaida);
-
-        rs = stmt.executeQuery();
-        if (rs.next() && rs.getInt(1) > 0) {
-            isHoraDisponivel = false;
-        }
-    } catch (SQLException e) {
-        System.err.println("Erro ao validar hora: " + e.getMessage());
-        e.printStackTrace();
-    } finally {
         try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conexao != null) {
-                conexaoBD.fecharConexao(conexao);
+            Time horaEntrada = formatTime(evento.getHoraEntrada());
+            Time horaSaida = formatTime(evento.getHoraSaida());
+
+            conexao = conexaoBD.getConnection();
+            stmt = conexao.prepareStatement(sql);
+            stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
+            stmt.setTime(2, horaEntrada);
+            stmt.setTime(3, horaSaida);
+            stmt.setTime(4, horaEntrada);
+            stmt.setTime(5, horaSaida);
+            stmt.setTime(6, horaEntrada);
+            stmt.setTime(7, horaSaida);
+
+            rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                isHoraDisponivel = false;
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            System.err.println("Erro ao validar hora: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conexao != null) {
+                    conexaoBD.fecharConexao(conexao);
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
         }
+        return isHoraDisponivel;
     }
-    return isHoraDisponivel;
-}
 
 }

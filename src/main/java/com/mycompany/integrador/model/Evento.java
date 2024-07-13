@@ -11,7 +11,11 @@ public class Evento {
     private int codigo_quadra;
     private int codigo_cliente;
     private int codigo_modalidade;
+    private String nomeQuadra;
+    private String nomeCliente;
+    private String nomeModalidade;
 
+    //construtor com todos os id
     public Evento(int id, Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade) {
         this.id = id;
         this.data = data;
@@ -23,7 +27,7 @@ public class Evento {
         this.codigo_modalidade = codigo_modalidade;
     }
 
-    
+    //Construtor sem id contrutor sem nomes
     public Evento(Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade) {
         this.data = data;
         this.horaEntrada = horaEntrada;
@@ -32,6 +36,43 @@ public class Evento {
         this.codigo_quadra = codigo_quadra;
         this.codigo_cliente = codigo_cliente;
         this.codigo_modalidade = codigo_modalidade;
+    }
+
+    //Construtor sem id e com nomes
+    public Evento(Date data, String horaEntrada, String horaSaida, String descricao, String nomeQuadra, String nomeCliente, String nomeModalidade) {
+        this.data = data;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
+        this.descricao = descricao;
+        this.nomeQuadra = nomeQuadra;
+        this.nomeCliente = nomeCliente;
+        this.nomeModalidade = nomeModalidade;
+    }
+    
+    //Construtor sem id do evento
+    public Evento(Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade, String nomeQuadra, String nomeCliente, String nomeModalidade) {
+        this.data = data;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
+        this.descricao = descricao;
+        this.codigo_quadra = codigo_quadra;
+        this.codigo_cliente = codigo_cliente;
+        this.codigo_modalidade = codigo_modalidade;
+        this.nomeQuadra = nomeQuadra;
+        this.nomeCliente = nomeCliente;
+        this.nomeModalidade = nomeModalidade;
+    }
+
+    //Construtor sem id de foreinkey
+    public Evento(int id, Date data, String horaEntrada, String horaSaida, String descricao, String nomeQuadra, String nomeCliente, String nomeModalidade) {
+        this.id = id;
+        this.data = data;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
+        this.descricao = descricao;
+        this.nomeQuadra = nomeQuadra;
+        this.nomeCliente = nomeCliente;
+        this.nomeModalidade = nomeModalidade;
     }
 
     public int getId() {
@@ -98,6 +139,39 @@ public class Evento {
         this.codigo_modalidade = codigo_modalidade;
     }
 
+    public String getNomeQuadra() {
+        return nomeQuadra;
+    }
+
+    public void setNomeQuadra(String nomeQuadra) {
+        this.nomeQuadra = nomeQuadra;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public String getNomeModalidade() {
+        return nomeModalidade;
+    }
+
+    public void setNomeModalidade(String nomeModalidade) {
+        this.nomeModalidade = nomeModalidade;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
  
 
 

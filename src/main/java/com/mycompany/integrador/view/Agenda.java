@@ -1,4 +1,3 @@
-
 package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.Cliente;
@@ -13,21 +12,20 @@ import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.table.DefaultTableModel;
 
-        
 /**
  *
  * @author Ricardo
  */
 public class Agenda extends javax.swing.JFrame {
-private List<Evento> eventos;
-private EventoService eventoService;
-SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    
+    private List<Evento> eventos;
+    private EventoService eventoService;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Creates new form Agenda
@@ -36,11 +34,10 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         initComponents();
         eventos = new ArrayList<>();
         eventoService = new EventoService();
-        this.setLocationRelativeTo(null); 
-        
+        this.setLocationRelativeTo(null);
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,13 +51,13 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         EventosPanelBackGround = new javax.swing.JPanel();
         scrollTableEventos = new javax.swing.JScrollPane();
         eventosTable = new javax.swing.JTable();
-        eventosButtonPanel = new javax.swing.JPanel();
-        adicionarEventoButton = new javax.swing.JButton();
-        apagarEventoButton = new javax.swing.JButton();
         quadraLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jSeparator1 = new javax.swing.JSeparator();
+        eventosButtonPanel = new javax.swing.JPanel();
+        adicionarEventoButton = new javax.swing.JButton();
+        apagarEventoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 420));
@@ -78,22 +75,54 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             },
             new String [] {
-                "Descripçao", "Hora", "Data"
+                "ID", "Data", "Entrada", "Saida", "Descripção", "Modalidad", "Cliente"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         eventosTable.setColumnSelectionAllowed(true);
         scrollTableEventos.setViewportView(eventosTable);
         eventosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        EventosPanelBackGround.add(scrollTableEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 280));
+        EventosPanelBackGround.add(scrollTableEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 330));
+
+        agendaBackGroundPanel.add(EventosPanelBackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 490, 330));
+
+        quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
+        quadraLabel.setText("1-Quadra A");
+        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 230, -1));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Agenda para:");
+        agendaBackGroundPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jCalendar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCalendar1MouseClicked(evt);
+            }
+        });
+        jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar1PropertyChange(evt);
+            }
+        });
+        agendaBackGroundPanel.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 330));
+        agendaBackGroundPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 930, 10));
 
         eventosButtonPanel.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -118,38 +147,13 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         });
         eventosButtonPanel.add(apagarEventoButton);
 
-        EventosPanelBackGround.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 50));
-
-        agendaBackGroundPanel.add(EventosPanelBackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 300, -1));
-
-        quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
-        quadraLabel.setText("Quadra A");
-        agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 230, -1));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Agenda para:");
-        agendaBackGroundPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
-
-        jCalendar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCalendar1MouseClicked(evt);
-            }
-        });
-        jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jCalendar1PropertyChange(evt);
-            }
-        });
-        agendaBackGroundPanel.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 330));
-        agendaBackGroundPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 740, 10));
+        agendaBackGroundPanel.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 490, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(agendaBackGroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,22 +171,35 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private void apagarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apagarEventoButtonActionPerformed
         // TODO add your handling code here:
         int selectedRow = eventosTable.getSelectedRow();
-        String descripcao = eventosTable.getValueAt(selectedRow, 0).toString();
-        String date = eventosTable.getValueAt(selectedRow, 2).toString();
-        System.out.println(date + " "+ descripcao);
-        eventoService.apagarEventos(date, descripcao);
-        eventos.clear();
-        //DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
-       // model.setRowCount(0);
-        addEventoTabela();
+        if (selectedRow >= 0) {
+
+            int codigo_evento = Integer.parseInt(eventosTable.getValueAt(selectedRow, 0).toString());
+            String dia = eventosTable.getValueAt(selectedRow, 1).toString();
+            String horaEntrada = eventosTable.getValueAt(selectedRow, 2).toString();
+            String nomeCliente = eventosTable.getValueAt(selectedRow, 6).toString(); // Ajustar se o índice da coluna do cliente for diferente
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Realmente quer apagar o evento do dia " + dia + " na hora " + horaEntrada + " do cliente " + nomeCliente + "?", "Confirmar Apagar", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+
+                eventoService.apagarEventos(codigo_evento);
+
+                DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
+                model.removeRow(selectedRow);
+
+                JOptionPane.showMessageDialog(this, "Registro apagado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para apagar.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
 
     private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
         // TODO add your handling code here:
-         EventoTela eventoTela = new EventoTela();
-         eventoTela.quadraLabel.setText(quadraLabel.getText());
-         eventoTela.setVisible(true);
+        EventoTela eventoTela = new EventoTela();
+        eventoTela.quadraLabel.setText(quadraLabel.getText());
+        eventoTela.setVisible(true);
     }//GEN-LAST:event_adicionarEventoButtonActionPerformed
 
     private void jCalendar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseClicked
@@ -192,20 +209,19 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
         // TODO add your handling code here:
         if ("calendar".equals(evt.getPropertyName())) {
-        Object newValue = evt.getNewValue();
-        if (newValue instanceof Calendar) {
-            Calendar calendar = (Calendar) newValue;
-            String selectedDate = dateFormat.format(calendar.getTime());
-            
-         System.out.println(selectedDate);
-         eventos = eventoService.listarEventos(selectedDate);
-         addEventoTabela();
+            Object newValue = evt.getNewValue();
+            if (newValue instanceof Calendar) {
+                Calendar calendar = (Calendar) newValue;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String selectedDate = dateFormat.format(calendar.getTime());
+                int codigoQuadra = pegarId(quadraLabel.getText());
+
+                System.out.println(selectedDate);
+                List<Evento> eventos = eventoService.listarEventos(selectedDate, codigoQuadra);
+                addEventoTabela(eventos);
+            }
         }
-    }
-        
-        
-        
-        
+
     }//GEN-LAST:event_jCalendar1PropertyChange
 
     /**
@@ -236,8 +252,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //</editor-fold>
 
         /* Create and display the form */
-        
-          java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 Agenda agenda = new Agenda();
@@ -245,35 +260,36 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             }
         });
     }
-    
-    
-     public void imprimirEventos() {
+
+    public void imprimirEventos() {
         System.out.println("Lista de eventos:");
         for (Evento evento : eventos) {
-            System.out.println("Fecha: " + evento.getData() +
-                               ", Hora: " + evento.getHoraEntrada() +
-                               ", Descripción: " + evento.getDescricao());
+            System.out.println("Fecha: " + evento.getData()
+                    + ", Hora: " + evento.getHoraEntrada()
+                    + ", Descripción: " + evento.getDescricao());
         }
     }
-     
- public void addEventoTabela() {
-     DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
-     model.setRowCount(0);
-        
+
+    public void addEventoTabela(List<Evento> eventos) {
+        DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
+        model.setRowCount(0);
+
         for (Evento evento : eventos) {
-            Object[] row = { evento.getDescricao(), evento.getHoraEntrada(), evento.getData()};
+            Object[] row = {evento.getId(), evento.getData(), evento.getHoraEntrada(), evento.getHoraSaida(), evento.getDescricao(), evento.getNomeModalidade(), evento.getNomeCliente()};
             model.addRow(row);
         }
-}
- 
- public void apagarEventosTabela(){
-     
-     DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
-     model.setRowCount(0);
- }
+    }
+
+    public int pegarId(String string) {
+        if (string != null && !string.isEmpty()) {
+            char idChar = string.charAt(0);
+            return Integer.parseInt(String.valueOf(idChar));
+        } else {
+            throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
+        }
+    }
 
 
-  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EventosPanelBackGround;
     private javax.swing.JButton adicionarEventoButton;
