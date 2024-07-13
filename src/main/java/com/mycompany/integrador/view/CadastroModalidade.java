@@ -37,6 +37,7 @@ public class CadastroModalidade extends javax.swing.JFrame {
     private int codigo;
     private final DefaultTableModel tableModel;
     private final ModalidadeService modalidadeService;
+    
     /**
      * Creates new form CadastroFuncionario
      */
@@ -44,6 +45,7 @@ public class CadastroModalidade extends javax.swing.JFrame {
         initComponents();
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
+        setLocationRelativeTo(null);
 
         getContentPane().setLayout(null);
         

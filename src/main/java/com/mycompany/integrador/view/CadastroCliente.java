@@ -56,6 +56,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         initComponents();
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
+        setLocationRelativeTo(null);
 
         getContentPane().setLayout(null);
         

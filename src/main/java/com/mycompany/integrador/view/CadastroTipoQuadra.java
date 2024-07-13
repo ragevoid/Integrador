@@ -42,6 +42,7 @@ public class CadastroTipoQuadra extends javax.swing.JFrame {
         setResizable(false);
 
         getContentPane().setLayout(null);
+        setLocationRelativeTo(null);
         
         aplicarUpperCaseFilter(jTextFieldNome, 60);
 

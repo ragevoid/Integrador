@@ -20,6 +20,7 @@ public class QuadraSelector extends javax.swing.JFrame {
     private List<Quadra> quadras;
     private QuadraService quadraService;
     public String selectedQuadra;
+    public String SelectedQuadraName;
 
     /**
      * Creates new form QuadraSelector
@@ -49,6 +50,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Seleção de Quadra");
         setMinimumSize(new java.awt.Dimension(575, 113));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -94,10 +96,13 @@ public class QuadraSelector extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         selectedQuadra = jComboBox1.getSelectedItem().toString();
+        SelectedQuadraName = getStringAfterDash(selectedQuadra);
         
         System.out.println(selectedQuadra);
         Agenda agenda = new Agenda();
         agenda.quadraLabel.setText(selectedQuadra);
+        
+        agenda.setTitle("Agenda - "+SelectedQuadraName);
         agenda.setVisible(true);     
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -151,6 +156,11 @@ public class QuadraSelector extends javax.swing.JFrame {
             model.addElement(quadra.getId() +" - "+ quadra.getNome());
         }
         jComboBox1.setModel(model);
+    }
+   
+    public static String getStringAfterDash(String input) {
+        int dashIndex = input.indexOf("-");
+        return input.substring(dashIndex + 1);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
