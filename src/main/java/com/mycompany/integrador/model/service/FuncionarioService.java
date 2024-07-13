@@ -6,7 +6,6 @@ package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Funcionario;
 import com.mycompany.integrador.util.BuscarCodigoService;
-import com.mycompany.integrador.util.ConectionPostgres;
 import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -319,7 +318,7 @@ public class FuncionarioService {
           public boolean verificarCredenciais(Long id, String senha) {
         String sql = "SELECT COUNT(*) FROM funcionario WHERE codigo_funcionario = ? AND senha_funcionario = ?";
         try {
-            conexao = ConectionPostgres.getConnection();
+            conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
             stmt.setLong(1, id);
             stmt.setString(2, senha);

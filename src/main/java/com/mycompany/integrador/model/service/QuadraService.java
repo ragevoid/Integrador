@@ -5,7 +5,7 @@
 package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Quadra;
-import com.mycompany.integrador.util.ConectionPostgres;
+import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,14 +23,14 @@ public class QuadraService {
     ResultSet rs = null;
     
     public QuadraService() {
-        conexao = ConectionPostgres.getConnection();
+        conexao = conexaoBD.getConnection();
     }
      public List<Quadra> listarQuadras() {
         String sql = "SELECT codigo_quadra, nome_quadra, tipoquadra_quadra, tamanho_quadra FROM quadra";
         List<Quadra> quadras = new ArrayList<>();
 
         try {
-            conexao = ConectionPostgres.getConnection();
+            conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
             rs = stmt.executeQuery();
 
@@ -52,7 +52,7 @@ public class QuadraService {
                 if (stmt != null) {
                     stmt.close();
                 }
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }

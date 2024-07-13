@@ -5,7 +5,7 @@
 package com.mycompany.integrador.model.service;
 
 import com.mycompany.integrador.model.Evento;
-import com.mycompany.integrador.util.ConectionPostgres;
+import com.mycompany.integrador.util.conexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class EventoService {
     ResultSet rs = null;
 
     public EventoService() {
-        conexao = ConectionPostgres.getConnection();
+        conexao = conexaoBD.getConnection();
     }
 
     public Time formatTime(String timeString) {
@@ -69,7 +69,7 @@ public class EventoService {
                 if (stmt != null) {
                     stmt.close();
                 }
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
@@ -83,7 +83,7 @@ public class EventoService {
         List<Evento> eventos = new ArrayList<>();
 
         try {
-            conexao = ConectionPostgres.getConnection();
+            conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
 
             // Converter String para Date
@@ -119,7 +119,7 @@ public class EventoService {
                 if (stmt != null) {
                     stmt.close();
                 }
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
@@ -132,7 +132,7 @@ public class EventoService {
         String sql = "DELETE FROM evento WHERE data_evento = ? AND descripcao_evento = ?";
 
         try {
-            conexao = ConectionPostgres.getConnection();
+            conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
 
             // Converter a string de data para o tipo java.sql.Date
@@ -155,7 +155,7 @@ public class EventoService {
                 if (stmt != null) {
                     stmt.close();
                 }
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar recursos: " + e.getMessage());
             }
@@ -178,7 +178,7 @@ public boolean validarHora(Evento evento) {
         Time horaEntrada = formatTime(evento.getHoraEntrada());
         Time horaSaida = formatTime(evento.getHoraSaida());
 
-        conexao = ConectionPostgres.getConnection();
+        conexao = conexaoBD.getConnection();
         stmt = conexao.prepareStatement(sql);
         stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
         stmt.setTime(2, horaEntrada);
@@ -204,7 +204,7 @@ public boolean validarHora(Evento evento) {
                 stmt.close();
             }
             if (conexao != null) {
-                ConectionPostgres.fecharConexao(conexao);
+                conexaoBD.fecharConexao(conexao);
             }
         } catch (SQLException e) {
             System.err.println("Erro ao fechar recursos: " + e.getMessage());
