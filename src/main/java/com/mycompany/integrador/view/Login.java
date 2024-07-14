@@ -196,36 +196,36 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String idText = userField.getText();
         String senha = new String(passwordField.getPassword());
-    
-        
+
         System.out.println(tentativa);
-        if (tentativa > 1) {
+        if (tentativa == 2) {
             JOptionPane.showMessageDialog(null, "Muitas Tentativas", "Error",
                     JOptionPane.ERROR_MESSAGE);;
             this.dispose();
-        }
-        try {
-            Long id = Long.parseLong(idText);
-            FuncionarioService funcionarioService = new FuncionarioService();
+        } else {
+            try {
+                Long id = Long.parseLong(idText);
+                FuncionarioService funcionarioService = new FuncionarioService();
 
-            if (funcionarioService.verificarCredenciais(id, senha)) {
-                System.out.println("Login bem-sucedido!");
-                this.dispose();
-                Principal principal = new Principal();
-                int idUser = Integer.parseInt(userField.getText());
-                principal.userCodeLabel.setText(funcionarioService.getNome(idUser));
-                principal.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario ou Senha Incorreto", "Error",
+                if (funcionarioService.verificarCredenciais(id, senha)) {
+                    System.out.println("Login bem-sucedido!");
+                    this.dispose();
+                    Principal principal = new Principal();
+                    int idUser = Integer.parseInt(userField.getText());
+                    principal.userCodeLabel.setText(funcionarioService.getNome(idUser));
+                    principal.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario ou Senha Incorreto", "Error",
+                            JOptionPane.ERROR_MESSAGE);;
+                    tentativa++;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Acceso Negado", "Error",
                         JOptionPane.ERROR_MESSAGE);;
                 tentativa++;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Acceso Negado", "Error",
-                    JOptionPane.ERROR_MESSAGE);;
-            tentativa++;
-        }
 
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void userFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userFieldKeyTyped

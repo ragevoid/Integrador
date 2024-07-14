@@ -58,6 +58,7 @@ public class Agenda extends javax.swing.JFrame {
         eventosButtonPanel = new javax.swing.JPanel();
         adicionarEventoButton = new javax.swing.JButton();
         apagarEventoButton = new javax.swing.JButton();
+        buttonVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 420));
@@ -149,6 +150,16 @@ public class Agenda extends javax.swing.JFrame {
 
         agendaBackGroundPanel.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 490, 50));
 
+        buttonVoltar.setBackground(new java.awt.Color(102, 102, 102));
+        buttonVoltar.setForeground(new java.awt.Color(51, 51, 51));
+        buttonVoltar.setText("Voltar");
+        buttonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonVoltarActionPerformed(evt);
+            }
+        });
+        agendaBackGroundPanel.add(buttonVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 23, 190, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -226,6 +237,13 @@ public class Agenda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCalendar1PropertyChange
 
+    private void buttonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVoltarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        QuadraSelector quadraSelector = new QuadraSelector();
+        quadraSelector.setVisible(true);
+    }//GEN-LAST:event_buttonVoltarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,15 +281,6 @@ public class Agenda extends javax.swing.JFrame {
         });
     }
 
-    public void imprimirEventos() {
-        System.out.println("Lista de eventos:");
-        for (Evento evento : eventos) {
-            System.out.println("Fecha: " + evento.getData()
-                    + ", Hora: " + evento.getHoraEntrada()
-                    + ", Descripción: " + evento.getDescricao());
-        }
-    }
-
     public void addEventoTabela(List<Evento> eventos) {
         DefaultTableModel model = (DefaultTableModel) eventosTable.getModel();
         model.setRowCount(0);
@@ -302,6 +311,7 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JButton adicionarEventoButton;
     private javax.swing.JPanel agendaBackGroundPanel;
     private javax.swing.JButton apagarEventoButton;
+    private javax.swing.JButton buttonVoltar;
     private javax.swing.JPanel eventosButtonPanel;
     private javax.swing.JTable eventosTable;
     private com.toedter.calendar.JCalendar jCalendar1;

@@ -303,7 +303,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         setBackground(new java.awt.Color(51, 51, 51));
         setMaximumSize(new java.awt.Dimension(1095, 800));
         setMinimumSize(new java.awt.Dimension(1095, 800));
-        setPreferredSize(new java.awt.Dimension(1095, 800));
 
         BackGround.setBackground(new java.awt.Color(51, 51, 51));
         BackGround.setMaximumSize(new java.awt.Dimension(1080, 800));

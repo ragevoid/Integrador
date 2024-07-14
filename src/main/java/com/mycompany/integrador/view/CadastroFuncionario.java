@@ -449,9 +449,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             }
         });
         jTableDadosFuncionario.setGridColor(new java.awt.Color(51, 51, 51));
-        jTableDadosFuncionario.setMaximumSize(new java.awt.Dimension(939, 400));
-        jTableDadosFuncionario.setMinimumSize(new java.awt.Dimension(939, 400));
-        jTableDadosFuncionario.setPreferredSize(new java.awt.Dimension(939, 400));
+        jTableDadosFuncionario.setMaximumSize(new java.awt.Dimension(939, 500));
+        jTableDadosFuncionario.setMinimumSize(new java.awt.Dimension(939, 500));
+        jTableDadosFuncionario.setPreferredSize(new java.awt.Dimension(939, 500));
         jTableDadosFuncionario.setSelectionBackground(new java.awt.Color(0, 153, 204));
         jTableDadosFuncionario.setSelectionForeground(new java.awt.Color(51, 51, 51));
         jScrollPane1.setViewportView(jTableDadosFuncionario);

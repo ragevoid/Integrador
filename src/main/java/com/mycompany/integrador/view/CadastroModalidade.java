@@ -121,6 +121,15 @@ public class CadastroModalidade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        backgroundPanel = new javax.swing.JPanel();
+        buttonPanel = new javax.swing.JPanel();
+        jButtonInserir = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
+        jButtonSalvar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
+        jButtonLocalizar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonSair = new javax.swing.JButton();
         jPanelModalidade = new javax.swing.JPanel();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCodigo = new javax.swing.JTextField();
@@ -132,21 +141,105 @@ public class CadastroModalidade extends javax.swing.JFrame {
         jButtonCadastrar = new javax.swing.JButton();
         jButtonSalvarTela = new javax.swing.JButton();
         jFormattedTextFieldValor = new javax.swing.JFormattedTextField();
-        jButtonInserir = new javax.swing.JButton();
-        jButtonExcluir = new javax.swing.JButton();
-        jButtonSalvar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jButtonLocalizar = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Modalidade");
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(51, 51, 51));
+        setMaximumSize(new java.awt.Dimension(760, 730));
+        setMinimumSize(new java.awt.Dimension(760, 730));
+        setPreferredSize(new java.awt.Dimension(760, 730));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelModalidade.setBackground(new java.awt.Color(153, 153, 153));
-        jPanelModalidade.setPreferredSize(new java.awt.Dimension(1250, 700));
+        backgroundPanel.setBackground(new java.awt.Color(51, 51, 51));
+        backgroundPanel.setMaximumSize(new java.awt.Dimension(760, 730));
+        backgroundPanel.setMinimumSize(new java.awt.Dimension(760, 730));
+        backgroundPanel.setPreferredSize(new java.awt.Dimension(760, 730));
+        backgroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        buttonPanel.setBackground(new java.awt.Color(51, 51, 51));
+        buttonPanel.setMaximumSize(new java.awt.Dimension(760, 730));
+        buttonPanel.setMinimumSize(new java.awt.Dimension(760, 730));
+        buttonPanel.setPreferredSize(new java.awt.Dimension(760, 730));
+        buttonPanel.setLayout(new java.awt.GridLayout());
+
+        jButtonInserir.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonInserir.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonInserir.setText("Inserir");
+        jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInserirActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonInserir);
+
+        jButtonExcluir.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonExcluir.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonExcluir);
+
+        jButtonSalvar.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonSalvar.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonSalvar);
+
+        jButtonCancelar.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonCancelar.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonCancelar);
+
+        jButtonLocalizar.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonLocalizar.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonLocalizar.setText("Localizar");
+        jButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLocalizarActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonLocalizar);
+
+        jButtonEditar.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonEditar.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonEditar);
+
+        jButtonSair.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonSair.setForeground(new java.awt.Color(153, 153, 153));
+        jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(jButtonSair);
+
+        backgroundPanel.add(buttonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 110));
+
+        jPanelModalidade.setBackground(new java.awt.Color(51, 51, 51));
+        jPanelModalidade.setMaximumSize(new java.awt.Dimension(760, 730));
+        jPanelModalidade.setMinimumSize(new java.awt.Dimension(760, 730));
+        jPanelModalidade.setPreferredSize(new java.awt.Dimension(760, 730));
+
+        jLabelCodigo.setForeground(new java.awt.Color(204, 204, 204));
         jLabelCodigo.setText("Código:");
 
         jTextFieldCodigo.setEditable(false);
@@ -154,11 +247,17 @@ public class CadastroModalidade extends javax.swing.JFrame {
         jTextFieldCodigo.setMinimumSize(new java.awt.Dimension(70, 30));
         jTextFieldCodigo.setNextFocusableComponent(jTextFieldNome);
 
+        jLabelNomeModalidade.setForeground(new java.awt.Color(204, 204, 204));
         jLabelNomeModalidade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelNomeModalidade.setText("Nome Modalidade:");
 
+        jLabelValor.setForeground(new java.awt.Color(204, 204, 204));
         jLabelValor.setText("Valor:");
 
+        jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
+
+        jTableDadosModalidade.setBackground(new java.awt.Color(51, 51, 51));
+        jTableDadosModalidade.setForeground(new java.awt.Color(204, 204, 204));
         jTableDadosModalidade.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -175,6 +274,7 @@ public class CadastroModalidade extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableDadosModalidade.setGridColor(new java.awt.Color(51, 51, 51));
         jScrollPane1.setViewportView(jTableDadosModalidade);
         if (jTableDadosModalidade.getColumnModel().getColumnCount() > 0) {
             jTableDadosModalidade.getColumnModel().getColumn(0).setResizable(false);
@@ -187,6 +287,7 @@ public class CadastroModalidade extends javax.swing.JFrame {
         }
 
         jButtonCadastrar.setBackground(new java.awt.Color(51, 153, 255));
+        jButtonCadastrar.setForeground(new java.awt.Color(51, 51, 51));
         jButtonCadastrar.setText("Cadastrar");
         jButtonCadastrar.setIconTextGap(5);
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +297,7 @@ public class CadastroModalidade extends javax.swing.JFrame {
         });
 
         jButtonSalvarTela.setBackground(new java.awt.Color(204, 204, 255));
+        jButtonSalvarTela.setForeground(new java.awt.Color(51, 51, 51));
         jButtonSalvarTela.setText("Salvar");
         jButtonSalvarTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,27 +310,30 @@ public class CadastroModalidade extends javax.swing.JFrame {
         jPanelModalidadeLayout.setHorizontalGroup(
             jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelModalidadeLayout.createSequentialGroup()
-                            .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextFieldNome))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelModalidadeLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(326, 326, 326)
-                            .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                        .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                                .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                                .addComponent(jLabelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(326, 326, 326)
+                                .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 24, Short.MAX_VALUE))))
         );
         jPanelModalidadeLayout.setVerticalGroup(
             jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,97 +350,13 @@ public class CadastroModalidade extends javax.swing.JFrame {
                     .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButtonInserir.setText("Inserir");
-        jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonInserirActionPerformed(evt);
-            }
-        });
+        backgroundPanel.add(jPanelModalidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 780, 620));
 
-        jButtonExcluir.setText("Excluir");
-        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExcluirActionPerformed(evt);
-            }
-        });
-
-        jButtonSalvar.setText("Salvar");
-        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
-            }
-        });
-
-        jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-
-        jButtonLocalizar.setText("Localizar");
-        jButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLocalizarActionPerformed(evt);
-            }
-        });
-
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
-
-        jButtonSair.setText("Sair");
-        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSairActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanelModalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
-        );
+        getContentPane().add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -704,6 +725,8 @@ public class CadastroModalidade extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEditar;
