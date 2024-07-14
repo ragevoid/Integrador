@@ -49,19 +49,21 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quadra Manager (Alpha)");
-        setMaximumSize(new java.awt.Dimension(600, 600));
-        setMinimumSize(new java.awt.Dimension(600, 600));
-        setPreferredSize(new java.awt.Dimension(600, 600));
+        setMaximumSize(new java.awt.Dimension(1000, 790));
+        setMinimumSize(new java.awt.Dimension(1000, 790));
+        setPreferredSize(new java.awt.Dimension(1000, 790));
+        setResizable(false);
 
         PrincipalBackGround.setBackground(new java.awt.Color(51, 51, 51));
-        PrincipalBackGround.setMaximumSize(new java.awt.Dimension(600, 600));
-        PrincipalBackGround.setMinimumSize(new java.awt.Dimension(600, 600));
+        PrincipalBackGround.setMaximumSize(new java.awt.Dimension(1000, 800));
+        PrincipalBackGround.setMinimumSize(new java.awt.Dimension(1000, 700));
+        PrincipalBackGround.setPreferredSize(new java.awt.Dimension(1000, 720));
         PrincipalBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo2.png"))); // NOI18N
         jLabel2.setToolTipText("");
-        PrincipalBackGround.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 600, 370));
+        PrincipalBackGround.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 1000, 370));
 
         jPanel1.setBackground(new java.awt.Color(64, 64, 64));
         jPanel1.setFocusable(false);
@@ -81,13 +83,18 @@ public class Principal extends javax.swing.JFrame {
         String dataAtual = DataAtual.obtenerDataActual();
         principalDataLabel.setText(dataAtual);
 
-        PrincipalBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 600, 50));
+        PrincipalBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 1000, 70));
 
         jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setBorder(null);
 
         cadatroMenu.setText("Cadastro");
         cadatroMenu.setMargin(new java.awt.Insets(6, 6, 6, 6));
+        cadatroMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadatroMenuActionPerformed(evt);
+            }
+        });
 
         usersMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
         usersMenu.setText("Usuarios");
@@ -198,6 +205,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_TipoQuadraMenuActionPerformed
+
+    private void cadatroMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadatroMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cadatroMenuActionPerformed
 
     /**
      * @param args the command line arguments
