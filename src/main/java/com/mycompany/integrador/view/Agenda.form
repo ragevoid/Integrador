@@ -181,7 +181,6 @@
         </Component>
         <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCalendar1MouseClicked"/>
             <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jCalendar1PropertyChange"/>
           </Events>
           <Constraints>

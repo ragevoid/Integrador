@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class Agenda extends javax.swing.JFrame {
 
     private List<Evento> eventos;
+    private List<Evento> eventosMes;
     private EventoService eventoService;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -33,6 +34,7 @@ public class Agenda extends javax.swing.JFrame {
     public Agenda() {
         initComponents();
         eventos = new ArrayList<>();
+        eventosMes = new ArrayList<>();
         eventoService = new EventoService();
         this.setLocationRelativeTo(null);
 
@@ -112,11 +114,6 @@ public class Agenda extends javax.swing.JFrame {
         jLabel1.setText("Agenda para:");
         agendaBackGroundPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        jCalendar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCalendar1MouseClicked(evt);
-            }
-        });
         jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jCalendar1PropertyChange(evt);
@@ -215,10 +212,6 @@ public class Agenda extends javax.swing.JFrame {
         eventoTela.setVisible(true);
     }//GEN-LAST:event_adicionarEventoButtonActionPerformed
 
-    private void jCalendar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCalendar1MouseClicked
-
     private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
         // TODO add your handling code here:
         if ("calendar".equals(evt.getPropertyName())) {
@@ -304,6 +297,9 @@ public class Agenda extends javax.swing.JFrame {
         int dashIndex = input.indexOf("-");
         return input.substring(dashIndex + 1);
     }
+          
+
+          
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -216,5 +216,59 @@ public class EventoService {
         }
         return isHoraDisponivel;
     }
+    
+    
+  public List<Evento> listarEventosMes(int quadra, int month) {
+        String sql = "SELECT e.codigo_evento, e.data_evento, e.horaEntrada_evento, e.horaSaida_evento, e.descricao_evento, "
+                + "q.nome_quadra, c.nome_cliente, m.nome_modalidade "
+                + "FROM evento e "
+                + "JOIN quadra q ON e.codigo_quadra = q.codigo_quadra "
+                + "JOIN cliente c ON e.codigo_cliente = c.codigo_cliente "
+                + "JOIN modalidade m ON e.codigo_modalidade = m.codigo_modalidade "
+                + "WHERE e.codigo_quadra = ? AND MONTH(e.data_evento) = ?";
+        List<Evento> eventos = new ArrayList<>();
 
+        try {
+            conexao = conexaoBD.getConnection();
+            stmt = conexao.prepareStatement(sql);
+
+            stmt.setInt(1, quadra);
+            stmt.setInt(2, month);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo_evento = rs.getInt("codigo_evento");
+                Date dataEvento = rs.getDate("data_evento");
+                String horaEntrada = rs.getString("horaEntrada_evento");
+                String horaSaida = rs.getString("horaSaida_evento");
+                String descricao = rs.getString("descricao_evento");
+                String nomeQuadra = rs.getString("nome_quadra");
+                String nomeCliente = rs.getString("nome_cliente");
+                String nomeModalidade = rs.getString("nome_modalidade");
+
+                eventos.add(new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, nomeQuadra, nomeCliente, nomeModalidade));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conexao != null) {
+                    conexaoBD.fecharConexao(conexao);
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        return eventos;
+    }
 }
+    
