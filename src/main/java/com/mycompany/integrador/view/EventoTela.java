@@ -178,14 +178,17 @@ public class EventoTela extends javax.swing.JFrame {
         }
 
         Evento evento = new Evento(data, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
+        System.out.println(evento.getData() + "---" + evento.getHoraEntrada() + "---" + evento.getHoraSaida() + "---" + evento.getDescricao() + "---" + evento.getCodigo_quadra() + "---" + evento.getCodigo_cliente() + "---" + evento.getCodigo_modalidade());
 
-        if (!eventoService.validarHora(evento)) {
+        if (eventoService.validarHora(evento)) {
             eventoService.salvarEvento(evento);
-            JOptionPane.showMessageDialog(null, "Evento salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            // this.dispose(); // Uncomment if you want to close the frame after saving
+            JOptionPane.showMessageDialog(null, "Evento inserido com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Erro: já existe uma hora marcada para esse dia", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Horário indisponível: Agendado para outro cliente", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void modalidadeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modalidadeComboActionPerformed
@@ -269,7 +272,6 @@ public class EventoTela extends javax.swing.JFrame {
             throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
