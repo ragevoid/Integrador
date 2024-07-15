@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -36,6 +37,7 @@ public class Agenda extends javax.swing.JFrame {
         eventos = new ArrayList<>();
         eventosMes = new ArrayList<>();
         eventoService = new EventoService();
+        mostrarDiasEventos();
         this.setLocationRelativeTo(null);
 
     }
@@ -195,6 +197,7 @@ public class Agenda extends javax.swing.JFrame {
                 model.removeRow(selectedRow);
 
                 JOptionPane.showMessageDialog(this, "Registro apagado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                mostrarDiasEventos();
             }
         } else {
 
@@ -207,24 +210,24 @@ public class Agenda extends javax.swing.JFrame {
         // TODO add your handling code here:
         EventoTela eventoTela = new EventoTela();
         eventoTela.quadraLabel.setText(quadraLabel.getText());
-        
-        eventoTela.setTitle("Eventos - "+ pegarNomeQuadra(quadraLabel.getText()) );
+
+        eventoTela.setTitle("Eventos - " + pegarNomeQuadra(quadraLabel.getText()));
         eventoTela.setVisible(true);
     }//GEN-LAST:event_adicionarEventoButtonActionPerformed
 
     private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
         // TODO add your handling code here:
         if ("calendar".equals(evt.getPropertyName())) {
+            int codigoQuadra = pegarId(quadraLabel.getText());
             Object newValue = evt.getNewValue();
             if (newValue instanceof Calendar) {
                 Calendar calendar = (Calendar) newValue;
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String selectedDate = dateFormat.format(calendar.getTime());
-                int codigoQuadra = pegarId(quadraLabel.getText());
-
-                System.out.println(selectedDate);
                 List<Evento> eventos = eventoService.listarEventos(selectedDate, codigoQuadra);
                 addEventoTabela(eventos);
+                mostrarDiasEventos();
+
             }
         }
 
@@ -292,14 +295,49 @@ public class Agenda extends javax.swing.JFrame {
             throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
     }
-    
-          public static String pegarNomeQuadra(String input) {
+
+    public static String pegarNomeQuadra(String input) {
         int dashIndex = input.indexOf("-");
         return input.substring(dashIndex + 1);
     }
-          
 
-          
+    public void mostrarDiasEventos() {
+
+        int codigoQuadra = pegarId(quadraLabel.getText());
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        int month = jCalendar1.getMonthChooser().getMonth() + 1;
+        int year = jCalendar1.getYearChooser().getYear();
+        JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
+        Component component[] = jpanel.getComponents();
+        eventosMes = eventoService.listarEventosMes(codigoQuadra, month);
+
+        for (Component comp : component) {
+            if (comp instanceof JButton) {
+                JButton dayButton = (JButton) comp;
+                String dayText = dayButton.getText();
+
+                if (dayText.matches("\\d+")) {
+                    int day = Integer.parseInt(dayText);
+                    Calendar compCalendar = Calendar.getInstance();
+                    compCalendar.set(year, month - 1, day);
+
+                    for (Evento eventoMes : eventosMes) {
+                        Date eventDate = eventoMes.getData();
+                        Calendar eventCalendar = Calendar.getInstance();
+                        eventCalendar.setTime(eventDate);
+
+                        if (eventCalendar.get(Calendar.YEAR) == compCalendar.get(Calendar.YEAR)
+                                && eventCalendar.get(Calendar.MONTH) == compCalendar.get(Calendar.MONTH)
+                                && eventCalendar.get(Calendar.DAY_OF_MONTH) == compCalendar.get(Calendar.DAY_OF_MONTH)) {
+                            dayButton.setBackground(Color.RED); // Defina a cor desejada
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

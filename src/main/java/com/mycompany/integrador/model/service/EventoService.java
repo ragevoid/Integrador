@@ -42,7 +42,7 @@ public class EventoService {
 
     public Evento salvarEvento(Evento evento) {
 
-        String sql = "INSERT INTO evento (data_evento, horaEntrada_evento, horaSaida_evento, descripcao_evento, codigo_quadra, codigo_cliente, codigo_modalidade) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO evento (data_evento, horaEntrada_evento, horaSaida_evento, descricao_evento, codigo_quadra, codigo_cliente, codigo_modalidade) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
@@ -78,7 +78,7 @@ public class EventoService {
     }
 
     public List<Evento> listarEventos(String dataSelected, int quadra) {
-        String sql = "SELECT e.codigo_evento, e.data_evento, e.horaEntrada_evento, e.horaSaida_evento, e.descripcao_evento, "
+        String sql = "SELECT e.codigo_evento, e.data_evento, e.horaEntrada_evento, e.horaSaida_evento, e.descricao_evento, "
                 + "q.nome_quadra, c.nome_cliente, m.nome_modalidade "
                 + "FROM evento e "
                 + "JOIN quadra q ON e.codigo_quadra = q.codigo_quadra "
@@ -107,7 +107,7 @@ public class EventoService {
                 Date dataEvento = rs.getDate("data_evento");
                 String horaEntrada = rs.getString("horaEntrada_evento");
                 String horaSaida = rs.getString("horaSaida_evento");
-                String descricao = rs.getString("descripcao_evento");
+                String descricao = rs.getString("descricao_evento");
                 String nomeQuadra = rs.getString("nome_quadra");
                 String nomeCliente = rs.getString("nome_cliente");
                 String nomeModalidade = rs.getString("nome_modalidade");
@@ -216,16 +216,15 @@ public class EventoService {
         }
         return isHoraDisponivel;
     }
-    
-    
-  public List<Evento> listarEventosMes(int quadra, int month) {
+
+    public List<Evento> listarEventosMes(int quadra, int month) {
         String sql = "SELECT e.codigo_evento, e.data_evento, e.horaEntrada_evento, e.horaSaida_evento, e.descricao_evento, "
                 + "q.nome_quadra, c.nome_cliente, m.nome_modalidade "
                 + "FROM evento e "
                 + "JOIN quadra q ON e.codigo_quadra = q.codigo_quadra "
                 + "JOIN cliente c ON e.codigo_cliente = c.codigo_cliente "
                 + "JOIN modalidade m ON e.codigo_modalidade = m.codigo_modalidade "
-                + "WHERE e.codigo_quadra = ? AND MONTH(e.data_evento) = ?";
+                + "WHERE e.codigo_quadra = ? AND EXTRACT(MONTH FROM e.data_evento) = ?";
         List<Evento> eventos = new ArrayList<>();
 
         try {
@@ -271,4 +270,3 @@ public class EventoService {
         return eventos;
     }
 }
-    

@@ -1,8 +1,10 @@
 package com.mycompany.integrador.model;
 
 import java.util.Date;
+import java.util.Calendar;
 
 public class Evento {
+
     private int id;
     private Date data;
     private String horaEntrada;
@@ -48,7 +50,7 @@ public class Evento {
         this.nomeCliente = nomeCliente;
         this.nomeModalidade = nomeModalidade;
     }
-    
+
     //Construtor sem id do evento
     public Evento(Date data, String horaEntrada, String horaSaida, String descricao, int codigo_quadra, int codigo_cliente, int codigo_modalidade, String nomeQuadra, String nomeCliente, String nomeModalidade) {
         this.data = data;
@@ -162,17 +164,23 @@ public class Evento {
     public void setNomeModalidade(String nomeModalidade) {
         this.nomeModalidade = nomeModalidade;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
 
+    public int getDia() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.data);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getMes() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.data);
+        return cal.get(Calendar.MONTH) + 1; // Calendar.MONTH is zero-based
+    }
+
+    public int getAno() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.data);
+        return cal.get(Calendar.YEAR);
+    }
 
 }
