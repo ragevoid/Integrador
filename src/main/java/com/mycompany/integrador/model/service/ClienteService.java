@@ -20,7 +20,7 @@ import java.util.List;
  * @author jose.zanandrea
  */
 public class ClienteService {
-    
+
     Connection conexao = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -51,7 +51,6 @@ public class ClienteService {
             stmt.setString(9, cliente.getBairro());
             stmt.setInt(10, cliente.getCidade());
 
-
             // Executando o comando SQL
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso!");
@@ -59,20 +58,12 @@ public class ClienteService {
         } catch (SQLException e) {
             System.err.println("Erro ao inserir dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return cliente;
     }
-    
-        public Cliente atualizarCliente(Cliente cliente) {
+
+    public Cliente atualizarCliente(Cliente cliente) {
         String sql = "UPDATE cliente SET cpf_cliente = ?, nome_cliente = ?, telefone_cliente = ?, email_cliente = ?, datanascimento_cliente = ?, "
                 + "endereco_cliente = ?, numero_cliente = ?, CEP_cliente = ?, bairro_cliente = ?, cidade_cliente = ? "
                 + " WHERE codigo_cliente = ?";
@@ -95,7 +86,6 @@ public class ClienteService {
             stmt.setString(9, cliente.getBairro());
             stmt.setInt(10, cliente.getCidade());
 
-            
             //condição where
             stmt.setInt(11, cliente.getCodigo());
 
@@ -106,15 +96,7 @@ public class ClienteService {
         } catch (SQLException e) {
             System.err.println("Erro ao inserir dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return cliente;
     }
@@ -149,29 +131,18 @@ public class ClienteService {
                 String bairro = rs.getString("bairro_cliente");
                 int cidade = rs.getInt("cidade_cliente");
 
-                clientes.add(new Cliente(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento ));
+                clientes.add(new Cliente(codigo, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade, dataNascimento));
             }
 
         } catch (SQLException e) {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
 
         return clientes;
     }
-    
+
     public Cliente localizarClientePorCodigo(int codigo) {
         Cliente cliente = null;
         String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
@@ -196,7 +167,7 @@ public class ClienteService {
                     String CEP = rs.getString("cep_cliente");
                     String bairro = rs.getString("bairro_cliente");
                     int cidade = rs.getInt("cidade_cliente");
-                    cliente = new Cliente(codigoCliente, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento);
+                    cliente = new Cliente(codigoCliente, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade, dataNascimento);
                 }
             }
 
@@ -206,7 +177,7 @@ public class ClienteService {
 
         return cliente;
     }
-    
+
     public Cliente localizarClientePorNome(String nomeCliente) {
         Cliente cliente = null;
         String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
@@ -241,7 +212,7 @@ public class ClienteService {
 
         return cliente;
     }
-    
+
     public Cliente localizarClientePorCPF(String CPFCliente) {
         Cliente cliente = null;
         String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
@@ -276,7 +247,7 @@ public class ClienteService {
 
         return cliente;
     }
-    
+
     public boolean excluirCliente(int codigo) {
         String sql = "DELETE FROM cliente WHERE codigo_cliente = ?";
         try {
@@ -291,29 +262,34 @@ public class ClienteService {
             int linhasAfetadas = stmt.executeUpdate();
 
             // Retorna verdadeiro se uma linha foi afetada, falso caso contrário
-                return linhasAfetadas > 0;
+            return linhasAfetadas > 0;
 
         } catch (SQLException e) {
             System.err.println("Erro ao deletar dados: " + e.getMessage());
             return false;
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
     }
-    
+
     public int getMaxCodigoCliente() {
         BuscarCodigoService service = new BuscarCodigoService();
         return service.getMaxCodigo("cliente", "codigo_cliente");
     }
 
+    // Método auxiliar para fechar recursos
+    private void fecharRecursos() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            conexaoBD.fecharConexao(conexao);
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
+
 }
-
-

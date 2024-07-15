@@ -191,7 +191,7 @@ public class QuadraService {
 
         return quadra;
     }
-    
+
     private void fecharRecursos() {
         try {
             if (rs != null) {

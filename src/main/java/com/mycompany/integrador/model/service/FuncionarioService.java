@@ -294,17 +294,7 @@ public class FuncionarioService {
         } catch (SQLException e) {
             System.err.println("Erro ao verificar credenciais: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return false;
     }
