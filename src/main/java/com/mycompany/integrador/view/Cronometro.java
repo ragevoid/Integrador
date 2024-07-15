@@ -43,7 +43,7 @@ public class Cronometro extends javax.swing.JFrame implements CronometroService.
         labelCronometroPara = new java.awt.Label();
         labelNomeQuadra = new java.awt.Label();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         panelCronometro.setBackground(new java.awt.Color(204, 204, 204));
 

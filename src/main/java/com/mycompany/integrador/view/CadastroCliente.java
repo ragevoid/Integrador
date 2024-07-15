@@ -54,7 +54,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     public CadastroCliente() {
         initComponents();
-        setBounds(new java.awt.Rectangle(0, 0, 800, 600));
+        //setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -316,50 +316,54 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabelCodigo.setForeground(new java.awt.Color(204, 204, 204));
         jLabelCodigo.setText("Código:");
-        jPanelFuncionario.add(jLabelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 15, 60, 25));
+        jPanelFuncionario.add(jLabelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 60, 25));
 
         jTextFieldCodigo.setEditable(false);
         jTextFieldCodigo.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldCodigo.setForeground(new java.awt.Color(204, 204, 204));
+        jTextFieldCodigo.setBorder(null);
         jTextFieldCodigo.setEnabled(false);
         jTextFieldCodigo.setMinimumSize(new java.awt.Dimension(70, 30));
         jTextFieldCodigo.setNextFocusableComponent(jTextFieldNome);
-        jPanelFuncionario.add(jTextFieldCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 15, 100, 25));
+        jPanelFuncionario.add(jTextFieldCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 80, 30));
 
         jLabelNome.setForeground(new java.awt.Color(204, 204, 204));
         jLabelNome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelNome.setText("Nome:");
-        jPanelFuncionario.add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 15, 50, 25));
+        jPanelFuncionario.add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 25));
 
         jTextFieldNome.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldNome.setForeground(new java.awt.Color(204, 204, 204));
+        jTextFieldNome.setBorder(null);
         jTextFieldNome.setNextFocusableComponent(jFormattedTextFieldCPF);
-        jPanelFuncionario.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 650, 25));
+        jPanelFuncionario.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 660, 25));
 
         jLabelCPF.setForeground(new java.awt.Color(204, 204, 204));
         jLabelCPF.setText("CPF:");
-        jPanelFuncionario.add(jLabelCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 46, 60, 25));
+        jPanelFuncionario.add(jLabelCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 40, 25));
 
         jLabelEmail.setForeground(new java.awt.Color(204, 204, 204));
         jLabelEmail.setText("Email:");
-        jPanelFuncionario.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 81, 60, 25));
+        jPanelFuncionario.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 40, 25));
 
         jTextFieldEmail.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldEmail.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 81, 850, 25));
+        jTextFieldEmail.setBorder(null);
+        jPanelFuncionario.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 310, 25));
 
         jLabelTelefone.setForeground(new java.awt.Color(204, 204, 204));
         jLabelTelefone.setText("Telefone:");
-        jPanelFuncionario.add(jLabelTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 46, 60, 25));
+        jPanelFuncionario.add(jLabelTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 40, 60, 25));
 
         jTextFieldTelefone.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldTelefone.setForeground(new java.awt.Color(204, 204, 204));
+        jTextFieldTelefone.setBorder(null);
         jTextFieldTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldTelefoneKeyTyped(evt);
             }
         });
-        jPanelFuncionario.add(jTextFieldTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 46, 430, 25));
+        jPanelFuncionario.add(jTextFieldTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 40, 210, 25));
 
         jTableDadosCliente.setBackground(new java.awt.Color(51, 51, 51));
         jTableDadosCliente.setForeground(new java.awt.Color(204, 204, 204));
@@ -388,106 +392,130 @@ public class CadastroCliente extends javax.swing.JFrame {
         if (jTableDadosCliente.getColumnModel().getColumnCount() > 0) {
             jTableDadosCliente.getColumnModel().getColumn(0).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTableDadosCliente.getColumnModel().getColumn(0).setHeaderValue("Código");
             jTableDadosCliente.getColumnModel().getColumn(1).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTableDadosCliente.getColumnModel().getColumn(1).setHeaderValue("Nome");
             jTableDadosCliente.getColumnModel().getColumn(2).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(2).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(2).setHeaderValue("CPF");
             jTableDadosCliente.getColumnModel().getColumn(3).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(3).setPreferredWidth(200);
+            jTableDadosCliente.getColumnModel().getColumn(3).setHeaderValue("Email");
             jTableDadosCliente.getColumnModel().getColumn(4).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(4).setPreferredWidth(100);
+            jTableDadosCliente.getColumnModel().getColumn(4).setHeaderValue("Telefone");
             jTableDadosCliente.getColumnModel().getColumn(5).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(5).setPreferredWidth(200);
+            jTableDadosCliente.getColumnModel().getColumn(5).setHeaderValue("Endereco");
             jTableDadosCliente.getColumnModel().getColumn(6).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(6).setPreferredWidth(50);
+            jTableDadosCliente.getColumnModel().getColumn(6).setHeaderValue("Numero");
             jTableDadosCliente.getColumnModel().getColumn(7).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(7).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(7).setHeaderValue("CEP");
             jTableDadosCliente.getColumnModel().getColumn(8).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(8).setPreferredWidth(100);
+            jTableDadosCliente.getColumnModel().getColumn(8).setHeaderValue("Bairro");
             jTableDadosCliente.getColumnModel().getColumn(9).setResizable(false);
             jTableDadosCliente.getColumnModel().getColumn(9).setPreferredWidth(120);
+            jTableDadosCliente.getColumnModel().getColumn(9).setHeaderValue("Cidade");
             jTableDadosCliente.getColumnModel().getColumn(10).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(10).setHeaderValue("Data Nascimento");
             jTableDadosCliente.getColumnModel().getColumn(11).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(11).setHeaderValue("Edit");
             jTableDadosCliente.getColumnModel().getColumn(12).setResizable(false);
+            jTableDadosCliente.getColumnModel().getColumn(12).setHeaderValue("Delete");
         }
 
-        jPanelFuncionario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 1040, 370));
+        jPanelFuncionario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 1040, 420));
 
-        jButtonCadastrar.setBackground(new java.awt.Color(51, 153, 255));
+        jButtonCadastrar.setBackground(new java.awt.Color(51, 0, 153));
+        jButtonCadastrar.setForeground(new java.awt.Color(204, 204, 204));
         jButtonCadastrar.setText("Cadastrar");
+        jButtonCadastrar.setBorder(null);
         jButtonCadastrar.setIconTextGap(5);
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCadastrarActionPerformed(evt);
             }
         });
-        jPanelFuncionario.add(jButtonCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 190, 190, 25));
+        jPanelFuncionario.add(jButtonCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 240, 30));
 
         jLabelCEP.setForeground(new java.awt.Color(204, 204, 204));
         jLabelCEP.setText("CEP:");
-        jPanelFuncionario.add(jLabelCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 120, -1, 25));
+        jPanelFuncionario.add(jLabelCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, -1, 25));
 
         jTextFieldEndereco.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldEndereco.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jTextFieldEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 118, 350, 25));
+        jTextFieldEndereco.setBorder(null);
+        jPanelFuncionario.add(jTextFieldEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 460, 25));
 
         jLabelEndereco.setForeground(new java.awt.Color(204, 204, 204));
         jLabelEndereco.setText("Endereço:");
-        jPanelFuncionario.add(jLabelEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 118, 60, 25));
+        jPanelFuncionario.add(jLabelEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 60, 25));
 
         jTextFieldNumero.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldNumero.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jTextFieldNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 220, 25));
+        jTextFieldNumero.setBorder(null);
+        jPanelFuncionario.add(jTextFieldNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, 170, 25));
 
         jLabelNumero.setForeground(new java.awt.Color(204, 204, 204));
         jLabelNumero.setText("Número:");
-        jPanelFuncionario.add(jLabelNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 118, 50, 25));
+        jPanelFuncionario.add(jLabelNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 50, 25));
 
         jLabelCidade.setForeground(new java.awt.Color(204, 204, 204));
         jLabelCidade.setText("Cidade:");
-        jPanelFuncionario.add(jLabelCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 50, 25));
+        jPanelFuncionario.add(jLabelCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 50, 25));
 
         jTextFieldBairro.setBackground(new java.awt.Color(102, 102, 102));
         jTextFieldBairro.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jTextFieldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 149, 340, 25));
+        jTextFieldBairro.setBorder(null);
+        jPanelFuncionario.add(jTextFieldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 340, 25));
 
         jLabelBairro.setForeground(new java.awt.Color(204, 204, 204));
         jLabelBairro.setText("Bairro:");
-        jPanelFuncionario.add(jLabelBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 149, 60, 25));
+        jPanelFuncionario.add(jLabelBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 60, 25));
 
         jComboBoxCidade.setBackground(new java.awt.Color(102, 102, 102));
         jComboBoxCidade.setForeground(new java.awt.Color(204, 204, 204));
+        jComboBoxCidade.setBorder(null);
         jComboBoxCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCidadeActionPerformed(evt);
             }
         });
-        jPanelFuncionario.add(jComboBoxCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 430, 25));
+        jPanelFuncionario.add(jComboBoxCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 430, 25));
 
         jFormattedTextFieldCPF.setBackground(new java.awt.Color(102, 102, 102));
+        jFormattedTextFieldCPF.setBorder(null);
         jFormattedTextFieldCPF.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jFormattedTextFieldCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 46, 350, 25));
+        jPanelFuncionario.add(jFormattedTextFieldCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 280, 25));
 
         jFormattedTextFieldCEP.setBackground(new java.awt.Color(102, 102, 102));
+        jFormattedTextFieldCEP.setBorder(null);
         jFormattedTextFieldCEP.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jFormattedTextFieldCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 171, 25));
+        jPanelFuncionario.add(jFormattedTextFieldCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 70, 171, 25));
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Salvar");
+        jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanelFuncionario.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 200, 25));
+        jPanelFuncionario.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 250, 30));
 
         jFormattedTextFielddataNascimento.setBackground(new java.awt.Color(102, 102, 102));
+        jFormattedTextFielddataNascimento.setBorder(null);
         jFormattedTextFielddataNascimento.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelFuncionario.add(jFormattedTextFielddataNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 300, 25));
+        jPanelFuncionario.add(jFormattedTextFielddataNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 290, 25));
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Data Nascimento:");
-        jPanelFuncionario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 192, -1, 25));
+        jPanelFuncionario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 25));
 
         BackGround.add(jPanelFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1050, 600));
 
@@ -500,6 +528,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonInserir.setBackground(new java.awt.Color(102, 102, 102));
         jButtonInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo.png"))); // NOI18N
         jButtonInserir.setText("INSERIR");
+        jButtonInserir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInserirActionPerformed(evt);
@@ -510,6 +539,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonSalvar.setBackground(new java.awt.Color(102, 102, 102));
         jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salvar.png"))); // NOI18N
         jButtonSalvar.setText("SALVAR");
+        jButtonSalvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
@@ -520,6 +550,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonExcluir.setBackground(new java.awt.Color(102, 102, 102));
         jButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apagar.png"))); // NOI18N
         jButtonExcluir.setText("EXCLUIR");
+        jButtonExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirActionPerformed(evt);
@@ -530,6 +561,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonLocalizar.setBackground(new java.awt.Color(102, 102, 102));
         jButtonLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/localizar.png"))); // NOI18N
         jButtonLocalizar.setText("LOCALIZAR");
+        jButtonLocalizar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLocalizarActionPerformed(evt);
@@ -540,6 +572,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonEditar.setBackground(new java.awt.Color(102, 102, 102));
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit.png"))); // NOI18N
         jButtonEditar.setText("EDITAR");
+        jButtonEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarActionPerformed(evt);
@@ -550,6 +583,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonCancelar.setBackground(new java.awt.Color(102, 102, 102));
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancelar.png"))); // NOI18N
         jButtonCancelar.setText("CANCELAR");
+        jButtonCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -560,6 +594,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonSair.setBackground(new java.awt.Color(102, 102, 102));
         jButtonSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
         jButtonSair.setText("SAIR");
+        jButtonSair.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSairActionPerformed(evt);

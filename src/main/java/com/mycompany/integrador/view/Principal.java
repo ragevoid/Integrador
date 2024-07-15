@@ -37,6 +37,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         userCodeLabel = new javax.swing.JLabel();
         principalDataLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         cadatroMenu = new javax.swing.JMenu();
         funcionarioMenu = new javax.swing.JMenuItem();
@@ -52,14 +53,14 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quadra Manager (Alpha)");
-        setMaximumSize(new java.awt.Dimension(1000, 790));
-        setMinimumSize(new java.awt.Dimension(1000, 790));
-        setPreferredSize(new java.awt.Dimension(1000, 790));
+        setMaximumSize(new java.awt.Dimension(1000, 780));
+        setMinimumSize(new java.awt.Dimension(1000, 780));
+        setPreferredSize(new java.awt.Dimension(1000, 780));
         setResizable(false);
 
         PrincipalBackGround.setBackground(new java.awt.Color(51, 51, 51));
-        PrincipalBackGround.setMaximumSize(new java.awt.Dimension(1000, 800));
-        PrincipalBackGround.setMinimumSize(new java.awt.Dimension(1000, 700));
+        PrincipalBackGround.setMaximumSize(new java.awt.Dimension(1000, 720));
+        PrincipalBackGround.setMinimumSize(new java.awt.Dimension(1000, 720));
         PrincipalBackGround.setPreferredSize(new java.awt.Dimension(1000, 720));
         PrincipalBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -70,14 +71,20 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(64, 64, 64));
         jPanel1.setFocusable(false);
+        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 70));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1000, 70));
+        jPanel1.setName(""); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 70));
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
+        userCodeLabel.setBackground(new java.awt.Color(102, 102, 102));
         userCodeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         userCodeLabel.setForeground(new java.awt.Color(0, 153, 204));
         userCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userCodeLabel.setText("UserCodeLabel");
         jPanel1.add(userCodeLabel);
 
+        principalDataLabel.setBackground(new java.awt.Color(102, 102, 102));
         principalDataLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         principalDataLabel.setForeground(new java.awt.Color(0, 153, 204));
         principalDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -86,12 +93,24 @@ public class Principal extends javax.swing.JFrame {
         String dataAtual = DataAtual.obtenerDataActual();
         principalDataLabel.setText(dataAtual);
 
-        PrincipalBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 1000, 70));
+        PrincipalBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 1000, 70));
 
-        jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
-        jMenuBar1.setBorder(null);
+        jSeparator1.setBackground(new java.awt.Color(0, 153, 255));
+        jSeparator1.setForeground(new java.awt.Color(0, 153, 255));
+        PrincipalBackGround.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
+        jMenuBar1.setBackground(new java.awt.Color(102, 102, 102));
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenuBar1.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jMenuBar1.setMaximumSize(new java.awt.Dimension(1000, 40));
+        jMenuBar1.setMinimumSize(new java.awt.Dimension(1000, 40));
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(1000, 40));
+        jMenuBar1.setRequestFocusEnabled(false);
+
+        cadatroMenu.setForeground(new java.awt.Color(204, 204, 204));
         cadatroMenu.setText("Cadastro");
+        cadatroMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cadatroMenu.setMargin(new java.awt.Insets(6, 6, 6, 6));
         cadatroMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +120,7 @@ public class Principal extends javax.swing.JFrame {
 
         funcionarioMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_DOWN_MASK));
         funcionarioMenu.setText("Funcionário");
+        funcionarioMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         funcionarioMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 funcionarioMenuActionPerformed(evt);
@@ -110,6 +130,7 @@ public class Principal extends javax.swing.JFrame {
 
         clientesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
         clientesMenu.setText("Clientes");
+        clientesMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clientesMenuActionPerformed(evt);
@@ -119,6 +140,7 @@ public class Principal extends javax.swing.JFrame {
 
         modalidadesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK));
         modalidadesMenu.setText("Modalidades");
+        modalidadesMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         modalidadesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modalidadesMenuActionPerformed(evt);
@@ -128,10 +150,17 @@ public class Principal extends javax.swing.JFrame {
 
         quadrasMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_DOWN_MASK));
         quadrasMenu.setText("Quadras");
+        quadrasMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        quadrasMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quadrasMenuActionPerformed(evt);
+            }
+        });
         cadatroMenu.add(quadrasMenu);
 
         TipoQuadraMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_DOWN_MASK));
         TipoQuadraMenu.setText("Tipo de Quadras");
+        TipoQuadraMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TipoQuadraMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TipoQuadraMenuActionPerformed(evt);
@@ -141,10 +170,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(cadatroMenu);
 
+        agendaMenu.setForeground(new java.awt.Color(204, 204, 204));
         agendaMenu.setText("Agenda");
+        agendaMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         iniciarAgenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
         iniciarAgenda.setText("Iniciar Agenda");
+        iniciarAgenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         iniciarAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iniciarAgendaActionPerformed(evt);
@@ -154,7 +186,9 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(agendaMenu);
 
+        jMenu1.setForeground(new java.awt.Color(204, 204, 204));
         jMenu1.setText("Cronômetro");
+        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
@@ -163,6 +197,7 @@ public class Principal extends javax.swing.JFrame {
 
         iniciarCronometroButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_DOWN_MASK));
         iniciarCronometroButton.setText("Iniciar Cronômetro");
+        iniciarCronometroButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         iniciarCronometroButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iniciarCronometroButtonActionPerformed(evt);
@@ -172,8 +207,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setForeground(new java.awt.Color(204, 204, 204));
         jMenu2.setText("Sair");
-        jMenu2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -246,6 +289,17 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenu1ActionPerformed
 
+    private void quadrasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quadrasMenuActionPerformed
+        // TODO add your handling code here:
+        CadastroQuadra cadastroQuadra = new CadastroQuadra();
+        cadastroQuadra.setVisible(true);
+    }//GEN-LAST:event_quadrasMenuActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,6 +349,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JMenuItem modalidadesMenu;
     private javax.swing.JLabel principalDataLabel;
     private javax.swing.JMenuItem quadrasMenu;

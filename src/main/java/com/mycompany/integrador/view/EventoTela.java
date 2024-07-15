@@ -182,7 +182,7 @@ public class EventoTela extends javax.swing.JFrame {
 
         if (eventoService.validarHora(evento)) {
             eventoService.salvarEvento(evento);
-            JOptionPane.showMessageDialog(null, "Evento inserido com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Evento inserido com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Horário indisponível: Agendado para outro cliente", "Erro", JOptionPane.ERROR_MESSAGE);
