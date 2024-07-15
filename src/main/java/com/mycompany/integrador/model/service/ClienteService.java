@@ -175,7 +175,7 @@ public class ClienteService {
     public Cliente localizarClientePorCodigo(int codigo) {
         Cliente cliente = null;
         String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
-                + " senha_cliente, endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente, "
+                + " endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente "
                 + " FROM cliente"
                 + " WHERE codigo_cliente = ?";
 
@@ -185,18 +185,18 @@ public class ClienteService {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    int codigoFuncionario = rs.getInt("codigo_funcionario");
-                    String nome = rs.getString("nome_funcionario");
-                    String CPF = rs.getString("CPF_funcionario");
-                    String telefone = rs.getString("telefone_funcionario");
-                    String email = rs.getString("email_funcionario");
+                    int codigoCliente = rs.getInt("codigo_cliente");
+                    String nome = rs.getString("nome_cliente");
+                    String CPF = rs.getString("CPF_cliente");
+                    String telefone = rs.getString("telefone_cliente");
+                    String email = rs.getString("email_cliente");
                     Date dataNascimento = rs.getDate("datanascimento_cliente");
-                    String endereco = rs.getString("endereco_funcionario");
-                    String numero = rs.getString("numero_funcionario");
-                    String CEP = rs.getString("CEP_funcionario");
-                    String bairro = rs.getString("bairro_funcionario");
-                    int cidade = rs.getInt("cidade_funcionario");
-                    cliente = new Cliente(codigoFuncionario, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento);
+                    String endereco = rs.getString("endereco_cliente");
+                    String numero = rs.getString("numero_cliente");
+                    String CEP = rs.getString("cep_cliente");
+                    String bairro = rs.getString("bairro_cliente");
+                    int cidade = rs.getInt("cidade_cliente");
+                    cliente = new Cliente(codigoCliente, nome, CPF, telefone, email, endereco, numero, CEP, bairro, cidade,dataNascimento);
                 }
             }
 
@@ -210,7 +210,7 @@ public class ClienteService {
     public Cliente localizarClientePorNome(String nomeCliente) {
         Cliente cliente = null;
         String sql = "SELECT codigo_cliente, nome_cliente, CPF_cliente, email_cliente, telefone_cliente, datanascimento_cliente,  "
-                + " senha_cliente, endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente, "
+                + " endereco_cliente, numero_cliente, cep_cliente, bairro_cliente, cidade_cliente "
                 + " FROM cliente"
                 + " WHERE nome_cliente LIKE ? ";
 
@@ -315,4 +315,5 @@ public class ClienteService {
     }
 
 }
+
 

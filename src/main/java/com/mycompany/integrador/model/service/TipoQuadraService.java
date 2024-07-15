@@ -33,7 +33,7 @@ public class TipoQuadraService {
             // Preparando a instrução SQL
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, tipoQuadra.getNome());
-         
+
             // Executando o comando SQL
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso!");
@@ -41,20 +41,12 @@ public class TipoQuadraService {
         } catch (SQLException e) {
             System.err.println("Erro ao inserir dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return tipoQuadra;
     }
     
-     public TipoQuadra atualizarTipoQuadra(TipoQuadra tipoQuadra) {
+    public TipoQuadra atualizarTipoQuadra(TipoQuadra tipoQuadra) {
         String sql = "UPDATE tipoquadra SET codigo_tipoquadra = ?, nome_tipoquadra = ? "
                 + " WHERE codigo_tipoquadra = ?";
         try {
@@ -65,7 +57,7 @@ public class TipoQuadraService {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, tipoQuadra.getCodigo());
             stmt.setString(2, tipoQuadra.getNome());
-            
+
             //condição where
             stmt.setInt(4, tipoQuadra.getCodigo());
 
@@ -76,15 +68,7 @@ public class TipoQuadraService {
         } catch (SQLException e) {
             System.err.println("Erro ao inserir dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return tipoQuadra;
     }
@@ -114,29 +98,18 @@ public class TipoQuadraService {
         } catch (SQLException e) {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
 
         return tipoquadras;
     }
      
-         public int getMaxCodigoTipoQuadra() {
+    public int getMaxCodigoTipoQuadra() {
         BuscarCodigoService service = new BuscarCodigoService();
         return service.getMaxCodigo("tipoquadra", "codigo_tipoquadra");
     }
          
-         public boolean excluirTipoQuadra(int codigo) {
+    public boolean excluirTipoQuadra(int codigo) {
         String sql = "DELETE FROM tipoquadra WHERE codigo_tipoquadra = ?";
         try {
             // Obtendo a conexão
@@ -150,21 +123,13 @@ public class TipoQuadraService {
             int linhasAfetadas = stmt.executeUpdate();
 
             // Retorna verdadeiro se uma linha foi afetada, falso caso contrário
-                return linhasAfetadas > 0;
+            return linhasAfetadas > 0;
 
         } catch (SQLException e) {
             System.err.println("Erro ao deletar dados: " + e.getMessage());
             return false;
         } finally {
-            // Fechando os recursos
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
     }
          
@@ -180,9 +145,9 @@ public class TipoQuadraService {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    int codigoTipoQuadra = rs.getInt("codigo_tipoquadra");                    
+                    int codigoTipoQuadra = rs.getInt("codigo_tipoquadra");
                     String nome = rs.getString("nome_tipoquadra");
-                    
+
                     tipoQuadra = new TipoQuadra(codigoTipoQuadra, nome);
                 }
             }
@@ -206,9 +171,9 @@ public class TipoQuadraService {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    int codigoTipoQuadra = rs.getInt("codigo_tipoquadra");                    
+                    int codigoTipoQuadra = rs.getInt("codigo_tipoquadra");
                     String nome = rs.getString("nome_tipoquadra");
-                    
+
                     tipoQuadra = new TipoQuadra(codigoTipoQuadra, nome);
                 }
             }
@@ -218,6 +183,60 @@ public class TipoQuadraService {
         }
 
         return tipoQuadra;
+    }
+    
+    public String getNomeTipoQuadra(int codigoTipoQuadra) {
+        String nomeTipoQuadra = null;
+        String sql = "SELECT nome_tipoquadra FROM tipoquadra WHERE codigo_tipoquadra = ?";
+        try {
+            conexao = conexaoBD.getConnection();
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoTipoQuadra);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                nomeTipoQuadra = rs.getString("nome_tipoquadra");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            fecharRecursos();
+        }
+        return nomeTipoQuadra;
+    }
+    
+    public int getCodigoTipoQuadra(String nome) {
+        int codigoTipoQuadra = -1; // Valor padrão
+        String sql = "SELECT codigo_tipoquadra FROM tipoquadra WHERE nome_tipoquadra LIKE ?";
+        try {
+            conexao = conexaoBD.getConnection();
+            stmt = conexao.prepareStatement(sql);
+
+            stmt.setString(1, nome);
+
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                codigoTipoQuadra = rs.getInt("codigo_tipoquadra");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            fecharRecursos();
+        }
+        return codigoTipoQuadra;
+    }
+        
+    private void fecharRecursos() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            conexaoBD.fecharConexao(conexao);
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
     }
                  
 }

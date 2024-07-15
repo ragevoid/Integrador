@@ -9,14 +9,14 @@ package com.mycompany.integrador.model;
  * @author Ricardo
  */
 public class Quadra {
-    private Long id;
+    private int codigo;
     private String nome;
     private double tamanho;
     private int tipo;
 
 
-    public Quadra(Long id, String nome, double tamanho, int tipo) {
-        this.id = id;
+    public Quadra(int codigo, String nome, double tamanho, int tipo) {
+        this.codigo = codigo;
         this.nome = nome;
         this.tamanho = tamanho;
         this.tipo = tipo;
@@ -30,12 +30,12 @@ public class Quadra {
 
     }
 
-    public Long getId() {
-        return id;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -61,9 +61,6 @@ public class Quadra {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
-    
-    
-    
-    
-    
+      
 }
+

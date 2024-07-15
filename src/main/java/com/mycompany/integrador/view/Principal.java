@@ -39,13 +39,16 @@ public class Principal extends javax.swing.JFrame {
         principalDataLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         cadatroMenu = new javax.swing.JMenu();
-        usersMenu = new javax.swing.JMenuItem();
+        funcionarioMenu = new javax.swing.JMenuItem();
         clientesMenu = new javax.swing.JMenuItem();
         modalidadesMenu = new javax.swing.JMenuItem();
         quadrasMenu = new javax.swing.JMenuItem();
         TipoQuadraMenu = new javax.swing.JMenuItem();
         agendaMenu = new javax.swing.JMenu();
         iniciarAgenda = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        iniciarCronometroButton = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quadra Manager (Alpha)");
@@ -96,14 +99,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        usersMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        usersMenu.setText("Usuarios");
-        usersMenu.addActionListener(new java.awt.event.ActionListener() {
+        funcionarioMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        funcionarioMenu.setText("Funcionário");
+        funcionarioMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usersMenuActionPerformed(evt);
+                funcionarioMenuActionPerformed(evt);
             }
         });
-        cadatroMenu.add(usersMenu);
+        cadatroMenu.add(funcionarioMenu);
 
         clientesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
         clientesMenu.setText("Clientes");
@@ -151,6 +154,28 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(agendaMenu);
 
+        jMenu1.setText("Cronômetro");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        iniciarCronometroButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        iniciarCronometroButton.setText("Iniciar Cronômetro");
+        iniciarCronometroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarCronometroButtonActionPerformed(evt);
+            }
+        });
+        jMenu1.add(iniciarCronometroButton);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Sair");
+        jMenu2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,13 +206,13 @@ public class Principal extends javax.swing.JFrame {
         quadraSelector.setVisible(true);
     }//GEN-LAST:event_iniciarAgendaActionPerformed
 
-    private void usersMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersMenuActionPerformed
+    private void funcionarioMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionarioMenuActionPerformed
                        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CadastroFuncionario().setVisible(true);
             }
         });
-    }//GEN-LAST:event_usersMenuActionPerformed
+    }//GEN-LAST:event_funcionarioMenuActionPerformed
 
     private void modalidadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modalidadesMenuActionPerformed
 
@@ -209,6 +234,17 @@ public class Principal extends javax.swing.JFrame {
     private void cadatroMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadatroMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cadatroMenuActionPerformed
+
+    private void iniciarCronometroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarCronometroButtonActionPerformed
+        // TODO add your handling code here:
+        QuadraSelectorCronometro quadraSelectorCronometro = new QuadraSelectorCronometro();
+        quadraSelectorCronometro.setVisible(true);
+    }//GEN-LAST:event_iniciarCronometroButtonActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,14 +287,17 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu agendaMenu;
     private javax.swing.JMenu cadatroMenu;
     private javax.swing.JMenuItem clientesMenu;
+    private javax.swing.JMenuItem funcionarioMenu;
     private javax.swing.JMenuItem iniciarAgenda;
+    private javax.swing.JMenuItem iniciarCronometroButton;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem modalidadesMenu;
     private javax.swing.JLabel principalDataLabel;
     private javax.swing.JMenuItem quadrasMenu;
     public javax.swing.JLabel userCodeLabel;
-    private javax.swing.JMenuItem usersMenu;
     // End of variables declaration//GEN-END:variables
 }

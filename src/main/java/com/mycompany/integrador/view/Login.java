@@ -133,8 +133,13 @@ public class Login extends javax.swing.JFrame {
 
         cadastrarButton.setBackground(new java.awt.Color(153, 153, 153));
         cadastrarButton.setForeground(new java.awt.Color(51, 51, 51));
-        cadastrarButton.setText("Cadastrar");
+        cadastrarButton.setText("Cancelar");
         cadastrarButton.setBorder(null);
+        cadastrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarButtonActionPerformed(evt);
+            }
+        });
         backGround.add(cadastrarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 70, 30));
 
         loginButton.setBackground(new java.awt.Color(0, 153, 204));
@@ -235,6 +240,11 @@ public class Login extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_userFieldKeyTyped
+
+    private void cadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarButtonActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_cadastrarButtonActionPerformed
 
     /**
      * @param args the command line arguments

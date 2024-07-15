@@ -153,7 +153,7 @@ public class QuadraSelector extends javax.swing.JFrame {
    public void popularComboBox() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Quadra quadra : quadras) {
-            model.addElement(quadra.getId() +" - "+ quadra.getNome());
+            model.addElement(quadra.getCodigo()+" - "+ quadra.getNome());
         }
         jComboBox1.setModel(model);
     }

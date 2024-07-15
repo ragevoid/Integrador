@@ -1,11 +1,8 @@
 package com.mycompany.integrador.view;
 
-import com.mycompany.integrador.model.Cliente;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.List;
-
 import com.mycompany.integrador.model.Evento;
 import com.mycompany.integrador.model.service.EventoService;
 import java.awt.Color;
@@ -150,7 +147,7 @@ public class Agenda extends javax.swing.JFrame {
         agendaBackGroundPanel.add(eventosButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 490, 50));
 
         buttonVoltar.setBackground(new java.awt.Color(102, 102, 102));
-        buttonVoltar.setForeground(new java.awt.Color(51, 51, 51));
+        buttonVoltar.setForeground(new java.awt.Color(204, 204, 204));
         buttonVoltar.setText("Voltar");
         buttonVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +200,7 @@ public class Agenda extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para apagar.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
- mostrarDiasEventos();
+        mostrarDiasEventos();
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
 
     private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
