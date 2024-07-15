@@ -203,7 +203,7 @@ public class Agenda extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para apagar.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
+ mostrarDiasEventos();
     }//GEN-LAST:event_apagarEventoButtonActionPerformed
 
     private void adicionarEventoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarEventoButtonActionPerformed
