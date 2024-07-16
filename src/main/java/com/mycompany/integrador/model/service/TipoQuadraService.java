@@ -19,11 +19,11 @@ import java.util.List;
  * @author ricardo.gonzalez
  */
 public class TipoQuadraService {
+
     Connection conexao = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
-    
     public TipoQuadra salvarTipoQuadra(TipoQuadra tipoQuadra) {
         String sql = "INSERT INTO tipoquadra (nome_tipoquadra) VALUES (?)";
         try {
@@ -45,7 +45,7 @@ public class TipoQuadraService {
         }
         return tipoQuadra;
     }
-    
+
     public TipoQuadra atualizarTipoQuadra(TipoQuadra tipoQuadra) {
         String sql = "UPDATE tipoquadra SET codigo_tipoquadra = ?, nome_tipoquadra = ? "
                 + " WHERE codigo_tipoquadra = ?";
@@ -72,7 +72,7 @@ public class TipoQuadraService {
         }
         return tipoQuadra;
     }
-     
+
     public List<TipoQuadra> listarTipoQuadra() {
         String sql = "SELECT * FROM tipoquadra";
         List<TipoQuadra> tipoquadras = new ArrayList<>();
@@ -103,12 +103,12 @@ public class TipoQuadraService {
 
         return tipoquadras;
     }
-     
+
     public int getMaxCodigoTipoQuadra() {
         BuscarCodigoService service = new BuscarCodigoService();
         return service.getMaxCodigo("tipoquadra", "codigo_tipoquadra");
     }
-         
+
     public boolean excluirTipoQuadra(int codigo) {
         String sql = "DELETE FROM tipoquadra WHERE codigo_tipoquadra = ?";
         try {
@@ -132,7 +132,7 @@ public class TipoQuadraService {
             fecharRecursos();
         }
     }
-         
+
     public TipoQuadra localizarTipoQuadraPorCodigo(int codigo) {
         TipoQuadra tipoQuadra = null;
         String sql = "SELECT codigo_tipoquadra, nome_tipoquadra "
@@ -158,7 +158,7 @@ public class TipoQuadraService {
 
         return tipoQuadra;
     }
-    
+
     public TipoQuadra localizarTipoQuadraPorNome(String nomeTipoQuadra) {
         TipoQuadra tipoQuadra = null;
         String sql = "SELECT codigo_tipoquadra, nome_tipoquadra "
@@ -184,7 +184,7 @@ public class TipoQuadraService {
 
         return tipoQuadra;
     }
-    
+
     public String getNomeTipoQuadra(int codigoTipoQuadra) {
         String nomeTipoQuadra = null;
         String sql = "SELECT nome_tipoquadra FROM tipoquadra WHERE codigo_tipoquadra = ?";
@@ -203,7 +203,7 @@ public class TipoQuadraService {
         }
         return nomeTipoQuadra;
     }
-    
+
     public int getCodigoTipoQuadra(String nome) {
         int codigoTipoQuadra = -1; // Valor padrão
         String sql = "SELECT codigo_tipoquadra FROM tipoquadra WHERE nome_tipoquadra LIKE ?";
@@ -224,7 +224,7 @@ public class TipoQuadraService {
         }
         return codigoTipoQuadra;
     }
-        
+
     private void fecharRecursos() {
         try {
             if (rs != null) {
@@ -238,5 +238,5 @@ public class TipoQuadraService {
             System.err.println("Erro ao fechar recursos: " + e.getMessage());
         }
     }
-                 
+
 }

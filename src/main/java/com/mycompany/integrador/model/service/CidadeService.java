@@ -27,7 +27,8 @@ public class CidadeService {
         
         conexao = conexaoBD.getConnection();
     }
-     public List<Cidade> listarCidades() {
+    
+    public List<Cidade> listarCidades() {
         String sql = "SELECT codigo_cidade, nome_cidade FROM cidade";
         List<Cidade> cidades = new ArrayList<>();
 
@@ -45,32 +46,21 @@ public class CidadeService {
             while (rs.next()) {
                 int codigo = rs.getInt("codigo_cidade");
                 String nome = rs.getString("nome_cidade");
-                
+
                 cidades.add(new Cidade(codigo, nome));
             }
 
         } catch (SQLException e) {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
 
         return cidades;
-    }   
+    }  
      
-     public Cidade getCidades(String nome) {
-        String sql = "SELECT codigo_cidade, nome_cidade FROM cidade where nome_cidade like ?";        
+    public Cidade getCidades(String nome) {
+        String sql = "SELECT codigo_cidade, nome_cidade FROM cidade where nome_cidade like ?";
         Cidade cidade = null;
         try {
             // Obtendo a conexão
@@ -87,25 +77,14 @@ public class CidadeService {
             while (rs.next()) {
                 int codigo = rs.getInt("codigo_cidade");
                 String nomeCidade = rs.getString("nome_cidade");
-                
-                cidade = new Cidade(codigo,nomeCidade);
+
+                cidade = new Cidade(codigo, nomeCidade);
             }
 
         } catch (SQLException e) {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         } finally {
-            // Fechando os recursos
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
 
         return cidade;
@@ -125,17 +104,7 @@ public class CidadeService {
         } catch (SQLException e) {
             System.err.println("Erro ao selecionar dados: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                conexaoBD.fecharConexao(conexao);
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            fecharRecursos();
         }
         return codigoCidade;
     }

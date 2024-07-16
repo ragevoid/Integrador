@@ -62,7 +62,7 @@ public class Estado {
     
          @Override
     public String toString() {
-        return nome; // Isso faz com que o nome do funcionário seja exibido no JComboBox
+        return nome;
     }
     
 }
