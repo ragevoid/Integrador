@@ -295,6 +295,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         setTitle("Cadastro de Cliente");
         setBackground(new java.awt.Color(51, 51, 51));
         setMinimumSize(new java.awt.Dimension(940, 730));
+        setResizable(false);
 
         BackGround.setBackground(new java.awt.Color(51, 51, 51));
         BackGround.setMaximumSize(new java.awt.Dimension(940, 730));
@@ -522,6 +523,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo.png"))); // NOI18N
         jButtonInserir.setText("INSERIR");
         jButtonInserir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonInserir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInserirActionPerformed(evt);
@@ -533,6 +535,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salvar.png"))); // NOI18N
         jButtonSalvar.setText("SALVAR");
         jButtonSalvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonSalvar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
@@ -544,6 +547,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apagar.png"))); // NOI18N
         jButtonExcluir.setText("EXCLUIR");
         jButtonExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonExcluir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirActionPerformed(evt);
@@ -555,6 +559,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/localizar.png"))); // NOI18N
         jButtonLocalizar.setText("LOCALIZAR");
         jButtonLocalizar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonLocalizar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLocalizarActionPerformed(evt);
@@ -566,6 +571,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit.png"))); // NOI18N
         jButtonEditar.setText("EDITAR");
         jButtonEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonEditar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarActionPerformed(evt);
@@ -577,6 +583,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancelar.png"))); // NOI18N
         jButtonCancelar.setText("CANCELAR");
         jButtonCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonCancelar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -588,6 +595,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
         jButtonSair.setText("SAIR");
         jButtonSair.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonSair.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSairActionPerformed(evt);
@@ -634,12 +642,27 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        String codigo = jTextFieldCodigo.getText();
-        int codigoint = Integer.parseInt(codigo);
-        JOptionPane.showMessageDialog(null,
-                "Deseja realmente excluir os dados selecionados?", "Excluir Cliente", JOptionPane.YES_NO_CANCEL_OPTION);        
-        clienteService.excluirCliente(codigoint);
-        listarClientes();
+        String codigo = jTextFieldCodigo.getText().trim();
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum código foi inserido para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int codigoint = Integer.parseInt(codigo);
+            int confirmacao = JOptionPane.showConfirmDialog(null,
+                    "Deseja realmente excluir os dados selecionados?", "Excluir Cliente", JOptionPane.YES_NO_CANCEL_OPTION);
+
+            if (confirmacao == JOptionPane.YES_OPTION) {
+                clienteService.excluirCliente(codigoint);
+                listarClientes();
+                JOptionPane.showMessageDialog(null, "Dados excluídos com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "O código inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir os dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
