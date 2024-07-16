@@ -201,6 +201,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     private void CarregarClienteSelecionado() {
+        
         int codigo = (int) jTableDadosCliente.getValueAt(rowIndex, 0);
         String codigoStr = String.valueOf(codigo);
         String nome = (String) jTableDadosCliente.getValueAt(rowIndex, 1);
@@ -212,9 +213,12 @@ public class CadastroCliente extends javax.swing.JFrame {
         String CEP = (String) jTableDadosCliente.getValueAt(rowIndex, 7);
         String bairro = (String) jTableDadosCliente.getValueAt(rowIndex, 8);
         int codigoCidade = (int) jTableDadosCliente.getValueAt(rowIndex, 9);
-        Date dataNascimento = (Date) jTableDadosCliente.getValueAt(rowIndex, 10);
+        java.sql.Date dataNascimentoSQL = (java.sql.Date) jTableDadosCliente.getValueAt(rowIndex, 10);
 
-        // Preencha os campos com os dados do funcionario selecionado para edição 
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dataNascimentoStr = df.format(dataNascimentoSQL);
+
+        // Preencha os campos com os dados do cliente selecionado para edição 
         jTextFieldCodigo.setText(codigoStr);
         jTextFieldNome.setText(nome);
         jFormattedTextFieldCPF.setText(CPF);
@@ -224,19 +228,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldNumero.setText(numero);
         jFormattedTextFieldCEP.setText(CEP);
         jTextFieldBairro.setText(bairro);
-        
-        /*String dataNascimento1 = jFormattedTextFielddataNascimento.getText();
 
-        Date dataNascimentoDate = null;
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // Defina o formato da sua data de nascimento
-
-        try {
-            dataNascimentoDate = df.parse(dataNascimento1);
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, "Formato de data inválido. Use o formato dd/MM/yyyy.");
-            return;
-        }
-        jFormattedTextFielddataNascimento.setText(dataNascimento1);*/
+        jFormattedTextFielddataNascimento.setText(dataNascimentoStr);
 
         String nomeCidade = cidadeService.getNomeCidade(codigoCidade);
 
@@ -807,11 +800,11 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     private void salvarCliente() {
-        
-                if (!validarEmailField()) {
+
+        if (!validarEmailField()) {
             return;
         }
-                
+
         String codigo = jTextFieldCodigo.getText();
         int codigoint = Integer.parseInt(codigo);
         String nome = jTextFieldNome.getText();
@@ -849,7 +842,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(null,
-                "Dados inseridos com sucesso!", "Sucesso", JOptionPane.OK_OPTION);
+                "Dados inseridos com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         limparCampos();
         listarClientes();
     }
