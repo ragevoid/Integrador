@@ -103,6 +103,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         agenda.quadraLabel.setText(selectedQuadra);
         
         agenda.setTitle("Agenda - "+SelectedQuadraName);
+     
         agenda.setVisible(true);     
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

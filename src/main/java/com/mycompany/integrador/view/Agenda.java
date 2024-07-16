@@ -26,16 +26,18 @@ public class Agenda extends javax.swing.JFrame {
     private List<Evento> eventosMes;
     private EventoService eventoService;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+
 
     /**
      * Creates new form Agenda
      */
     public Agenda() {
         initComponents();
-        eventos = new ArrayList<>();
-        eventosMes = new ArrayList<>();
         eventoService = new EventoService();
+        eventosMes = new ArrayList<>();
         mostrarDiasEventos();
+        eventos = new ArrayList<>();
         this.setLocationRelativeTo(null);
 
     }
@@ -62,6 +64,7 @@ public class Agenda extends javax.swing.JFrame {
         editarButton = new javax.swing.JButton();
         apagarEventoButton = new javax.swing.JButton();
         buttonVoltar = new javax.swing.JButton();
+        atualizarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 420));
@@ -108,6 +111,11 @@ public class Agenda extends javax.swing.JFrame {
         quadraLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         quadraLabel.setForeground(new java.awt.Color(204, 204, 204));
         quadraLabel.setText("1-Quadra A");
+        quadraLabel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                quadraLabelPropertyChange(evt);
+            }
+        });
         agendaBackGroundPanel.add(quadraLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 230, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -120,7 +128,9 @@ public class Agenda extends javax.swing.JFrame {
                 jCalendar1PropertyChange(evt);
             }
         });
+        zerarCalendar();
         agendaBackGroundPanel.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 380, 330));
+        zerarCalendar();
         agendaBackGroundPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 930, 10));
 
         eventosButtonPanel.setLayout(new java.awt.GridLayout(1, 0));
@@ -165,6 +175,14 @@ public class Agenda extends javax.swing.JFrame {
             }
         });
         agendaBackGroundPanel.add(buttonVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 23, 190, 30));
+
+        atualizarButton.setText("Atualizar");
+        atualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarButtonActionPerformed(evt);
+            }
+        });
+        agendaBackGroundPanel.add(atualizarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 380, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,16 +267,30 @@ public class Agenda extends javax.swing.JFrame {
 
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
         // TODO add your handling code here:
+        
         int selectedRow = eventosTable.getSelectedRow();
-        if (selectedRow >= 0) { 
-            int codigo_evento = Integer.parseInt(eventosTable.getValueAt(selectedRow, 0).toString());
+        if (selectedRow >= 0) {
+            String codigo_evento = eventosTable.getValueAt(selectedRow, 0).toString();
             EventoTelaEditar eventoTelaEditar = new EventoTelaEditar();
-            eventoTelaEditar.codigo_evento = codigo_evento;
+            System.out.println(codigo_evento);
+            eventoTelaEditar.codigoEventoLabel.setText(codigo_evento);
             eventoTelaEditar.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }else{
+        JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+            
+  
     }//GEN-LAST:event_editarButtonActionPerformed
+
+    private void quadraLabelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_quadraLabelPropertyChange
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_quadraLabelPropertyChange
+
+    private void atualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarButtonActionPerformed
+        // TODO add your handling code here:
+        mostrarDiasEventos();
+    }//GEN-LAST:event_atualizarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,43 +353,57 @@ public class Agenda extends javax.swing.JFrame {
         return input.substring(dashIndex + 1);
     }
 
-    public void mostrarDiasEventos() {
+public void mostrarDiasEventos() {
+    int codigoQuadra = pegarId(quadraLabel.getText());
+    int month = jCalendar1.getMonthChooser().getMonth() + 1;
+    int year = jCalendar1.getYearChooser().getYear();
+    JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
+    Component[] components = jpanel.getComponents();
+    eventosMes = eventoService.listarEventosMes(codigoQuadra, month);
 
-        int codigoQuadra = pegarId(quadraLabel.getText());
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        int month = jCalendar1.getMonthChooser().getMonth() + 1;
-        int year = jCalendar1.getYearChooser().getYear();
-        JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
-        Component component[] = jpanel.getComponents();
-        eventosMes = eventoService.listarEventosMes(codigoQuadra, month);
+   zerarCalendar();
 
-        for (Component comp : component) {
-            if (comp instanceof JButton) {
-                JButton dayButton = (JButton) comp;
-                String dayText = dayButton.getText();
 
-                if (dayText.matches("\\d+")) {
-                    int day = Integer.parseInt(dayText);
-                    Calendar compCalendar = Calendar.getInstance();
-                    compCalendar.set(year, month - 1, day);
+    // Percorrer novamente para definir a cor dos dias com eventos
+    for (Component comp : components) {
+        if (comp instanceof JButton) {
+            JButton dayButton = (JButton) comp;
+            String dayText = dayButton.getText();
 
-                    for (Evento eventoMes : eventosMes) {
-                        Date eventDate = eventoMes.getData();
-                        Calendar eventCalendar = Calendar.getInstance();
-                        eventCalendar.setTime(eventDate);
+            if (dayText.matches("\\d+")) {
+                int day = Integer.parseInt(dayText);
+                Calendar compCalendar = Calendar.getInstance();
+                compCalendar.set(year, month - 1, day);
 
-                        if (eventCalendar.get(Calendar.YEAR) == compCalendar.get(Calendar.YEAR)
-                                && eventCalendar.get(Calendar.MONTH) == compCalendar.get(Calendar.MONTH)
-                                && eventCalendar.get(Calendar.DAY_OF_MONTH) == compCalendar.get(Calendar.DAY_OF_MONTH)) {
-                            dayButton.setBackground(Color.RED); // Defina a cor desejada
-                        }
+                for (Evento eventoMes : eventosMes) {
+                    Date eventDate = eventoMes.getData();
+                    Calendar eventCalendar = Calendar.getInstance();
+                    eventCalendar.setTime(eventDate);
+
+                    if (eventCalendar.get(Calendar.YEAR) == compCalendar.get(Calendar.YEAR)
+                            && eventCalendar.get(Calendar.MONTH) == compCalendar.get(Calendar.MONTH)
+                            && eventCalendar.get(Calendar.DAY_OF_MONTH) == compCalendar.get(Calendar.DAY_OF_MONTH)) {
+                        dayButton.setBackground(Color.RED); // Defina a cor desejada
+                        break; // Sai do loop após encontrar um evento para esse dia
                     }
                 }
             }
         }
-
     }
+}
+
+public void zerarCalendar(){
+    JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
+    Component[] components = jpanel.getComponents();
+    for (Component comp : components) {
+        if (comp instanceof JButton) {
+            JButton dayButton = (JButton) comp;
+            dayButton.setBackground(null);
+        }
+    }
+
+}
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -365,11 +411,12 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JButton adicionarEventoButton;
     private javax.swing.JPanel agendaBackGroundPanel;
     private javax.swing.JButton apagarEventoButton;
+    private javax.swing.JButton atualizarButton;
     private javax.swing.JButton buttonVoltar;
     private javax.swing.JButton editarButton;
     private javax.swing.JPanel eventosButtonPanel;
     private javax.swing.JTable eventosTable;
-    private com.toedter.calendar.JCalendar jCalendar1;
+    public com.toedter.calendar.JCalendar jCalendar1;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     public javax.swing.JLabel quadraLabel;

@@ -317,6 +317,42 @@ public class EventoService {
 
     return evento;
 }
+  
+  public boolean atualizarEvento(Evento evento) {
+    String sql = "UPDATE evento SET data_evento = ?, horaEntrada_evento = ?, horaSaida_evento = ?, descricao_evento = ?, codigo_quadra = ?, codigo_cliente = ?, codigo_modalidade = ? WHERE codigo_evento = ?";
+
+    try {
+        conexao = conexaoBD.getConnection();
+        stmt = conexao.prepareStatement(sql);
+
+        stmt.setDate(1, new java.sql.Date(evento.getData().getTime()));
+        stmt.setTime(2, formatTime(evento.getHoraEntrada()));
+        stmt.setTime(3, formatTime(evento.getHoraSaida()));
+        stmt.setString(4, evento.getDescricao());
+        stmt.setInt(5, evento.getCodigo_quadra());
+        stmt.setInt(6, evento.getCodigo_cliente());
+        stmt.setInt(7, evento.getCodigo_modalidade());
+        stmt.setInt(8, evento.getId());
+
+        int rowsUpdated = stmt.executeUpdate();
+        return rowsUpdated > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar dados: " + e.getMessage());
+        return false;
+    } finally {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conexao != null) {
+                conexaoBD.fecharConexao(conexao);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
+}
 
 
 }
