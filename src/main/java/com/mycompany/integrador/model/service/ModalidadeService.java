@@ -224,5 +224,49 @@ public class ModalidadeService {
 
         return modalidade;
     }
+    
+    
+    
+        public Modalidade listarModalidadeEspecifica(int codigoModalidade) {
+        String sql = "SELECT * FROM modalidade WHERE codigo_modalidade = ?";
+        Modalidade modalidade = null;
+        try {
+            // Obtendo a conexão
+            conexao = conexaoBD.getConnection();
+
+            // Preparando a instrução SQL
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, codigoModalidade);
+            // Executando o comando SQL
+            rs = stmt.executeQuery();
+
+            // Processando os resultados
+            while (rs.next()) {
+                int codigo = rs.getInt("codigo_modalidade");
+                String nome = rs.getString("nome_modalidade");
+                float valor = rs.getFloat("valor_modalidade");
+
+                modalidade = new Modalidade(codigo, nome,valor );
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao selecionar dados: " + e.getMessage());
+        } finally {
+            // Fechando os recursos
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexaoBD.fecharConexao(conexao);
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        return modalidade;
+    }
                  
 }

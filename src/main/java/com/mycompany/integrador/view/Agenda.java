@@ -8,6 +8,7 @@ import com.mycompany.integrador.model.service.EventoService;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -58,6 +59,7 @@ public class Agenda extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         eventosButtonPanel = new javax.swing.JPanel();
         adicionarEventoButton = new javax.swing.JButton();
+        editarButton = new javax.swing.JButton();
         apagarEventoButton = new javax.swing.JButton();
         buttonVoltar = new javax.swing.JButton();
 
@@ -135,6 +137,14 @@ public class Agenda extends javax.swing.JFrame {
             }
         });
         eventosButtonPanel.add(adicionarEventoButton);
+
+        editarButton.setText("Editar Evento");
+        editarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarButtonActionPerformed(evt);
+            }
+        });
+        eventosButtonPanel.add(editarButton);
 
         apagarEventoButton.setText("Apagar Evento");
         apagarEventoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +246,19 @@ public class Agenda extends javax.swing.JFrame {
         QuadraSelector quadraSelector = new QuadraSelector();
         quadraSelector.setVisible(true);
     }//GEN-LAST:event_buttonVoltarActionPerformed
+
+    private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = eventosTable.getSelectedRow();
+        if (selectedRow >= 0) { 
+            int codigo_evento = Integer.parseInt(eventosTable.getValueAt(selectedRow, 0).toString());
+            EventoTelaEditar eventoTelaEditar = new EventoTelaEditar();
+            eventoTelaEditar.codigo_evento = codigo_evento;
+            eventoTelaEditar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_editarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +366,7 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JPanel agendaBackGroundPanel;
     private javax.swing.JButton apagarEventoButton;
     private javax.swing.JButton buttonVoltar;
+    private javax.swing.JButton editarButton;
     private javax.swing.JPanel eventosButtonPanel;
     private javax.swing.JTable eventosTable;
     private com.toedter.calendar.JCalendar jCalendar1;

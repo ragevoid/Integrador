@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *
  * @author ricardo.gonzalez
  */
-public class EventoTela extends javax.swing.JFrame {
+public class EventoTelaEditar extends javax.swing.JFrame {
 
     private List<Evento> eventos;
     private EventoService eventoService;
@@ -32,22 +32,21 @@ public class EventoTela extends javax.swing.JFrame {
     private ClienteService clienteService;
     private List<Modalidade> modalidades;
     private ModalidadeService modalidadeService;
+    public int codigo_evento = 5;
 
     /**
      * Creates new form EventoTela
      */
-    public EventoTela() {
+    public EventoTelaEditar() {
         initComponents();
         this.setLocationRelativeTo(null);
-        eventos = new ArrayList<>();
         eventoService = new EventoService();
         clientes = new ArrayList<>();
         clienteService = new ClienteService();
         modalidades = new ArrayList<>();
         modalidadeService = new ModalidadeService();
-        popularComboboxClientes();
-        popularComboboxModalidades();
-
+        popularEvento(5);
+        
     }
 
     /**
@@ -213,26 +212,28 @@ public class EventoTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EventoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EventoTelaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EventoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EventoTelaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EventoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EventoTelaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EventoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EventoTelaEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EventoTela().setVisible(true);
+                new EventoTelaEditar().setVisible(true);
             }
         });
     }
 
-    ;
+    
     
     public static boolean comprobarHoras(String hora1, String hora2) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -248,22 +249,46 @@ public class EventoTela extends javax.swing.JFrame {
             return false;  // O puedes lanzar una excepción, según tu preferencia
         }
     }
-
-    public void popularComboboxClientes() {
-        clientes = clienteService.listarClientes();
-        clienteCombo.removeAllItems();
-        for (Cliente cliente : clientes) {
-            clienteCombo.addItem(cliente.getCodigo() + "-" + cliente.getNome());
-        }
-    }
-
-    public void popularComboboxModalidades() {
+    
+       public void popularComboboxModalidades() {
         modalidadeCombo.removeAllItems();
         modalidades = modalidadeService.listarModalidade();
         for (Modalidade modalidade : modalidades) {
             modalidadeCombo.addItem(modalidade.getCodigo_modalidade() + "-" + modalidade.getNome_modalidade());
         }
     }
+    
+   public void popularEvento(int codigo_evento) {
+    Evento evento = eventoService.getEvento(codigo_evento);
+    
+    if (evento != null) {
+        // Setar hora de entrada
+        String horaEntrada = evento.getHoraEntrada();
+        LocalTime horaEntrada_parsed = LocalTime.parse(horaEntrada);
+        horaEntradaPicker.setTime(horaEntrada_parsed);
+
+        // Setar hora de saída
+        String horaSaida = evento.getHoraSaida();
+        LocalTime horaSaida_parsed = LocalTime.parse(horaSaida);
+        horaSaidaPicker.setTime(horaSaida_parsed);
+
+        // Popular combobox de modalidades
+        popularComboboxModalidades();
+
+        // Setar modalidade selecionada
+        int codigoModalidade = evento.getCodigo_modalidade();
+        for (int i = 0; i < modalidadeCombo.getItemCount(); i++) {
+            String item = (String) modalidadeCombo.getItemAt(i);
+            if (item.startsWith(String.valueOf(codigoModalidade) + "-")) {
+                modalidadeCombo.setSelectedIndex(i);
+                break;
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Evento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 
     public int pegarId(String string) {
         if (string != null && !string.isEmpty()) {
@@ -274,7 +299,8 @@ public class EventoTela extends javax.swing.JFrame {
         }
     }
     
-
+    
+   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

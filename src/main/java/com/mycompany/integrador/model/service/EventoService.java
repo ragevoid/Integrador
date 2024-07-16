@@ -269,4 +269,54 @@ public class EventoService {
 
         return eventos;
     }
+    
+    
+    
+    
+  public Evento getEvento(int codigoEvento) {
+    String sql = "SELECT * FROM evento WHERE codigo_evento = ?";
+    Evento evento = null;
+
+    try {
+        conexao = conexaoBD.getConnection();
+        stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, codigoEvento);
+
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            int codigo_evento = rs.getInt("codigo_evento");
+            Date dataEvento = rs.getDate("data_evento");
+            String horaEntrada = rs.getString("horaEntrada_evento");
+            String horaSaida = rs.getString("horaSaida_evento");
+            String descricao = rs.getString("descricao_evento");
+            int codigoQuadra = rs.getInt("codigo_quadra");
+            int codigoCliente = rs.getInt("codigo_cliente");
+            int codigoModalidade = rs.getInt("codigo_modalidade");
+
+            evento = new Evento(codigo_evento, dataEvento, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao selecionar dados: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conexao != null) {
+                conexaoBD.fecharConexao(conexao);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
+
+    return evento;
+}
+
+
 }

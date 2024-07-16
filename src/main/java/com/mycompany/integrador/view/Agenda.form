@@ -217,6 +217,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adicionarEventoButtonActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="editarButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Editar Evento"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editarButtonActionPerformed"/>
+              </Events>
+            </Component>
             <Component class="javax.swing.JButton" name="apagarEventoButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Apagar Evento"/>
