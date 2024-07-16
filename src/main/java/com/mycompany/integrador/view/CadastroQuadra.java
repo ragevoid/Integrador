@@ -45,7 +45,6 @@ public class CadastroQuadra extends javax.swing.JFrame {
      */
     public CadastroQuadra() {
         initComponents();
-        setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -74,7 +73,7 @@ public class CadastroQuadra extends javax.swing.JFrame {
     
     private void aplicarFormatoTamanhoQuadra(JFormattedTextField campoTamanho) {
         try {
-            MaskFormatter maskFormatter = new MaskFormatter(".##");
+            MaskFormatter maskFormatter = new MaskFormatter("###.##");
             maskFormatter.install(campoTamanho);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -97,8 +96,8 @@ public class CadastroQuadra extends javax.swing.JFrame {
         });
 
         // Renderizador para os botões
-        jTableDadosQuadra.getColumn("Edit").setCellRenderer(new ButtonRenderer("Edit"));
-        jTableDadosQuadra.getColumn("Delete").setCellRenderer(new ButtonRenderer("Delete"));
+        jTableDadosQuadra.getColumn("Edit").setCellRenderer(new ButtonRenderer("Editar"));
+        jTableDadosQuadra.getColumn("Delete").setCellRenderer(new ButtonRenderer("Deletar"));
 
         // Editor para os botões
         jTableDadosQuadra.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), "Edit", jTableDadosQuadra));
@@ -146,7 +145,7 @@ public class CadastroQuadra extends javax.swing.JFrame {
         jPanelModalidade = new javax.swing.JPanel();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCodigo = new javax.swing.JTextField();
-        jLabelNomeModalidade = new javax.swing.JLabel();
+        jLabelNomeQuadra = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabelTamanho = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -156,12 +155,13 @@ public class CadastroQuadra extends javax.swing.JFrame {
         jFormattedTextFieldTamanho = new javax.swing.JFormattedTextField();
         jComboBoxTipoQuadra = new javax.swing.JComboBox<>();
         jLabelTamanho1 = new javax.swing.JLabel();
+        panelBotoes = new java.awt.Panel();
         jButtonInserir = new javax.swing.JButton();
-        jButtonExcluir = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
         jButtonLocalizar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -178,8 +178,8 @@ public class CadastroQuadra extends javax.swing.JFrame {
         jTextFieldCodigo.setMinimumSize(new java.awt.Dimension(70, 30));
         jTextFieldCodigo.setNextFocusableComponent(jTextFieldNome);
 
-        jLabelNomeModalidade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabelNomeModalidade.setText("Nome Modalidade:");
+        jLabelNomeQuadra.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelNomeQuadra.setText("Nome da Quadra:");
 
         jLabelTamanho.setText("Tamanho:");
 
@@ -246,36 +246,33 @@ public class CadastroQuadra extends javax.swing.JFrame {
         jPanelModalidade.setLayout(jPanelModalidadeLayout);
         jPanelModalidadeLayout.setHorizontalGroup(
             jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelModalidadeLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelModalidadeLayout.createSequentialGroup()
-                        .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
-                                .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabelTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBoxTipoQuadra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldNome)))))
-                .addGap(0, 0, 0))
+                        .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelNomeQuadra, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                        .addComponent(jLabelTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextFieldTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBoxTipoQuadra, 0, 424, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNome))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116))
+            .addGroup(jPanelModalidadeLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelModalidadeLayout.setVerticalGroup(
             jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,109 +280,105 @@ public class CadastroQuadra extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNomeModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomeQuadra, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelModalidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSalvarTela, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextFieldTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxTipoQuadra, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTamanho1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE))
         );
 
+        panelBotoes.setLayout(new java.awt.GridLayout());
+
+        jButtonInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo.png"))); // NOI18N
         jButtonInserir.setText("Inserir");
         jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInserirActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonInserir);
 
-        jButtonExcluir.setText("Excluir");
-        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExcluirActionPerformed(evt);
-            }
-        });
-
-        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salvar.png"))); // NOI18N
+        jButtonSalvar.setText("SALVAR");
+        jButtonSalvar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonSalvar);
 
-        jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apagar.png"))); // NOI18N
+        jButtonExcluir.setText("EXCLUIR");
+        jButtonExcluir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
+                jButtonExcluirActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonExcluir);
 
-        jButtonLocalizar.setText("Localizar");
+        jButtonLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/localizar.png"))); // NOI18N
+        jButtonLocalizar.setText("LOCALIZAR");
+        jButtonLocalizar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLocalizarActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonLocalizar);
 
-        jButtonEditar.setText("Editar");
+        jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit.png"))); // NOI18N
+        jButtonEditar.setText("EDITAR");
+        jButtonEditar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonEditar);
 
-        jButtonSair.setText("Sair");
+        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancelar.png"))); // NOI18N
+        jButtonCancelar.setText("CANCELAR");
+        jButtonCancelar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        panelBotoes.add(jButtonCancelar);
+
+        jButtonSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
+        jButtonSair.setText("SAIR");
+        jButtonSair.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSairActionPerformed(evt);
             }
         });
+        panelBotoes.add(jButtonSair);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 28, Short.MAX_VALUE))
-                    .addComponent(jPanelModalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(panelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1140, Short.MAX_VALUE)
+            .addComponent(jPanelModalidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelModalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
 
@@ -414,12 +407,28 @@ public class CadastroQuadra extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        String codigo = jTextFieldCodigo.getText();
-        int codigoint = Integer.parseInt(codigo);
-        JOptionPane.showMessageDialog(null,
-                "Deseja realmente excluir os dados selecionados?", "Excluir Quadra", JOptionPane.YES_NO_CANCEL_OPTION);        
-        quadraService.excluirQuadra(codigoint);
-        listarQuadras();
+        
+        String codigo = jTextFieldCodigo.getText().trim();
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum código foi inserido para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int codigoint = Integer.parseInt(codigo);
+            int confirmacao = JOptionPane.showConfirmDialog(null,
+                    "Deseja realmente excluir os dados selecionados?", "Excluir Quadra", JOptionPane.YES_NO_CANCEL_OPTION);
+
+            if (confirmacao == JOptionPane.YES_OPTION) {
+                quadraService.excluirQuadra(codigoint);
+                listarQuadras();
+                JOptionPane.showMessageDialog(null, "Dados excluídos com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "O código inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir os dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -463,7 +472,7 @@ public class CadastroQuadra extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(null,
-                "Dados inseridos com sucesso!", "Sucesso", JOptionPane.OK_OPTION);
+                "Dados inseridos com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         limparCampos();
         listarQuadras();
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
@@ -686,7 +695,7 @@ public class CadastroQuadra extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxTipoQuadra;
     private javax.swing.JFormattedTextField jFormattedTextFieldTamanho;
     private javax.swing.JLabel jLabelCodigo;
-    private javax.swing.JLabel jLabelNomeModalidade;
+    private javax.swing.JLabel jLabelNomeQuadra;
     private javax.swing.JLabel jLabelTamanho;
     private javax.swing.JLabel jLabelTamanho1;
     private javax.swing.JPanel jPanelModalidade;
@@ -694,5 +703,6 @@ public class CadastroQuadra extends javax.swing.JFrame {
     private javax.swing.JTable jTableDadosQuadra;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNome;
+    private java.awt.Panel panelBotoes;
     // End of variables declaration//GEN-END:variables
 }
