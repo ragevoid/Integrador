@@ -33,7 +33,7 @@ public class EventoService {
     }
 
     public Time formatTime(String timeString) {
-        // Adicionar segundos se necessário para garantir o formato correto
+        
         if (timeString.length() == 5) {
             timeString = timeString + ":00";
         }
@@ -56,7 +56,6 @@ public class EventoService {
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso!");
 
-            // Obter o ID gerado
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 evento.setId(generatedKeys.getInt(1));
@@ -91,7 +90,6 @@ public class EventoService {
             conexao = conexaoBD.getConnection();
             stmt = conexao.prepareStatement(sql);
 
-            // Converter String para Date
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(dataSelected);
             java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
@@ -317,6 +315,7 @@ public class EventoService {
 
     return evento;
 }
+  
   
   public boolean atualizarEvento(Evento evento) {
     String sql = "UPDATE evento SET data_evento = ?, horaEntrada_evento = ?, horaSaida_evento = ?, descricao_evento = ?, codigo_quadra = ?, codigo_cliente = ?, codigo_modalidade = ? WHERE codigo_evento = ?";

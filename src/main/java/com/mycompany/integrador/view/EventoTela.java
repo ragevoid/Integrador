@@ -179,7 +179,6 @@ public class EventoTela extends javax.swing.JFrame {
         }
 
         Evento evento = new Evento(data, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
-        System.out.println(evento.getData() + "---" + evento.getHoraEntrada() + "---" + evento.getHoraSaida() + "---" + evento.getDescricao() + "---" + evento.getCodigo_quadra() + "---" + evento.getCodigo_cliente() + "---" + evento.getCodigo_modalidade());
 
         if (eventoService.validarHora(evento)) {
             eventoService.salvarEvento(evento);
@@ -241,11 +240,10 @@ public class EventoTela extends javax.swing.JFrame {
             LocalTime time1 = LocalTime.parse(hora1, formatter);
             LocalTime time2 = LocalTime.parse(hora2, formatter);
 
-            // Retorna true si hora1 está después de hora2
             return time1.isAfter(time2);
         } catch (DateTimeParseException e) {
             System.out.println("Formato de hora inválido");
-            return false;  // O puedes lanzar una excepción, según tu preferencia
+            return false;
         }
     }
 
@@ -273,8 +271,6 @@ public class EventoTela extends javax.swing.JFrame {
             throw new IllegalArgumentException("A string fornecida está vazia ou é nula.");
         }
     }
-    
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

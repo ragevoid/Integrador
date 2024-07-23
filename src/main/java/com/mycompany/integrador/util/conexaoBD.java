@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class conexaoBD {
     private static final String URL = "jdbc:postgresql://localhost:5432/quadraManager";
     private static final String USUARIO = "postgres";
-    private static final String SENHA = "adn";
+    private static final String SENHA = "28579994";
 
     public static Connection getConnection() {
         try {

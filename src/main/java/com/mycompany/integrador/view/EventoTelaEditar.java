@@ -33,7 +33,6 @@ public class EventoTelaEditar extends javax.swing.JFrame {
     private List<Modalidade> modalidades;
     private ModalidadeService modalidadeService;
 
-
     /**
      * Creates new form EventoTela
      */
@@ -45,7 +44,6 @@ public class EventoTelaEditar extends javax.swing.JFrame {
         clienteService = new ClienteService();
         modalidades = new ArrayList<>();
         modalidadeService = new ModalidadeService();
-     
 
     }
 
@@ -174,33 +172,32 @@ public class EventoTelaEditar extends javax.swing.JFrame {
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
         // TODO add your handling code here:
 
-       try {
-        LocalDate localDate = dataPicker.getDate();
-        Date data = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        String horaEntrada = horaEntradaPicker.getTimeStringOrEmptyString();
-        String horaSaida = horaSaidaPicker.getTimeStringOrEmptyString();
-        String descricao = descriptionText.getText();
-        String quadra = quadraLabel.getText();
-        int codigoQuadra = pegarId(quadra);
-        String cliente = clienteCombo.getSelectedItem().toString();
-        int codigoCliente = pegarId(cliente);
-        String modalidade = modalidadeCombo.getSelectedItem().toString();
-        int codigoModalidade = pegarId(modalidade);
-        int codigo_evento = Integer.parseInt(codigoEventoLabel.getText());
+        try {
+            LocalDate localDate = dataPicker.getDate();
+            Date data = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            String horaEntrada = horaEntradaPicker.getTimeStringOrEmptyString();
+            String horaSaida = horaSaidaPicker.getTimeStringOrEmptyString();
+            String descricao = descriptionText.getText();
+            String quadra = quadraLabel.getText();
+            int codigoQuadra = pegarId(quadra);
+            String cliente = clienteCombo.getSelectedItem().toString();
+            int codigoCliente = pegarId(cliente);
+            String modalidade = modalidadeCombo.getSelectedItem().toString();
+            int codigoModalidade = pegarId(modalidade);
+            int codigo_evento = Integer.parseInt(codigoEventoLabel.getText());
 
+            Evento evento = new Evento(codigo_evento, data, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
 
-        Evento evento = new Evento(codigo_evento, data, horaEntrada, horaSaida, descricao, codigoQuadra, codigoCliente, codigoModalidade);
-
-        boolean sucesso = eventoService.atualizarEvento(evento);
-        if (sucesso) {
-            JOptionPane.showMessageDialog(this, "Evento atualizado com sucesso!");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro ao atualizar evento.");
+            boolean sucesso = eventoService.atualizarEvento(evento);
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this, "Evento atualizado com sucesso!");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao atualizar evento.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao processar atualização: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Erro ao processar atualização: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-    }
 
     }//GEN-LAST:event_editarButtonActionPerformed
 
@@ -258,11 +255,10 @@ public class EventoTelaEditar extends javax.swing.JFrame {
             LocalTime time1 = LocalTime.parse(hora1, formatter);
             LocalTime time2 = LocalTime.parse(hora2, formatter);
 
-            // Retorna true si hora1 está después de hora2
             return time1.isAfter(time2);
         } catch (DateTimeParseException e) {
             System.out.println("Formato de hora inválido");
-            return false;  // O puedes lanzar una excepción, según tu preferencia
+            return false;
         }
     }
 
@@ -285,26 +281,21 @@ public class EventoTelaEditar extends javax.swing.JFrame {
     public void popularEvento(int codigo_evento) {
         Evento evento = eventoService.getEvento(codigo_evento);
 
-        // Converter java.sql.Date para LocalDate
         String dateString = evento.getData().toString();
         LocalDate localDate = LocalDate.parse(dateString);
         dataPicker.setDate(localDate);
-        System.out.println(localDate);
+        
 
-        // Setar hora de entrada
         String horaEntrada = evento.getHoraEntrada();
         LocalTime horaEntrada_parsed = LocalTime.parse(horaEntrada);
         horaEntradaPicker.setTime(horaEntrada_parsed);
 
-        // Setar hora de saída
         String horaSaida = evento.getHoraSaida();
         LocalTime horaSaida_parsed = LocalTime.parse(horaSaida);
         horaSaidaPicker.setTime(horaSaida_parsed);
 
-        // Popular combobox de modalidades
         popularComboboxModalidades();
 
-        // Setar modalidade selecionada
         int codigoModalidade = evento.getCodigo_modalidade();
         for (int i = 0; i < modalidadeCombo.getItemCount(); i++) {
             String item = (String) modalidadeCombo.getItemAt(i);
@@ -314,7 +305,6 @@ public class EventoTelaEditar extends javax.swing.JFrame {
             }
         }
 
-        // Popular combobox de clientes
         popularComboboxClientes();
         int codigoCliente = evento.getCodigo_cliente();
         for (int i = 0; i < clienteCombo.getItemCount(); i++) {
@@ -325,7 +315,6 @@ public class EventoTelaEditar extends javax.swing.JFrame {
             }
         }
 
-        // Setar descrição
         descriptionText.setText(evento.getDescricao());
     }
 

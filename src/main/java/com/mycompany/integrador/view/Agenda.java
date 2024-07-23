@@ -8,12 +8,10 @@ import com.mycompany.integrador.model.service.EventoService;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,8 +24,6 @@ public class Agenda extends javax.swing.JFrame {
     private List<Evento> eventosMes;
     private EventoService eventoService;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
-
 
     /**
      * Creates new form Agenda
@@ -267,7 +263,7 @@ public class Agenda extends javax.swing.JFrame {
 
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
         // TODO add your handling code here:
-        
+
         int selectedRow = eventosTable.getSelectedRow();
         if (selectedRow >= 0) {
             String codigo_evento = eventosTable.getValueAt(selectedRow, 0).toString();
@@ -275,16 +271,16 @@ public class Agenda extends javax.swing.JFrame {
             System.out.println(codigo_evento);
             eventoTelaEditar.codigoEventoLabel.setText(codigo_evento);
             eventoTelaEditar.setVisible(true);
-        }else{
-        JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um registro para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-            
-  
+
+
     }//GEN-LAST:event_editarButtonActionPerformed
 
     private void quadraLabelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_quadraLabelPropertyChange
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_quadraLabelPropertyChange
 
     private void atualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarButtonActionPerformed
@@ -353,57 +349,54 @@ public class Agenda extends javax.swing.JFrame {
         return input.substring(dashIndex + 1);
     }
 
-public void mostrarDiasEventos() {
-    int codigoQuadra = pegarId(quadraLabel.getText());
-    int month = jCalendar1.getMonthChooser().getMonth() + 1;
-    int year = jCalendar1.getYearChooser().getYear();
-    JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
-    Component[] components = jpanel.getComponents();
-    eventosMes = eventoService.listarEventosMes(codigoQuadra, month);
+    public void mostrarDiasEventos() {
+        int codigoQuadra = pegarId(quadraLabel.getText());
+        int month = jCalendar1.getMonthChooser().getMonth() + 1;
+        int year = jCalendar1.getYearChooser().getYear();
+        JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
+        Component[] components = jpanel.getComponents();
+        eventosMes = eventoService.listarEventosMes(codigoQuadra, month);
 
-   zerarCalendar();
+        zerarCalendar();
 
+        for (Component comp : components) {
+            if (comp instanceof JButton) {
+                JButton dayButton = (JButton) comp;
+                String dayText = dayButton.getText();
 
-    // Percorrer novamente para definir a cor dos dias com eventos
-    for (Component comp : components) {
-        if (comp instanceof JButton) {
-            JButton dayButton = (JButton) comp;
-            String dayText = dayButton.getText();
+                if (dayText.matches("\\d+")) {
+                    int day = Integer.parseInt(dayText);
+                    Calendar compCalendar = Calendar.getInstance();
+                    compCalendar.set(year, month - 1, day);
 
-            if (dayText.matches("\\d+")) {
-                int day = Integer.parseInt(dayText);
-                Calendar compCalendar = Calendar.getInstance();
-                compCalendar.set(year, month - 1, day);
+                    for (Evento eventoMes : eventosMes) {
+                        Date eventDate = eventoMes.getData();
+                        Calendar eventCalendar = Calendar.getInstance();
+                        eventCalendar.setTime(eventDate);
 
-                for (Evento eventoMes : eventosMes) {
-                    Date eventDate = eventoMes.getData();
-                    Calendar eventCalendar = Calendar.getInstance();
-                    eventCalendar.setTime(eventDate);
-
-                    if (eventCalendar.get(Calendar.YEAR) == compCalendar.get(Calendar.YEAR)
-                            && eventCalendar.get(Calendar.MONTH) == compCalendar.get(Calendar.MONTH)
-                            && eventCalendar.get(Calendar.DAY_OF_MONTH) == compCalendar.get(Calendar.DAY_OF_MONTH)) {
-                        dayButton.setBackground(Color.RED); // Defina a cor desejada
-                        break; // Sai do loop após encontrar um evento para esse dia
+                        if (eventCalendar.get(Calendar.YEAR) == compCalendar.get(Calendar.YEAR)
+                                && eventCalendar.get(Calendar.MONTH) == compCalendar.get(Calendar.MONTH)
+                                && eventCalendar.get(Calendar.DAY_OF_MONTH) == compCalendar.get(Calendar.DAY_OF_MONTH)) {
+                            dayButton.setBackground(Color.RED);
+                            break;
+                        }
                     }
                 }
             }
         }
     }
-}
 
-public void zerarCalendar(){
-    JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
-    Component[] components = jpanel.getComponents();
-    for (Component comp : components) {
-        if (comp instanceof JButton) {
-            JButton dayButton = (JButton) comp;
-            dayButton.setBackground(null);
+    public void zerarCalendar() {
+        JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
+        Component[] components = jpanel.getComponents();
+        for (Component comp : components) {
+            if (comp instanceof JButton) {
+                JButton dayButton = (JButton) comp;
+                dayButton.setBackground(null);
+            }
         }
+
     }
-
-}
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

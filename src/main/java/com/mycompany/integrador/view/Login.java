@@ -6,8 +6,6 @@ package com.mycompany.integrador.view;
 
 import com.mycompany.integrador.model.service.FuncionarioService;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
@@ -202,7 +200,6 @@ public class Login extends javax.swing.JFrame {
         String idText = userField.getText();
         String senha = new String(passwordField.getPassword());
 
-        System.out.println(tentativa);
         if (tentativa == 2) {
             JOptionPane.showMessageDialog(null, "Muitas Tentativas", "Error",
                     JOptionPane.ERROR_MESSAGE);;

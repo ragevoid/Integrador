@@ -4,8 +4,6 @@
  */
 package com.mycompany.integrador.view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import com.mycompany.integrador.util.DataAtual;
 
 /**
@@ -250,7 +248,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_iniciarAgendaActionPerformed
 
     private void funcionarioMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionarioMenuActionPerformed
-                       java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CadastroFuncionario().setVisible(true);
             }
@@ -286,7 +284,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void quadrasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quadrasMenuActionPerformed

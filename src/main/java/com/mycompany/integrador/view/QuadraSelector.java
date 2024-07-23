@@ -3,20 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.integrador.view;
-import com.mycompany.integrador.model.Evento;
+
 import com.mycompany.integrador.model.Quadra;
 import com.mycompany.integrador.model.service.QuadraService;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 
 /**
  *
  * @author ricardo.gonzalez
  */
 public class QuadraSelector extends javax.swing.JFrame {
+
     private List<Quadra> quadras;
     private QuadraService quadraService;
     public String selectedQuadra;
@@ -30,7 +29,7 @@ public class QuadraSelector extends javax.swing.JFrame {
         quadras = new ArrayList<>();
         quadraService = new QuadraService();
         listarQuadras();
-        this.setLocationRelativeTo(null);  
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -97,14 +96,14 @@ public class QuadraSelector extends javax.swing.JFrame {
         // TODO add your handling code here:
         selectedQuadra = jComboBox1.getSelectedItem().toString();
         SelectedQuadraName = pegarNomeQuadra(selectedQuadra);
-        
+
         System.out.println(selectedQuadra);
         Agenda agenda = new Agenda();
         agenda.quadraLabel.setText(selectedQuadra);
-        
-        agenda.setTitle("Agenda - "+SelectedQuadraName);
-     
-        agenda.setVisible(true);     
+
+        agenda.setTitle("Agenda - " + SelectedQuadraName);
+
+        agenda.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -143,22 +142,24 @@ public class QuadraSelector extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void listarQuadras(){
+
+    public void listarQuadras() {
         quadras = quadraService.listarQuadras();
-         System.out.println("Lista de quadras:");
+        System.out.println("Lista de quadras:");
         for (Quadra quadra : quadras) {
-            System.out.println("Nome: " + quadra.getNome());}
+            System.out.println("Nome: " + quadra.getNome());
+        }
         popularComboBox();
     }
-   public void popularComboBox() {
+
+    public void popularComboBox() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (Quadra quadra : quadras) {
-            model.addElement(quadra.getCodigo()+" - "+ quadra.getNome());
+            model.addElement(quadra.getCodigo() + " - " + quadra.getNome());
         }
         jComboBox1.setModel(model);
     }
-   
+
     public static String pegarNomeQuadra(String input) {
         int dashIndex = input.indexOf("-");
         return input.substring(dashIndex + 1);
